@@ -8,8 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "lodash": "^4.17.20",
     "next": "^10.0.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "rxjs": "^6.6.3"
   }
 }
