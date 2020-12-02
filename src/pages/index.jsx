@@ -1,7 +1,9 @@
 import {useEffect,useState} from 'react';
 import {getPokemonList,getPokemon} from '../api/pokemon'
 import PokemonStore from '../store/pokemonStrore'
+
 import PokemonList from '../components/PokemonList/PokemonList';
+import Header from '../components/Header/Header'
 
 
 export default function Index() {
@@ -24,7 +26,7 @@ export default function Index() {
   return (
     <>
     <header>
-      navigation searchBar
+      <Header />
     </header>
     <main>
       <PokemonList/>
