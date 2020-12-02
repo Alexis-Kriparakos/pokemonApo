@@ -1,7 +1,7 @@
-import {BehaviourSubject} from 'rxjs'
+import { BehaviorSubject } from 'rxjs';
 
-const pokemonStore$ = new BehaviourSubject([]);
-const pokemonFetched$ = new BehaviourSubject(false);
+const pokemonStore$ = new BehaviorSubject([]);
+const pokemonFetched$ = new BehaviorSubject(false);
 
 const PokemonFetched = {
     update: fetched => {
