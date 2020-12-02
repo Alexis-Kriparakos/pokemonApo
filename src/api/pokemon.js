@@ -27,7 +27,7 @@ export async function getPokemon(pokeName) {
         const sprites = get(response,'data.sprites');
         const types = get(response, 'data.types');
         const stats = get(response, 'data.stats')
-        return {name, moves, sprites, types,stats};
+        return {name, moves, sprites, types, stats};
     } catch (error) {
         console.log(error)
     }

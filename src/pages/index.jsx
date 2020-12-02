@@ -10,11 +10,11 @@ export default function Index() {
     const limit = 151;
     async function getData() {
       const pokemonList = await getPokemonList(limit);
-      const pokemonListWithStats = pokemonList.map(async function(p) {
-        const pokemon = await getPokemon(p.name)
+      console.log(pokemonList);
+      const pokemonListWithStats = await Promise.all(pokemonList.map(p => {
+        const pokemon = getPokemon(p.name)
         return pokemon 
-       })
-       console.log(pokemonListWithStats);
+       }));
       PokemonStore.update(pokemonListWithStats);  
     }
     getData();
