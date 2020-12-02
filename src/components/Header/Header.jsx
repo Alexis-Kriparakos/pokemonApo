@@ -28,9 +28,15 @@ export default function Header() {
     }
 
     return(
-        <section>        
-            <div>HEADEr</div>
-            <input className={styles.input} type="text" placeholder="Αναζήτησε Κατάστημα" onChange={e=>onChaneInput(e.target.value)}/>
+        <section>  
+            <div className={styles.headerContainer}>     
+                <div className={styles.header}>
+                <img className={styles.img} src="/assets/icon/Pokémon_logo.svg" alt=""/>
+                </div>
+            </div> 
+            <div className={styles.inputContainer}>
+            <input className={styles.input} type="text" placeholder="Seasch Pokemon" onChange={e=>onChaneInput(e.target.value)}/>
+            </div>
         </section>
 
     )
