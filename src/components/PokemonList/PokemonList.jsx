@@ -18,10 +18,10 @@ export default function PokemonList() {
   if(!pokemonList.length) return null;
 
 return (
-    <section >
+    <section className={styles.container}>
         <ul className={styles.pokemonList}>
-            {pokemonList.map(pokemon =>(
-                <li className={styles.pokemonListItem}>
+            {pokemonList.map((pokemon,i) =>(
+                <li className={styles.pokemonListItem} key={i}>
                     <PokemonCard pokemon={pokemon} />
                 </li>
             ))}
