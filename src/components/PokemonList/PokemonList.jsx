@@ -18,7 +18,7 @@ export default function PokemonList() {
   if(!pokemonList.length) return null;
 
 return (
-    <section >
+    <section className={styles.container}>
         <ul className={styles.pokemonList}>
             {pokemonList.map((pokemon,i) =>(
                 <li className={styles.pokemonListItem} key={i}>

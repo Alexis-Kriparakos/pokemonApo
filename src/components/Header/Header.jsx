@@ -1,4 +1,3 @@
-import { fromPairs } from "lodash"
 import {useState, useEffect} from 'react';
 import {DUMMY_POKEMON} from '../../DummyPokemon';
 import cloneDeep from 'lodash/cloneDeep';
@@ -28,15 +27,16 @@ export default function Header() {
     }
 
     return(
-        <section>  
+        <section className={styles.container}>  
             <div className={styles.headerContainer}>     
-                <div className={styles.header}>
-                <img className={styles.img} src="/assets/icon/Pokémon_logo.svg" alt=""/>
+                <div className={styles.headerText}>
+                    Pokemon
                 </div>
-            </div> 
-            <div className={styles.inputContainer}>
-            <input className={styles.input} type="text" placeholder="Seasch Pokemon" onChange={e=>onChaneInput(e.target.value)}/>
+                <div className={styles.inputContainer}>
+            <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={e=>onChaneInput(e.target.value)}/>
             </div>
+            </div> 
+            
         </section>
 
     )

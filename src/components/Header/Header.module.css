@@ -1,12 +1,20 @@
-.header {
-	margin: 0 auto;
-	height: 3.125rem;
-	max-width: 72rem;
+.container {
+	flex: 0 0 70%;
+}
+
+.headerText {
+	flex: 0 0 35%;
+	font-size: 1.5rem;
+	color: #fff;
 }
 
 .headerContainer {
+	display: flex;
+	align-items: center;
 	background-color: #ef5350;
 	margin: 0 0 1.5rem 0;
+	width: 100%;
+	padding: 1.5rem 3rem;
 }
 
 .input {
@@ -18,17 +26,5 @@
 	padding-left: 5px;
 	display: -ms-inline-flexbox;
 	display: inline-flex;
-	min-width: 31.25rem;
-}
-
-.inputContainer {
-	margin: 0 0 1.5rem 0;
-	display: flex;
-	justify-content: center;
-	position: relative;
-}
-
-.img {
-	width: 2rem;
-	height: 2rem;
+	width: 31.25rem;
 }

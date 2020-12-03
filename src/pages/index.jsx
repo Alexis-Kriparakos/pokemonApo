@@ -5,6 +5,7 @@ import PokemonStore from '../store/pokemonStrore'
 import PokemonList from '../components/PokemonList/PokemonList';
 import Header from '../components/Header/Header'
 
+import styles from './index.module.css';
 
 export default function Index() {
   // useEffect(() => {
@@ -28,7 +29,7 @@ export default function Index() {
     <header>
       <Header />
     </header>
-    <main>
+    <main className={styles.mainContainer}>
       <PokemonList/>
     </main>
     </>
