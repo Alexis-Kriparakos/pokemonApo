@@ -1,8 +1,11 @@
 import {useEffect,useState} from 'react';
 import {getPokemonList,getPokemon} from '../api/pokemon'
 import PokemonStore from '../store/pokemonStrore'
-import PokemonList from '../components/PokemonList/PokemonList';
 
+import PokemonList from '../components/PokemonList/PokemonList';
+import Header from '../components/Header/Header'
+
+import styles from './index.module.css';
 
 export default function Index() {
   // useEffect(() => {
@@ -24,9 +27,9 @@ export default function Index() {
   return (
     <>
     <header>
-      navigation searchBar
+      <Header />
     </header>
-    <main>
+    <main className={styles.mainContainer}>
       <PokemonList/>
     </main>
     </>
