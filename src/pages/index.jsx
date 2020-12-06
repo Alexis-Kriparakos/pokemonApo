@@ -8,21 +8,20 @@ import Header from '../components/Header/Header'
 import styles from './index.module.css';
 
 export default function Index() {
-  // useEffect(() => {
-  //   const limit = 151;
-  //   async function getData() {
-  //     const pokemonList = await getPokemonList(limit);
-  //     console.log(pokemonList);
-  //     const pokemonListWithStats = await Promise.all(pokemonList.map(p => {
-  //       const pokemon = getPokemon(p.name)
-  //       return pokemon 
-  //      }));
-  //      console.log(pokemonListWithStats)
-  //     PokemonStore.update(pokemonListWithStats);  
-  //   }
-  //   getData();
+  useEffect(() => {
+    const limit = 10;
+    async function getData() {
+      const pokemonList = await getPokemonList(limit);
+      console.log(pokemonList);
+      const pokemonListWithStats = await Promise.all(pokemonList.map(p => {
+        const pokemon = getPokemon(p.name)
+        return pokemon 
+       }));
+      PokemonStore.update(pokemonListWithStats);  
+    }
+    getData();
     
-  //    },[])
+     },[])
 
   return (
     <>

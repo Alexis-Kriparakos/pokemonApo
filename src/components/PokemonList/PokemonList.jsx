@@ -6,14 +6,14 @@ import styles from './PokemonList.module.css'
 import {DUMMY_POKEMON} from '../../DummyPokemon';
 
 export default function PokemonList() {
-  const [pokemonList,setPokemonList] = useState(DUMMY_POKEMON);
+  const [pokemonList,setPokemonList] = useState([]);
 
-//   useEffect(()=>{
-//       const pokemonStore$ = PokemonStore.subscribe(setPokemonList);
-//     return()=>{
-//         pokemonStore$.unsubscribe();
-//     }
-//   },[])
+  useEffect(()=>{
+      const pokemonStore$ = PokemonStore.subscribe(setPokemonList);
+    return()=>{
+        pokemonStore$.unsubscribe();
+    }
+  },[])
 
   if(!pokemonList.length) return null;
 

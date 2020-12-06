@@ -1,29 +1,26 @@
 import {useState, useEffect} from 'react';
-import {DUMMY_POKEMON} from '../../DummyPokemon';
 import cloneDeep from 'lodash/cloneDeep';
 import styles from './Header.module.css';
-
+import PokemonStore from '../../store/pokemonStrore';
 
 export default function Header() {
 
-    const [pokemonsFiltered,setPokemonFiltered] = useState([]);
     const [pokemonData,setPokemonData] = useState([])
 
     useState(()=>{
-        const dataPokemon = cloneDeep(DUMMY_POKEMON);
+        const allPokemon = PokemonStore.getValue();
+        const dataPokemon = cloneDeep(allPokemon);
         dataPokemon.forEach(poke => {
             poke.searchTerms = [`${poke.name}`,`${poke.name.toUpperCase()}`]
         })
         setPokemonData(dataPokemon);
-    }, [DUMMY_POKEMON])
+    }, [])
 
     function onChaneInput(value) {
         const filteredPokemons = pokemonData.filter(pokemon => {
             return pokemon.searchTerms.find(term => term.indexOf(value) !== -1);
         });
-        console.log(pokemonData)
-        console.log(filteredPokemons);
-        setPokemonFiltered(filteredPokemons);
+        PokemonStore.update(filteredPokemons);
     }
 
     return(
