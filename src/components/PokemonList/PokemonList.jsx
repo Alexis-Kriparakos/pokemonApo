@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import PokemonStore from '../../store/pokemonStrore';
+import PokemontoShow from '../../store/pokemonToShow';
 import PokemonCard from "../PokemonCard/PokemonCard";
 import styles from './PokemonList.module.css'
 
@@ -9,9 +9,10 @@ export default function PokemonList() {
   const [pokemonList,setPokemonList] = useState([]);
 
   useEffect(()=>{
-      const pokemonStore$ = PokemonStore.subscribe(setPokemonList);
+    const pokemontoShow$ = PokemontoShow.subscribe(setPokemonList);
+
     return()=>{
-        pokemonStore$.unsubscribe();
+        pokemontoShow$.unsubscribe();
     }
   },[])
 

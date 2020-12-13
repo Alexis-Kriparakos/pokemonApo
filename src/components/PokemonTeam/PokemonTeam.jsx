@@ -1,13 +1,24 @@
 import {useEffect, useState} from 'react';
-import PokemonStore from '../../store/pokemonStrore';
+import {Trainer1Team,Trainer2Team} from '../../store/pokemonBattle';
 import styles from './PokemonTeam.module.css'
-import {DUMMY_POKEMON} from '../../DummyPokemon';
 
-export default function PokemonTeam() {
+export default function PokemonTeam({trainer}) {
+
+    const [pokemonInTeam,setPokemoninTeam] = useState([]);
   
-const pokemonInTeam = []
-
-
+    useEffect(()=>{
+        if(trainer === '1') {
+            const team$ = Trainer1Team.subscribe(setPokemoninTeam);
+            return()=>{
+                team$.unsubscribe();
+            }
+        } else {
+            const team$ = Trainer2Team.subscribe(setPokemoninTeam);
+            return()=>{
+                team$.unsubscribe();
+            }
+        }
+},[])
 
 return (
     <section >
@@ -18,15 +29,19 @@ return (
             </div>
             <div>
                 <p>Remaing Pokemon</p>
-                <p>4 / 5</p>
+                <p>{pokemonInTeam.length} / 5</p>
             </div>
        </header>
        <main>
-           <ul>
+           {pokemonInTeam.lenght !==0 &&<ul>
                {pokemonInTeam.map(pokemon => (
-                   <PokemonTeamCard pokemon={pokemon}/> 
+                   <>
+                   <div>{pokemon.name}</div>
+                 
+                   </>
+                //    <PokemonTeamCard pokemon={pokemon}/> 
                ))}
-           </ul>
+           </ul>}
        </main>
     </section>
 )
