@@ -1,19 +1,20 @@
 import {useEffect, useState} from 'react';
-import PokemonStore from '../../store/pokemonStrore';
+import PokemontoShow from '../../store/pokemonToShow';
 import PokemonCard from "../PokemonCard/PokemonCard";
 import styles from './PokemonList.module.css'
 
 import {DUMMY_POKEMON} from '../../DummyPokemon';
 
 export default function PokemonList() {
-  const [pokemonList,setPokemonList] = useState(DUMMY_POKEMON);
+  const [pokemonList,setPokemonList] = useState([]);
 
-//   useEffect(()=>{
-//       const pokemonStore$ = PokemonStore.subscribe(setPokemonList);
-//     return()=>{
-//         pokemonStore$.unsubscribe();
-//     }
-//   },[])
+  useEffect(()=>{
+    const pokemontoShow$ = PokemontoShow.subscribe(setPokemonList);
+
+    return()=>{
+        pokemontoShow$.unsubscribe();
+    }
+  },[])
 
   if(!pokemonList.length) return null;
 

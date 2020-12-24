@@ -1,0 +1,24 @@
+.modalContainer {
+    width: 30.25rem;
+    padding: 1.5rem;
+    background-color: #eee;
+    text-align: center;
+}
+
+.text {
+    margin: 0 0 1.5rem;
+    color: #292929;
+}
+
+.btnAccept {
+    border-radius: 1.5rem;
+    font-size: 1.125rem;
+    background: #174989;
+    color: #fff;
+    text-align: center;
+    line-height: 1rem;
+    outline: 0;
+    border: none;
+    padding: 0.875rem 3.125rem;
+    cursor: pointer; 
+}
