@@ -12,6 +12,25 @@
 	width: 10.25rem;
 }
 
+.topContainer:hover .pokemonImage {
+    opacity: .5;
+    transform: translateX(30%);/*100%*/
+}
+.topContainer .pokemonDetails {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background: #fff;
+    transition: .5s;
+    transform-origin: left;
+    transform: perspective(2000px) rotateY(-90deg);
+}
+.topContainer:hover .pokemonDetails {
+    transform: perspective(2000px) rotateY(0deg);
+}
+
 .pokemonImage {
 	display: block;
 	min-height: 9.5rem;
@@ -50,3 +69,29 @@
 	max-height: 2rem;
 	overflow: hidden;
 }
+
+.pokemonDetails {
+	padding: 1rem;
+}
+
+.stats {
+	display: flex;
+	justify-content: space-between;
+}
+
+.stats p {
+	font-size: 0.875rem;
+    color: #292929;
+	margin: 0;
+}
+
+.statsBar {
+  	background-color: black;
+  	border-radius: 0.875rem;
+  	padding: 0.25rem;
+}
+ 
+#statsBar > div {
+	height: 1rem;
+	border-radius: 0.625rem;
+  }

@@ -1,11 +1,13 @@
 import {useEffect, useState} from 'react';
 import {Trainer1Team,Trainer2Team} from '../../store/pokemonBattle';
+
+import PokemonTeamCard from './PokemonTeamCard'
 import styles from './PokemonTeam.module.css'
 
 export default function PokemonTeam({trainer}) {
 
     const [pokemonInTeam,setPokemoninTeam] = useState([]);
-  
+    const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak'
     useEffect(()=>{
         if(trainer === '1') {
             const team$ = Trainer1Team.subscribe(setPokemoninTeam);
@@ -21,27 +23,23 @@ export default function PokemonTeam({trainer}) {
 },[])
 
 return (
-    <section >
+    <section>
        <header>
            <div>
-               <p>player Name</p>
-               <img src="" alt="Player icon"/>             
+               <p>{trainerName}</p>
             </div>
             <div>
-                <p>Remaing Pokemon</p>
-                <p>{pokemonInTeam.length} / 5</p>
+                {pokemonInTeam.map(() => (
+                    <img className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball"/>
+                ))} 
             </div>
        </header>
        <main>
-           {pokemonInTeam.lenght !==0 &&<ul>
+           {pokemonInTeam.lenght !==0 &&<div>
                {pokemonInTeam.map(pokemon => (
-                   <>
-                   <div>{pokemon.name}</div>
-                 
-                   </>
-                //    <PokemonTeamCard pokemon={pokemon}/> 
+                   <PokemonTeamCard pokemon={pokemon} key={pokemon.id}/> 
                ))}
-           </ul>}
+           </div>}
        </main>
     </section>
 )

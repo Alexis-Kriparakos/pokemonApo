@@ -1,5 +1,6 @@
-import get from 'lodash/get';
 import { useEffect, useState } from 'react';
+import get from 'lodash/get';
+import cn from 'classnames'
 import {getPokemonMove} from '../../api/pokemon';
 import {Trainer1Turn,Trainer1Team,Trainer2Team} from '../../store/pokemonBattle';
 
@@ -7,25 +8,89 @@ import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 import styles from './PokemonCard.module.css';
 
+const alertDuplicatePokemonText = 'This pokemon is already in your team.';
+const alertNotEnoughMoves = 'Your pokemon can learn up to 4 moves.'
+const MAX_POKEMON_TEAM = 5;
+
+
 export default function PokemonCard({pokemon}) {
     const image = get(pokemon, 'sprites.other.dream_world.front_default');
-    const alertText = 'This pokemon is already in your team';
+
+    const hpStat = Math.ceil(get(pokemon, 'stats[0].base_stat') * 4.5);
+    const atkStat = Math.ceil(get(pokemon, 'stats[1].base_stat') * 3.2);
+    const defStat = Math.ceil(get(pokemon, 'stats[2].base_stat') * 3.2);
+    const spAtkStat = Math.ceil(get(pokemon, 'stats[3].base_stat') * 3.2);
+    const spDefStat = Math.ceil(get(pokemon, 'stats[4].base_stat') * 3.5);
+    const speedStat = Math.ceil(get(pokemon, 'stats[5].base_stat') * 3);
+
+    const MAX_HP_STAT = 450;
+    const MAX_ATK_STAT = 300;
+    const MAX_DEF_STAT = 350;
+    const MAX_SPATK_STAT = 420;
+    const MAX_SPDEF_STAT = 420;
+    const MAX_SPEED_STAT = 360;
+
+    const BAR_STYLE = {
+        hp: {
+            'backgroundColor': '#5ABA4A',
+            'width': `${(hpStat/MAX_HP_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius': '0.625rem',
+        },
+        atk:  {
+            'backgroundColor': '#F37336',
+            'width': `${(atkStat/MAX_ATK_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius':'0.625rem',
+        },
+        def:  {
+            'backgroundColor': '#63C8F2',
+            'width': `${(defStat/MAX_DEF_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius':' 0.625rem',
+        },
+        spAtk:  {
+            'backgroundColor': '#D88DBC',
+            'width': `${(spAtkStat/MAX_SPATK_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius': '0.625rem',
+        },
+        spDef:  {
+            'backgroundColor': '#1E3E72',
+            'width': `${(spDefStat/MAX_SPDEF_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius': '0.625rem',
+        },
+        speed:  {
+            'backgroundColor':'#F7CC3B',
+            'width': `${(speedStat/MAX_SPEED_STAT*100).toFixed(3)}%`,
+            'height': '0.375rem',
+	        'borderRadius':'0.625rem',
+        },
+    }
+
     const [allPokemonMoves,setAllPokemonMoves] = useState([]);
     const [selectedMoves,setSelectedMoves] = useState([]);
     const [isOpenModal, setOpenModal] = useState(false);
-    const [isAlertModalOpen, setAlertModalOpen] = useState(false);
+    const [isDuplicatePokemonModal, setDuplicatePokemonModal] = useState(false);
+    const [isLessMovesModal, setLessMovesModal] = useState(false);
 
     function onClickAddToTeam(poke) {
+        const isDisabled = selectedMoves.length !== 4;
+        if(isDisabled) {
+            setLessMovesModal(true);
+            return;
+        }
         const newPoke = getPokeWithMove(poke)
         const team1 = Trainer1Team.getValue();
         setOpenModal(false)
-        if(team1.length < 5) {
+        if(team1.length < MAX_POKEMON_TEAM) {
             Trainer1Team.update([...team1,newPoke]);
             Trainer1Turn.update(true);
             return;
         }
         const team2 = Trainer2Team.getValue();
-        if(team2.length < 5) {
+        if(team2.length < MAX_POKEMON_TEAM) {
             Trainer2Team.update([...team2,newPoke]);
             Trainer1Turn.update(false);
         }
@@ -38,7 +103,6 @@ export default function PokemonCard({pokemon}) {
             setSelectedMoves(newMoves);
             return;
         }
-        if(selectedMoves.length === 4) return;
         setSelectedMoves([...selectedMoves, m])
     }
 
@@ -48,11 +112,12 @@ export default function PokemonCard({pokemon}) {
     }
 
     function onClickOpenSelectPokemon(poke) {
+        setSelectedMoves([])
         const isT1Turn = Trainer1Turn.getValue();
         const team = isT1Turn ? Trainer1Team.getValue() : Trainer2Team.getValue();
         const found = team.some(el => el.id === poke.id);
         if(found){
-            setAlertModalOpen(true);
+            setDuplicatePokemonModal(true);
             return;
         }
         setOpenModal(true);
@@ -60,7 +125,7 @@ export default function PokemonCard({pokemon}) {
 
     function onClickRemoveFromTeam(poke) {
         const team1 = Trainer1Team.getValue();
-        if(team1.length < 5) {
+        if(team1.length < MAX_POKEMON_TEAM) {
         const newTeam1 = team1.filter(p => p.id !== poke.id);
         Trainer1Team.update(newTeam1);
         return;
@@ -94,15 +159,74 @@ export default function PokemonCard({pokemon}) {
 
     return (
         <section className={styles.pokemonCard}>
-            <img className={styles.pokemonImage} src={image} alt={pokemon.name}/>
-           <p className={styles.pokemonName}>{pokemon.name}</p>
-           <div className={styles.btnContainer}>
-           <button className={styles.addPokemon} onClick={()=> onClickOpenSelectPokemon(pokemon)}>Add to Team</button>
-           <button className={styles.addPokemon} onClick={()=> onClickRemoveFromTeam(pokemon)}>Remove</button>
+            <div className={styles.topContainer}>
+                <img className={styles.pokemonImage} src={image} alt={pokemon.name}/>
+                <p className={styles.pokemonName}>{pokemon.name}</p>
+                <div className={styles.pokemonDetails}>
+                    <p className={styles.pokemonName}>{pokemon.name}</p>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>HP : </p>
+                            <p>{hpStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.hp}/>
+                        </div>
+                    </div>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>Attack : </p>
+                            <p>{atkStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.atk}/>
+                        </div>
+                    </div>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>Defense : </p>
+                            <p>{defStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.def}/>
+                        </div>
+                    </div>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>Sp. Atk : </p>
+                            <p>{spAtkStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.spAtk}/>
+                        </div>
+                    </div>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>Sp. Def : </p>
+                            <p>{spDefStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.spDef}/>
+                        </div>
+                    </div>
+                    <div className={styles.statContainer}>
+                        <div className={styles.stats}>
+                            <p>Speed : </p>
+                            <p>{speedStat}</p>
+                        </div>
+                        <div className={cn(styles.statsBar)}>
+                            <div style={BAR_STYLE.speed}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.btnContainer}>
+                <button className={styles.addPokemon} onClick={()=> onClickOpenSelectPokemon(pokemon)}>Add to Team</button>
+                <button className={styles.addPokemon} onClick={()=> onClickRemoveFromTeam(pokemon)}>Remove</button>
            </div>
            {isOpenModal && <PokemonMovesModal isOpenModal={isOpenModal} allPokemonMoves={allPokemonMoves} onClickMove={onClickMove} onClickAddToTeam={onClickAddToTeam} pokemon={pokemon} selectedMoves={selectedMoves}/>}
-           {isAlertModalOpen && <GenericAlert isOpenModal={isAlertModalOpen} alertText={alertText} onClickCallback={()=> setAlertModalOpen(false)}/>}
-           
+           {isDuplicatePokemonModal && <GenericAlert isOpenModal={isDuplicatePokemonModal} alertText={alertDuplicatePokemonText} onClickCallback={()=> setDuplicatePokemonModal(false)}/>}
+           {isLessMovesModal && <GenericAlert isOpenModal={isLessMovesModal} alertText={alertNotEnoughMoves} onClickCallback={()=> setLessMovesModal(false)}/>}
         </section>
     )
 }

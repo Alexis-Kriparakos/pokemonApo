@@ -1,30 +1,7 @@
 import ReactModal from 'react-modal';
 import {useState, useEffect} from 'react';
-import get from 'lodash/get';
-
+import {TYPE_TO_IMG} from '../../DummyPokemon';
 import styles from './PokemonMovesModal.module.css';
-
-
-const TYPE_TO_IMG = {
-    normal: 'normal.png',
-    fire: 'fire.png',
-    water: 'water.png',
-    grass: 'grass.png',
-    ground: 'ground.png',
-    rock: 'rock.png',
-    steel: 'steel.png',
-    ice: 'ice.png',
-    electric: 'electric.png',
-    dragon: 'dragon.png',
-    ghost: 'ghost.png',
-    psychic: 'psychic.png',
-    fighting: 'fighting.png',
-    poison: 'poison.png',
-    bug: 'bug.png',
-    flying: 'flying.png',
-    dark: 'dark.png',
-    fairy: 'fairy.png',
-}
 
 const customStyles = {
     overlay: {
@@ -33,7 +10,7 @@ const customStyles = {
         bottom: 0, 
         left: 0,
         right: 0, 
-        zIndex: 9,
+        zIndex: 8,
         background: 'rgba(0,0,0,0.3)',
     },
     content: {
@@ -48,9 +25,8 @@ const customStyles = {
 };
 
 
-export default function PokemonMovesModal({isOpenModal, allPokemonMoves, onClickMove, onClickAddToTeam, pokemon,selectedMoves}) {
+export default function PokemonMovesModal({isOpenModal, allPokemonMoves, onClickMove, onClickAddToTeam, pokemon}) {
     const [pokemonMoves,setPokemonMoves]= useState([]);
-    const isDisabled = selectedMoves.length !== 4;
     useEffect(()=>{
         setPokemonMoves(allPokemonMoves);
     },[allPokemonMoves])
@@ -82,14 +58,13 @@ export default function PokemonMovesModal({isOpenModal, allPokemonMoves, onClick
                         </span>
                     </div>
                     <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg}/>
-                    {console.log(TYPE_TO_IMG[move.type.name])}
                 </button>))}
                </div>
                 <div>
                 <button  type='button' className={styles.btnAccept}>
                         Cancel
                     </button>
-                    <button  type='button' className={styles.btnAccept} onClick={()=>onClickAddToTeam(pokemon)} disabled={isDisabled}>
+                    <button  type='button' className={styles.btnAccept} onClick={()=>onClickAddToTeam(pokemon)}>
                         Ok
                     </button>
                 </div>

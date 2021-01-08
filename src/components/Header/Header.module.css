@@ -8,6 +8,11 @@
 	color: #fff;
 }
 
+.logo {
+	width: 18rem;
+    height: 4.5rem;
+}
+
 .headerContainer {
 	display: flex;
 	align-items: center;

@@ -24,7 +24,7 @@ export default function Header() {
         <section className={styles.container}>  
             <div className={styles.headerContainer}>     
                 <div className={styles.headerText}>
-                    Pokemon
+                    <img className={styles.logo}src="/assets/img/Pokémon_logo.png" alt=""/>
                 </div>
                 <div className={styles.inputContainer}>
             <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={e=>onChaneInput(e.target.value)}/>

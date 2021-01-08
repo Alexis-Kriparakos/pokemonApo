@@ -25,8 +25,8 @@ export default function GenericAlert({isOpenModal, alertText, onClickCallback}) 
     
     return (
         <ReactModal isOpen={isOpenModal} style={customStyles} ariaHideApp={false} >
-            <div>
-                <p>
+            <div className={styles.modalContainer}>
+                <p className={styles.text}>
                     {alertText}
                 </p>
                 <div>
