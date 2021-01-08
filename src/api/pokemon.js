@@ -19,6 +19,15 @@ export async function getPokemonList(limit) {
     }
 }
 
+export async function getPokemonMove(moveURL) {
+    try {
+        const response = await axios.get(moveURL)
+         return response.data;   
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export async function getPokemon(pokeName) {
     try {
         const response = await POKE.get(`/pokemon/${pokeName}/`);
@@ -35,4 +44,4 @@ export async function getPokemon(pokeName) {
     }
 }
 
-export default {getPokemonList}
+export default {getPokemonList, getPokemon, getPokemonMove}

@@ -1,7 +1,7 @@
 import ReactModal from 'react-modal';
-import styles from '../GenericAlert.module.css';
+import styles from './GenericAlert.module.css';
 
-export default function GenericAlert(isModalOpen, alertText, onClickCallback) {
+export default function GenericAlert({isOpenModal, alertText, onClickCallback}) {
     const customStyles = {
         overlay: {
             position: 'fixed',
@@ -13,17 +13,18 @@ export default function GenericAlert(isModalOpen, alertText, onClickCallback) {
             background: 'rgba(0,0,0,0.3)',
         },
         content: {
-            position: 'absolute',
             top: '50%',
             left: '50%',
-            transform: 'translated(-50%, -50%, 0)',
-            padding: 0,
-            right: 'unset',
-            bottom: 'unset'
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            padding: '0',
+            transform: 'translate(-50%, -50%)',
         },
     };
+    
     return (
-        <ReactModal isOpen={isModalOpen} style={customStyles} ariaHideApp={false} >
+        <ReactModal isOpen={isOpenModal} style={customStyles} ariaHideApp={false} >
             <div>
                 <p>
                     {alertText}
