@@ -1,0 +1,63 @@
+.modalContainer {
+    width: 30.25rem;
+    height: 30.25rem;
+    padding: 1.5rem;
+    background-color: #eee;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.moveList {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 0 0 1rem;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.25rem;
+    position: absolute;
+    z-index: 1;
+  }
+  
+.moveBtn:hover .tooltiptext {
+    visibility: visible;
+}
+
+.moveBtn {
+    flex: 1 1 50%;
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    outline: 0;
+    cursor: pointer;
+}
+
+.typeImg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.text {
+    margin: 0 0 1.5rem;
+    color: #292929;
+}
+
+.btnAccept {
+    border-radius: 1.5rem;
+    font-size: 1.125rem;
+    background: #174989;
+    color: #fff;
+    text-align: center;
+    line-height: 1rem;
+    outline: 0;
+    border: none;
+    padding: 0.75rem 3.125rem;
+    cursor: pointer; 
+}

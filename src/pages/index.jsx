@@ -16,7 +16,6 @@ export default function Index() {
     const limit = 10;
     async function getData() {
       const pokemonList = await getPokemonList(limit);
-      console.log(pokemonList);
       const pokemonListWithStats = await Promise.all(pokemonList.map(p => {
         const pokemon = getPokemon(p.name)
         return pokemon 

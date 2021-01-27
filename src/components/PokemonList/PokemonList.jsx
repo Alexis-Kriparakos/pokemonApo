@@ -20,13 +20,11 @@ export default function PokemonList() {
 
 return (
     <section className={styles.container}>
-        <ul className={styles.pokemonList}>
-            {pokemonList.map((pokemon,i) =>(
-                <li className={styles.pokemonListItem} key={i}>
-                    <PokemonCard pokemon={pokemon} />
-                </li>
+        <div className={styles.pokemonList}>
+            {pokemonList.map((pokemon) =>(
+                    <PokemonCard pokemon={pokemon} key={pokemon.name}/>
             ))}
-        </ul>
+        </div>
     </section>
 )
 }

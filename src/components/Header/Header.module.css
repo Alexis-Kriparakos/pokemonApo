@@ -8,13 +8,18 @@
 	color: #fff;
 }
 
+.logo {
+	width: 18rem;
+    height: 4.5rem;
+}
+
 .headerContainer {
 	display: flex;
 	align-items: center;
 	background-color: #ef5350;
 	margin: 0 0 1.5rem 0;
-	width: 100%;
-	padding: 1.5rem 3rem;
+	width: 95%;
+	padding: 1.5rem 0 1.5rem 3rem;
 }
 
 .input {

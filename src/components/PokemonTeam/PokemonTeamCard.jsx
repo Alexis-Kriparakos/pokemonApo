@@ -1,16 +1,31 @@
 import {useEffect, useState} from 'react';
-import PokemonStore from '../../store/pokemonStrore';
+import get from 'lodash/get';
+import {TYPE_TO_IMG} from '../../DummyPokemon';
 import styles from './PokemonTeamCard.module.css'
-import {DUMMY_POKEMON} from '../../DummyPokemon';
 
-export default function PokemonTeamCard() {
+
+
+
+export default function PokemonTeamCard({pokemon}) {
   
-const pokemonInTeam = []
-
+const pokemonImg = get(pokemon,'sprites.front_default');
 
 
 return (
-<div></div>
+<div className={styles.miniCardContainer}>
+    <div className={styles.detailsContainer}>
+        <p className={styles.pokemonName}>{pokemon.name}</p> 
+        {pokemon.selected_moves.map(move =>(
+        <div className={styles.moveList} key={move.name}>
+            <p className={styles.moveDetails}>{move.name}</p>
+            <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg}/>
+        </div>
+        ))}
+    </div>
+    <div className={styles.imgContainer}>
+        <img className={styles.img} src={pokemonImg} alt="pokemon in team"/>
+    </div>
+</div>
 )
 
 }
