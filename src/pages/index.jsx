@@ -1,4 +1,5 @@
-import {useEffect,useState} from 'react';
+import {useEffect} from 'react';
+import Link from 'next/link'
 import {getPokemonList,getPokemon} from '../api/pokemon'
 import PokemonStore from '../store/pokemonStrore'
 import PokemonToShow from '../store/pokemonToShow'
@@ -13,7 +14,7 @@ import styles from './index.module.css';
 
 export default function Index() {
   useEffect(() => {
-    const limit = 10;
+    const limit = 20;
     async function getData() {
       const pokemonList = await getPokemonList(limit);
       const pokemonListWithStats = await Promise.all(pokemonList.map(p => {
@@ -34,6 +35,11 @@ export default function Index() {
     <>
     <header>
       <Header />
+      <Link href="/battle">
+        <a className={styles.link}>
+          BATTLE
+        </a>
+      </Link>
     </header>
     <main className={styles.mainContainer}>
       <PokemonTeam trainer={'1'}/>

@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import cn from 'classnames'
 import {getPokemonMove} from '../../api/pokemon';
 import {Trainer1Turn,Trainer1Team,Trainer2Team} from '../../store/pokemonBattle';
-
+import {MAX_STATS} from '../../DummyPokemon';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 import styles from './PokemonCard.module.css';
@@ -23,47 +23,42 @@ export default function PokemonCard({pokemon}) {
     const spDefStat = Math.ceil(get(pokemon, 'stats[4].base_stat') * 3.5);
     const speedStat = Math.ceil(get(pokemon, 'stats[5].base_stat') * 3);
 
-    const MAX_HP_STAT = 450;
-    const MAX_ATK_STAT = 300;
-    const MAX_DEF_STAT = 350;
-    const MAX_SPATK_STAT = 420;
-    const MAX_SPDEF_STAT = 420;
-    const MAX_SPEED_STAT = 360;
+    
 
     const BAR_STYLE = {
         hp: {
             'backgroundColor': '#5ABA4A',
-            'width': `${(hpStat/MAX_HP_STAT*100).toFixed(3)}%`,
+            'width': `${(hpStat/MAX_STATS.HP_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius': '0.625rem',
         },
         atk:  {
             'backgroundColor': '#F37336',
-            'width': `${(atkStat/MAX_ATK_STAT*100).toFixed(3)}%`,
+            'width': `${(atkStat/MAX_STATS.ATK_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius':'0.625rem',
         },
         def:  {
             'backgroundColor': '#63C8F2',
-            'width': `${(defStat/MAX_DEF_STAT*100).toFixed(3)}%`,
+            'width': `${(defStat/MAX_STATS.DEF_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius':' 0.625rem',
         },
         spAtk:  {
             'backgroundColor': '#D88DBC',
-            'width': `${(spAtkStat/MAX_SPATK_STAT*100).toFixed(3)}%`,
+            'width': `${(spAtkStat/MAX_STATS.SPATK_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius': '0.625rem',
         },
         spDef:  {
             'backgroundColor': '#1E3E72',
-            'width': `${(spDefStat/MAX_SPDEF_STAT*100).toFixed(3)}%`,
+            'width': `${(spDefStat/MAX_STATS.SPDEF_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius': '0.625rem',
         },
         speed:  {
             'backgroundColor':'#F7CC3B',
-            'width': `${(speedStat/MAX_SPEED_STAT*100).toFixed(3)}%`,
+            'width': `${(speedStat/MAX_STATS.SPEED_STAT*100).toFixed(3)}%`,
             'height': '0.375rem',
 	        'borderRadius':'0.625rem',
         },
