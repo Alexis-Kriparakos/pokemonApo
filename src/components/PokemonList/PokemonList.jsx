@@ -3,7 +3,6 @@ import PokemontoShow from '../../store/pokemonToShow';
 import PokemonCard from "../PokemonCard/PokemonCard";
 import styles from './PokemonList.module.css'
 
-import {DUMMY_POKEMON} from '../../DummyPokemon';
 
 export default function PokemonList() {
   const [pokemonList,setPokemonList] = useState([]);
