@@ -19,6 +19,15 @@ export const TYPE_TO_IMG = {
     fairy: 'fairy.png',
 }
 
+export const MAX_STATS = {
+    HP_STAT : 450,
+    ATK_STAT : 300,
+    DEF_STAT : 350,
+    SPATK_STAT : 420,
+    SPDEF_STAT : 420,
+    SPEED_STAT : 360,
+}   
+
 export  const DUMMY_POKEMON = [
     {name: "bulbasaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"},
     {name: "ivysaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg"},
@@ -120,4 +129,4 @@ export  const DUMMY_POKEMON = [
 
 ]
 
-export default {DUMMY_POKEMON,TYPE_TO_IMG};
+export default {DUMMY_POKEMON,TYPE_TO_IMG, MAX_STATS};

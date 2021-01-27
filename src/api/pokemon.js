@@ -1,7 +1,5 @@
 import axios from 'axios';
 import get from 'lodash/get'
-import PokemonStore from '../store/pokemonStrore';
-
 const baseURL = 'https://pokeapi.co/api/v2';
 const POKE = axios.create({
     baseURL,
