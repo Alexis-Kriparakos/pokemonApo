@@ -17,47 +17,40 @@ const MAX_POKEMON_TEAM = 1;
 export default function PokemonCard({ pokemon }) {
   const image = get(pokemon, 'sprites.other.dream_world.front_default');
 
-  const hpStat = Math.ceil(get(pokemon, 'stats[0].base_stat') * 4.5);
-  const atkStat = Math.ceil(get(pokemon, 'stats[1].base_stat') * 3.2);
-  const defStat = Math.ceil(get(pokemon, 'stats[2].base_stat') * 3.2);
-  const spAtkStat = Math.ceil(get(pokemon, 'stats[3].base_stat') * 3.2);
-  const spDefStat = Math.ceil(get(pokemon, 'stats[4].base_stat') * 3.5);
-  const speedStat = Math.ceil(get(pokemon, 'stats[5].base_stat') * 3);
-
   const BAR_STYLE = {
     hp: {
       backgroundColor: '#5ABA4A',
-      width: `${((hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: '0.625rem',
     },
     atk: {
       backgroundColor: '#F37336',
-      width: `${((atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: '0.625rem',
     },
     def: {
       backgroundColor: '#63C8F2',
-      width: `${((defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: ' 0.625rem',
     },
     spAtk: {
       backgroundColor: '#D88DBC',
-      width: `${((spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: '0.625rem',
     },
     spDef: {
       backgroundColor: '#1E3E72',
-      width: `${((spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: '0.625rem',
     },
     speed: {
       backgroundColor: '#F7CC3B',
-      width: `${((speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
+      width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
       height: '0.375rem',
       borderRadius: '0.625rem',
     },
@@ -70,7 +63,10 @@ export default function PokemonCard({ pokemon }) {
   const [isLessMovesModal, setLessMovesModal] = useState(false);
 
   function getPokeWithMove(p) {
-    const newPoke = { ...p, selected_moves: selectedMoves };
+    const newPoke = {
+      ...p,
+      selectedMoves,
+    };
     return newPoke;
   }
 
@@ -161,7 +157,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>HP : </p>
-              <p>{hpStat}</p>
+              <p>{pokemon.battleStats.hpStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.hp} />
@@ -170,7 +166,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>Attack : </p>
-              <p>{atkStat}</p>
+              <p>{pokemon.battleStats.atkStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.atk} />
@@ -179,7 +175,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>Defense : </p>
-              <p>{defStat}</p>
+              <p>{pokemon.battleStats.defStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.def} />
@@ -188,7 +184,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>Sp. Atk : </p>
-              <p>{spAtkStat}</p>
+              <p>{pokemon.battleStats.spAtkStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.spAtk} />
@@ -197,7 +193,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>Sp. Def : </p>
-              <p>{spDefStat}</p>
+              <p>{pokemon.battleStats.spDefStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.spDef} />
@@ -206,7 +202,7 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statContainer}>
             <div className={styles.stats}>
               <p>Speed : </p>
-              <p>{speedStat}</p>
+              <p>{pokemon.battleStats.speedStat}</p>
             </div>
             <div className={cn(styles.statsBar)}>
               <div style={BAR_STYLE.speed} />

@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Trainer1Team, Trainer2Team } from './teamStore';
+import { calculateDamage } from '../helpers/damage';
 
 const pokemonBattle$ = new BehaviorSubject({});
 const pokemonFighting1$ = new BehaviorSubject({});
@@ -7,6 +8,7 @@ const pokemonFighting2$ = new BehaviorSubject({});
 
 const isBattle$ = new BehaviorSubject(false);
 const isTrainer1Turn$ = new BehaviorSubject(true);
+const isTrainer2Turn$ = new BehaviorSubject(true);
 
 export const IsBattle = {
   update: (isBattle) => {
@@ -22,7 +24,14 @@ export const Trainer1Turn = {
   },
   subscribe: (isTrainer1Turn) => isTrainer1Turn$.subscribe(isTrainer1Turn),
   getValue: () => isTrainer1Turn$.value,
+};
 
+export const Trainer2Turn = {
+  update: (isTrainer2Turn) => {
+    isTrainer2Turn$.next(isTrainer2Turn);
+  },
+  subscribe: (isTrainer2Turn) => isTrainer2Turn$.subscribe(isTrainer2Turn),
+  getValue: () => isTrainer2Turn$.value,
 };
 
 export const PokemonFighting1 = {
@@ -61,8 +70,15 @@ export const PokemonBattle = {
     PokemonFighting1.getFirstPokemon();
     PokemonFighting2.getFirstPokemon();
   },
+  getPokemonFighting: () => [PokemonFighting1.getValue(), PokemonFighting2.getValue()],
+  executeMove: (move) => {
+    const [pokemonTeam1, pokemonTeam2] = PokemonBattle.getPokemonFighting();
+    if (PokemonBattle.trainer1Turn) {
+      calculateDamage(pokemonTeam1, pokemonTeam2, move);
+    }
+  },
 };
 
 export default {
-  PokemonBattle, IsBattle, Trainer1Turn,
+  PokemonBattle, IsBattle, Trainer1Turn, Trainer2Turn,
 };

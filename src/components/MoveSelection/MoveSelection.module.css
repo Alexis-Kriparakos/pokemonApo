@@ -1,0 +1,17 @@
+.movesSelection {
+    flex: 1 1 50%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.moveButton {
+    flex: 1 1 45%;
+    background-color: #fff;
+    font-size: 1.125rem;
+    margin: 0.125rem;
+    padding:1rem;
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    outline: 0;
+    cursor: pointer;
+}

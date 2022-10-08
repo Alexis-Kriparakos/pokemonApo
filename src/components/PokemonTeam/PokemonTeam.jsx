@@ -28,8 +28,8 @@ export default function PokemonTeam({ trainer }) {
           <p>{trainerName}</p>
         </div>
         <div>
-          {pokemonInTeam.map(() => (
-            <img className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
+          {pokemonInTeam.map((pokemon) => (
+            <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
           ))}
         </div>
       </header>

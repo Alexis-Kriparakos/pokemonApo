@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import get from 'lodash/get';
 import { TYPE_TO_IMG } from '../../DummyPokemon';
 import styles from './PokemonTeamCard.module.css';
@@ -11,7 +11,7 @@ export default function PokemonTeamCard({ pokemon }) {
     <div className={styles.miniCardContainer}>
       <div className={styles.detailsContainer}>
         <p className={styles.pokemonName}>{pokemon.name}</p>
-        {pokemon.selected_moves.map((move) => (
+        {pokemon.selectedMoves.map((move) => (
           <div className={styles.moveList} key={move.name}>
             <p className={styles.moveDetails}>{move.name}</p>
             <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
