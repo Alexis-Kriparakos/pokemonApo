@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import cn from 'classnames';
 import ReactModal from 'react-modal';
 import { TYPE_TO_IMG } from '../../DummyPokemon';
 import styles from './PokemonMovesModal.module.css';
@@ -26,7 +27,13 @@ const customStyles = {
 };
 
 export default function PokemonMovesModal({
-  isOpenModal, allPokemonMoves, onClickMove, onClickAddToTeam, pokemon,
+  isOpenModal,
+  setIsOpenModal,
+  allPokemonMoves,
+  onClickMove,
+  onClickAddToTeam,
+  pokemon,
+  selectedMoves,
 }) {
   const [pokemonMoves, setPokemonMoves] = useState([]);
   useEffect(() => {
@@ -47,12 +54,21 @@ export default function PokemonMovesModal({
         `;
   }
 
+  function isMoveSelected(move) {
+    return selectedMoves.some((m) => m.id === move.id);
+  }
+
   return (
     <ReactModal isOpen={isOpenModal} ariaHideApp={false} style={customStyles}>
       <div className={styles.modalContainer}>
         <div className={styles.moveList}>
           {pokemonMoves.map((move) => (
-            <button key={move.id} type="button" className={styles.moveBtn} onClick={() => onClickMove(move)}>
+            <button
+              key={move.id}
+              type="button"
+              className={cn(styles.moveBtn, { [styles.moveBtnSelected]: isMoveSelected(move) })}
+              onClick={() => onClickMove(move)}
+            >
               <div>
                 {move.name}
                 <span className={styles.tooltiptext}>
@@ -64,7 +80,7 @@ export default function PokemonMovesModal({
           ))}
         </div>
         <div>
-          <button type="button" className={styles.btnAccept}>
+          <button type="button" className={styles.btnAccept} onClick={() => setIsOpenModal(false)}>
             Cancel
           </button>
           <button type="button" className={styles.btnAccept} onClick={() => onClickAddToTeam(pokemon)}>
