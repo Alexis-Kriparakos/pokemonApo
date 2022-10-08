@@ -1,0 +1,9 @@
+.mainContainer {
+  display: flex;
+}
+
+.battleContainer {
+  background-color: green;
+  width: 80rem;
+  height: 40rem;
+}

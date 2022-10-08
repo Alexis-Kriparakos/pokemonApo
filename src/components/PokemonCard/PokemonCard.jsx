@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import get from 'lodash/get';
 import cn from 'classnames';
 import { getPokemonMove } from '../../api/pokemon';
-import { Trainer1Turn, Trainer1Team, Trainer2Team } from '../../store/pokemonBattle';
+import { Trainer1Turn } from '../../store/pokemonBattle';
+import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import { MAX_STATS } from '../../DummyPokemon';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
@@ -11,7 +12,7 @@ import styles from './PokemonCard.module.css';
 
 const alertDuplicatePokemonText = 'This pokemon is already in your team.';
 const alertNotEnoughMoves = 'Your pokemon can learn up to 4 moves.';
-const MAX_POKEMON_TEAM = 5;
+const MAX_POKEMON_TEAM = 1;
 
 export default function PokemonCard({ pokemon }) {
   const image = get(pokemon, 'sprites.other.dream_world.front_default');
@@ -96,7 +97,6 @@ export default function PokemonCard({ pokemon }) {
 
   function onClickMove(move) {
     const found = selectedMoves.some((m) => m.id === move.id);
-    console.log(found, 'move', move);
     if (found) {
       const newMoves = selectedMoves.filter((m) => m.id !== move.id);
       setSelectedMoves(newMoves);

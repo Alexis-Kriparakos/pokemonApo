@@ -1,8 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
+import { Trainer1Team, Trainer2Team } from './teamStore';
 
 const pokemonBattle$ = new BehaviorSubject({});
-const trainer1Team$ = new BehaviorSubject([]);
-const trainer2Team$ = new BehaviorSubject([]);
+const pokemonFighting1$ = new BehaviorSubject({});
+const pokemonFighting2$ = new BehaviorSubject({});
 
 const isBattle$ = new BehaviorSubject(false);
 const isTrainer1Turn$ = new BehaviorSubject(true);
@@ -24,21 +25,28 @@ export const Trainer1Turn = {
 
 };
 
-export const Trainer1Team = {
-  update: (trainer1Team) => {
-    trainer1Team$.next(trainer1Team);
+export const PokemonFighting1 = {
+  update: (pokemonFighting2) => {
+    pokemonFighting1$.next(pokemonFighting2);
   },
-  subscribe: (trainer1Team) => trainer1Team$.subscribe(trainer1Team),
-  getValue: () => trainer1Team$.value,
+  getFirstPokemon: () => {
+    const firstPokemon = Trainer1Team.getValue()[0];
+    PokemonFighting1.update(firstPokemon);
+  },
+  subscribe: (pokemonFighting2) => pokemonFighting1$.subscribe(pokemonFighting2),
+  getValue: () => pokemonFighting1$.value,
 };
 
-export const Trainer2Team = {
-  update: (trainer2Team) => {
-    trainer2Team$.next(trainer2Team);
+export const PokemonFighting2 = {
+  update: (pokemonFighting2) => {
+    pokemonFighting2$.next(pokemonFighting2);
   },
-  subscribe: (trainer2Team) => trainer2Team$.subscribe(trainer2Team),
-  getValue: () => trainer2Team$.value,
-
+  getFirstPokemon: () => {
+    const firstPokemon = Trainer2Team.getValue()[0];
+    PokemonFighting2.update(firstPokemon);
+  },
+  subscribe: (pokemonFighting2) => pokemonFighting2$.subscribe(pokemonFighting2),
+  getValue: () => pokemonFighting2$.value,
 };
 
 export const PokemonBattle = {
@@ -49,10 +57,12 @@ export const PokemonBattle = {
   getValue: () => pokemonBattle$.value,
   isBattle: () => isBattle$.value,
   trainer1Turn: () => isTrainer1Turn$.value,
-  trainer1Team: () => trainer1Team$.value,
-  trainer2Team: () => trainer2Team$.value,
+  startBattle: () => {
+    PokemonFighting1.getFirstPokemon();
+    PokemonFighting2.getFirstPokemon();
+  },
 };
 
 export default {
-  PokemonBattle, IsBattle, Trainer1Turn, Trainer1Team, Trainer2Team,
+  PokemonBattle, IsBattle, Trainer1Turn,
 };
