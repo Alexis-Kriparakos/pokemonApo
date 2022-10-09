@@ -17,7 +17,7 @@ export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
   const baseDamage = (((2 * 100) / 5 + 2) * move.power
   * (atkTypeStat / defTypeStat)) / 50 + 2;
   const damage = Math.floor(baseDamage * (stab ? 1 : 0.5) * type1 * type2);
-  console.log('damage', damage, moveType);
+  console.log('damage', damage, baseDamage, moveType);
   return damage;
 }
 
