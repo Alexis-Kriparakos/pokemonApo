@@ -1,3 +1,11 @@
+export const PHASES = {
+  PLAYER1_MOVE_CHOICE: 'Player one is choosing their move',
+  PLAYER2_MOVE_CHOICE: 'Player two is choosing their move',
+  BATTLE_PHASE: 'Battle phase',
+  SWITCH_POKEMON1: 'Player one is switching their pokemon',
+  SWITCH_POKEMON2: 'Player two is switching their pokemon',
+};
+
 export const TYPE_TO_IMG = {
   normal: 'normal.png',
   fire: 'fire.png',
@@ -397,5 +405,5 @@ export const TYPE_WEAKNESS_TABLE = {
 };
 
 export default {
-  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION,
+  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES,
 };

@@ -1,8 +1,7 @@
-import get from 'lodash/get';
 import { TYPE_WEAKNESS_TABLE, MOVE_DIVISION } from '../constants/constants';
 
 export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
-  const attackMissed = Math.floor(Math.random() * 100) + 1 > move.accuracy;
+  const attackMissed = Math.floor(Math.random() * 100) + 1 > move?.accuracy;
   if (attackMissed) return 0;
 
   const stab = pokemonAttacking.types
@@ -20,28 +19,6 @@ export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
   const damage = Math.floor(baseDamage * (stab ? 1 : 0.5) * type1 * type2);
   console.log('damage', damage, moveType);
   return damage;
-}
-
-export function transformPokemon(poke) {
-  const hpStat = Math.ceil(get(poke, 'stats[0].base_stat') * 4.5);
-  const atkStat = Math.ceil(get(poke, 'stats[1].base_stat') * 3.2);
-  const defStat = Math.ceil(get(poke, 'stats[2].base_stat') * 3.2);
-  const spAtkStat = Math.ceil(get(poke, 'stats[3].base_stat') * 3.2);
-  const spDefStat = Math.ceil(get(poke, 'stats[4].base_stat') * 3.5);
-  const speedStat = Math.ceil(get(poke, 'stats[5].base_stat') * 3);
-  const stats = {
-    hpStat, atkStat, defStat, spAtkStat, spDefStat, speedStat,
-  };
-  const types = poke.types.map((type) => type.type.name);
-  const newPoke = {
-    ...poke,
-    searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`],
-    battleStats: stats,
-    isAlive: true,
-    stats,
-    types,
-  };
-  return newPoke;
 }
 
 export default { calculateDamage };

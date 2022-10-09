@@ -1,15 +1,19 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './MoveSelection.module.css';
 
-export default function MoveSelection({ pokemon, onClick = () => {} }) {
-//   const [isMoveSelection, setIsMoveSelection] = useState(true);
-
+export default function MoveSelection({ pokemon, onClick = () => {}, isDisabled }) {
   return (
     <div className={styles.movesSelection}>
       {pokemon?.selectedMoves.map((move) => (
-        <button key={move.id} type="button" className={styles.moveButton} onClick={() => onClick(move)}>
+        <button
+          key={move.id}
+          type="button"
+          className={styles.moveButton}
+          onClick={() => onClick(move)}
+          disabled={isDisabled}
+        >
           {move.name.toUpperCase()}
         </button>
       ))}

@@ -10,7 +10,7 @@ import PokemonList from '../components/PokemonList/PokemonList';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 
 import Header from '../components/Header/Header';
-import { transformPokemon } from '../helpers/damage';
+import { transformPokemon } from '../helpers/transformer';
 import styles from './index.module.css';
 
 export default function Index() {

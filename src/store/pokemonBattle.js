@@ -1,22 +1,23 @@
 import { BehaviorSubject } from 'rxjs';
 import { Trainer1Team, Trainer2Team } from './teamStore';
 import { calculateDamage } from '../helpers/damage';
+import { PHASES } from '../constants/constants';
 
-const pokemonBattle$ = new BehaviorSubject({});
+const pokemonBattle$ = new BehaviorSubject({ status: PHASES.PLAYER1_MOVE_CHOICE });
 const pokemonFighting1$ = new BehaviorSubject({});
 const pokemonFighting2$ = new BehaviorSubject({});
 
-const isBattle$ = new BehaviorSubject(false);
+// const isBattle$ = new BehaviorSubject(false);
 const isTrainer1Turn$ = new BehaviorSubject(true);
-const isTrainer2Turn$ = new BehaviorSubject(true);
+// const isTrainer2Turn$ = new BehaviorSubject(true);
 
-export const IsBattle = {
-  update: (isBattle) => {
-    isBattle$.next(isBattle);
-  },
-  subscribe: (isBattle) => isBattle$.subscribe(isBattle),
+// export const IsBattle = {
+//   update: (isBattle) => {
+//     isBattle$.next(isBattle);
+//   },
+//   subscribe: (isBattle) => isBattle$.subscribe(isBattle),
 
-};
+// };
 
 export const Trainer1Turn = {
   update: (isTrainer1Turn) => {
@@ -26,13 +27,13 @@ export const Trainer1Turn = {
   getValue: () => isTrainer1Turn$.value,
 };
 
-export const Trainer2Turn = {
-  update: (isTrainer2Turn) => {
-    isTrainer2Turn$.next(isTrainer2Turn);
-  },
-  subscribe: (isTrainer2Turn) => isTrainer2Turn$.subscribe(isTrainer2Turn),
-  getValue: () => isTrainer2Turn$.value,
-};
+// export const Trainer2Turn = {
+//   update: (isTrainer2Turn) => {
+//     isTrainer2Turn$.next(isTrainer2Turn);
+//   },
+//   subscribe: (isTrainer2Turn) => isTrainer2Turn$.subscribe(isTrainer2Turn),
+//   getValue: () => isTrainer2Turn$.value,
+// };
 
 export const PokemonFighting1 = {
   update: (pokemonFighting2) => {
@@ -64,33 +65,33 @@ export const PokemonBattle = {
   },
   subscribe: (setPokemon) => pokemonBattle$.subscribe(setPokemon),
   getValue: () => pokemonBattle$.value,
-  isBattle: () => isBattle$.value,
-  trainer1Turn: () => isTrainer1Turn$.value,
   startBattle: () => {
     PokemonFighting1.getFirstPokemon();
     PokemonFighting2.getFirstPokemon();
   },
   getPokemonFighting: () => [PokemonFighting1.getValue(), PokemonFighting2.getValue()],
-  executeMove: (move1, move2) => {
-    const [pokemonTeam1, pokemonTeam2] = PokemonBattle.getPokemonFighting();
-    if (pokemonTeam1.battleStats.speedStat >= pokemonTeam1.battleStats.speedStat2) {
-      const damageDealt = calculateDamage(pokemonTeam1, pokemonTeam2, move1);
-      pokemonTeam2.battleStats.hpStat -= damageDealt;
-      PokemonFighting2.update(pokemonTeam2);
-      const teamTemp = Trainer2Team.getValue().filter((poke) => poke.id !== pokemonTeam2.id);
-      const newTeam = [pokemonTeam2, ...teamTemp];
-      Trainer2Team.update(newTeam);
+  executeMove: (pokemonAttacking, pokemonDefending, move) => {
+    const damageDealt = calculateDamage(pokemonAttacking, pokemonDefending, move);
+    const { battleStats: updatedBattleStats } = pokemonDefending;
+    updatedBattleStats.hpStat -= damageDealt;
+    return { ...pokemonDefending, updatedBattleStats };
+  },
+  updateTeam: (pokemonInjured, team) => {
+    const isTeam1 = team === 'team1';
+    const teamTemp = isTeam1
+      ? Trainer1Team.getValue().filter((poke) => poke.id !== pokemonInjured.id)
+      : Trainer2Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
+    const newTeam = [pokemonInjured, ...teamTemp];
+    if (isTeam1) {
+      PokemonFighting1.update(pokemonInjured);
+      Trainer1Team.update(newTeam);
+      return;
     }
-    console.log(pokemonTeam2, pokemonTeam1, move2);
-    const damageDealt = calculateDamage(pokemonTeam2, pokemonTeam1, move2);
-    pokemonTeam1.battleStats.hpStat -= damageDealt;
-    PokemonFighting1.update(pokemonTeam1);
-    const teamTemp = Trainer1Team.getValue().filter((poke) => poke.id !== pokemonTeam1.id);
-    const newTeam = [pokemonTeam1, ...teamTemp];
-    Trainer1Team.update(newTeam);
+    PokemonFighting2.update(pokemonInjured);
+    Trainer2Team.update(newTeam);
   },
 };
 
 export default {
-  PokemonBattle, IsBattle, Trainer1Turn, Trainer2Turn,
+  PokemonBattle, Trainer1Turn,
 };
