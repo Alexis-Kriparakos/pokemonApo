@@ -1,5 +1,5 @@
 .modalContainer {
-    width: 30.25rem;
+    width: 38.25rem;
     height: 30.25rem;
     padding: 1.5rem;
     background-color: #eee;
@@ -32,11 +32,18 @@
 }
 
 .moveBtn {
-    flex: 1 1 50%;
+    flex: 1 1 30%;
+    background-color: #fff;
+    margin: 0.25rem;
+    padding:0.25rem;
     border: 1px solid #000;
     border-radius: 0.5rem;
     outline: 0;
     cursor: pointer;
+}
+
+.moveBtnSelected {
+  background-color: #4BB543
 }
 
 .typeImg {

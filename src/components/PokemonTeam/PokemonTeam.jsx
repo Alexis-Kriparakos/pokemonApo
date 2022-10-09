@@ -1,46 +1,45 @@
-import {useEffect, useState} from 'react';
-import {Trainer1Team,Trainer2Team} from '../../store/pokemonBattle';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
+import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 
-import PokemonTeamCard from './PokemonTeamCard'
-import styles from './PokemonTeam.module.css'
+import PokemonTeamCard from './PokemonTeamCard';
+import styles from './PokemonTeam.module.css';
 
-export default function PokemonTeam({trainer}) {
+export default function PokemonTeam({ trainer, onClick = () => {} }) {
+  const [pokemonInTeam, setPokemoninTeam] = useState([]);
+  const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak';
+  useEffect(() => {
+    if (trainer === '1') {
+      const team$ = Trainer1Team.subscribe(setPokemoninTeam);
+      return () => {
+        team$.unsubscribe();
+      };
+    }
+    const team$ = Trainer2Team.subscribe(setPokemoninTeam);
+    return () => {
+      team$.unsubscribe();
+    };
+  }, []);
 
-    const [pokemonInTeam,setPokemoninTeam] = useState([]);
-    const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak'
-    useEffect(()=>{
-        if(trainer === '1') {
-            const team$ = Trainer1Team.subscribe(setPokemoninTeam);
-            return()=>{
-                team$.unsubscribe();
-            }
-        } else {
-            const team$ = Trainer2Team.subscribe(setPokemoninTeam);
-            return()=>{
-                team$.unsubscribe();
-            }
-        }
-},[])
-
-return (
+  return (
     <section>
-       <header>
-           <div>
-               <p>{trainerName}</p>
-            </div>
-            <div>
-                {pokemonInTeam.map(() => (
-                    <img className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball"/>
-                ))} 
-            </div>
-       </header>
-       <main>
-           {pokemonInTeam.lenght !==0 &&<div>
-               {pokemonInTeam.map(pokemon => (
-                   <PokemonTeamCard pokemon={pokemon} key={pokemon.id}/> 
-               ))}
-           </div>}
-       </main>
+      <header>
+        <p>{trainerName}</p>
+        <div>
+          {pokemonInTeam.map((pokemon) => (
+            <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
+          ))}
+        </div>
+      </header>
+      <main>
+        {pokemonInTeam.lenght !== 0 && (
+        <div>
+          {pokemonInTeam.map((pokemon) => (
+            <PokemonTeamCard key={pokemon.id} pokemon={pokemon} onClick={() => onClick(pokemon)} />
+          ))}
+        </div>
+        )}
+      </main>
     </section>
-)
+  );
 }
