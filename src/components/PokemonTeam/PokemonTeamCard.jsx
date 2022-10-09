@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { TYPE_TO_IMG } from '../../constants/constants';
 import styles from './PokemonTeamCard.module.css';
 
-export default function PokemonTeamCard({ pokemon }) {
+export default function PokemonTeamCard({ pokemon, onClick = () => {} }) {
   const pokemonImg = get(pokemon, 'sprites.front_default');
   const healthbarStyle = {
     backgroundColor: '#5ABA4A',
@@ -14,7 +14,7 @@ export default function PokemonTeamCard({ pokemon }) {
   };
 
   return (
-    <div className={styles.miniCardContainer}>
+    <button type="button" className={styles.miniCardContainer} onClick={() => onClick()}>
       <div className={styles.detailsContainer}>
         <p className={styles.pokemonName}>{pokemon.name}</p>
         <div className={styles.statsBar}>
@@ -30,6 +30,6 @@ export default function PokemonTeamCard({ pokemon }) {
       <div className={styles.imgContainer}>
         <img className={styles.img} src={pokemonImg} alt="pokemon in team" />
       </div>
-    </div>
+    </button>
   );
 }

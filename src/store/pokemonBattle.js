@@ -36,8 +36,8 @@ export const Trainer1Turn = {
 // };
 
 export const PokemonFighting1 = {
-  update: (pokemonFighting2) => {
-    pokemonFighting1$.next(pokemonFighting2);
+  update: (pokemonFighting1) => {
+    pokemonFighting1$.next(pokemonFighting1);
   },
   getFirstPokemon: () => {
     const firstPokemon = Trainer1Team.getValue()[0];
@@ -73,8 +73,12 @@ export const PokemonBattle = {
   executeMove: (pokemonAttacking, pokemonDefending, move) => {
     const damageDealt = calculateDamage(pokemonAttacking, pokemonDefending, move);
     const { battleStats: updatedBattleStats } = pokemonDefending;
-    updatedBattleStats.hpStat -= damageDealt;
-    return { ...pokemonDefending, updatedBattleStats };
+    if (updatedBattleStats.hpStat - damageDealt > 0) {
+      updatedBattleStats.hpStat -= damageDealt;
+      return { ...pokemonDefending, battleStats: updatedBattleStats };
+    }
+    updatedBattleStats.hpStat = 0;
+    return { ...pokemonDefending, battleStats: updatedBattleStats, isAlive: false};
   },
   updateTeam: (pokemonInjured, team) => {
     const isTeam1 = team === 'team1';

@@ -41,6 +41,13 @@ export default function Battle() {
     // };
   }, []);
 
+  function resetChoices() {
+    setPlayer1Disabled(false);
+    setPlayer2Disabled(true);
+    setSelectedMoveP1(undefined);
+    setSelectedMoveP2(undefined);
+  }
+
   useEffect(() => {
     if (!battleStatus) return;
     const [pokemonTeam1, pokemonTeam2] = PokemonBattle.getPokemonFighting();
@@ -58,26 +65,32 @@ export default function Battle() {
       case PHASES.BATTLE_PHASE:
         setTimeout(() => {
           if (pokemonTeam1.battleStats.speedStat >= pokemonTeam2.battleStats.speedStat) {
-            PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
-            PokemonBattle.updateTeam(pokemonTeam2, 'team2');
-            if (true) {
-              PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON2 });
-              return;
-            }
-            PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
-            PokemonBattle.updateTeam(pokemonTeam1, 'team1');
+            const poke2 = PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
+            PokemonBattle.updateTeam(poke2, 'team2');
+            if (!poke2.isAlive) return resetChoices();
+            const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
+            PokemonBattle.updateTeam(poke1, 'team1');
+            resetChoices();
             return;
           }
-          PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
-          PokemonBattle.updateTeam(pokemonTeam1, 'team1');
-          if (true) {
-            PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON1 });
-            return;
-          }
-          PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
-          PokemonBattle.updateTeam(pokemonTeam2, 'team2');
+          const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
+          PokemonBattle.updateTeam(poke1, 'team1');
+          if (!poke1.isAlive) return resetChoices();
+          const poke2 = PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
+          PokemonBattle.updateTeam(poke2, 'team2');
+          resetChoices();
         }, 1000);
         console.log(PHASES.BATTLE_PHASE);
+        break;
+      case PHASES.SWITCH_POKEMON1:
+        setPlayer1Disabled(true);
+        setPlayer2Disabled(true);
+        console.log(PHASES.SWITCH_POKEMON1);
+        break;
+      case PHASES.SWITCH_POKEMON2:
+        setPlayer1Disabled(true);
+        setPlayer2Disabled(true);
+        console.log(PHASES.SWITCH_POKEMON2);
         break;
       default:
         break;
