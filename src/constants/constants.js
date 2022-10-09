@@ -19,6 +19,11 @@ export const TYPE_TO_IMG = {
   fairy: 'fairy.png',
 };
 
+export const MOVE_DIVISION = {
+  normal: ['normal', 'fighting', 'bug', 'poison', 'flying', 'ground', 'rock', 'ghost'],
+  special: ['water', 'fire', 'grass', 'electric', 'ice', 'psychic', 'dragon'],
+};
+
 export const MAX_STATS = {
   HP_STAT: 450,
   ATK_STAT: 300,
@@ -391,4 +396,6 @@ export const TYPE_WEAKNESS_TABLE = {
   },
 };
 
-export default { TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE };
+export default {
+  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION,
+};
