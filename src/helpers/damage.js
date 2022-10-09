@@ -2,6 +2,9 @@ import get from 'lodash/get';
 import { TYPE_WEAKNESS_TABLE, MOVE_DIVISION } from '../constants/constants';
 
 export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
+  const attackMissed = Math.floor(Math.random() * 100) + 1 > move.accuracy;
+  if (attackMissed) return 0;
+
   const stab = pokemonAttacking.types
     .some((type) => type === move.type.name);
   const { type: { name: moveType } } = move;
@@ -15,6 +18,7 @@ export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
   const baseDamage = (((2 * 100) / 5 + 2) * move.power
   * (atkTypeStat / defTypeStat)) / 50 + 2;
   const damage = Math.floor(baseDamage * (stab ? 1 : 0.5) * type1 * type2);
+  console.log('damage', damage, moveType);
   return damage;
 }
 
@@ -33,6 +37,7 @@ export function transformPokemon(poke) {
     ...poke,
     searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`],
     battleStats: stats,
+    isAlive: true,
     stats,
     types,
   };

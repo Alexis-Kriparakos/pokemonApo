@@ -71,11 +71,23 @@ export const PokemonBattle = {
     PokemonFighting2.getFirstPokemon();
   },
   getPokemonFighting: () => [PokemonFighting1.getValue(), PokemonFighting2.getValue()],
-  executeMove: (move) => {
+  executeMove: (move1, move2) => {
     const [pokemonTeam1, pokemonTeam2] = PokemonBattle.getPokemonFighting();
-    if (PokemonBattle.trainer1Turn) {
-      calculateDamage(pokemonTeam1, pokemonTeam2, move);
+    if (pokemonTeam1.battleStats.speedStat >= pokemonTeam1.battleStats.speedStat2) {
+      const damageDealt = calculateDamage(pokemonTeam1, pokemonTeam2, move1);
+      pokemonTeam2.battleStats.hpStat -= damageDealt;
+      PokemonFighting2.update(pokemonTeam2);
+      const teamTemp = Trainer2Team.getValue().filter((poke) => poke.id !== pokemonTeam2.id);
+      const newTeam = [pokemonTeam2, ...teamTemp];
+      Trainer2Team.update(newTeam);
     }
+    console.log(pokemonTeam2, pokemonTeam1, move2);
+    const damageDealt = calculateDamage(pokemonTeam2, pokemonTeam1, move2);
+    pokemonTeam1.battleStats.hpStat -= damageDealt;
+    PokemonFighting1.update(pokemonTeam1);
+    const teamTemp = Trainer1Team.getValue().filter((poke) => poke.id !== pokemonTeam1.id);
+    const newTeam = [pokemonTeam1, ...teamTemp];
+    Trainer1Team.update(newTeam);
   },
 };
 

@@ -42,3 +42,15 @@
     color: #174489;
     margin: 0 0 .25rem;
 }
+
+.statsBar {
+  background-color: black;
+  min-width: 7rem;
+  border-radius: 0.875rem;
+  padding: 0.25rem;
+}
+
+#statsBar > div {
+  height: 1rem;
+  border-radius: 0.625rem;
+}

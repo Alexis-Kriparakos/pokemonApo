@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { getPokemonMove } from '../../api/pokemon';
 import { Trainer1Turn } from '../../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
-import { MAX_STATS } from '../../DummyPokemon';
+import { MAX_STATS } from '../../constants/constants';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 import styles from './PokemonCard.module.css';
@@ -159,7 +159,7 @@ export default function PokemonCard({ pokemon }) {
               <p>HP : </p>
               <p>{pokemon.battleStats.hpStat}</p>
             </div>
-            <div className={cn(styles.statsBar)}>
+            <div className={styles.statsBar}>
               <div style={BAR_STYLE.hp} />
             </div>
           </div>

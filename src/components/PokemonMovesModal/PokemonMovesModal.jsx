@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import ReactModal from 'react-modal';
-import { TYPE_TO_IMG } from '../../DummyPokemon';
+import { TYPE_TO_IMG } from '../../constants/constants';
 import styles from './PokemonMovesModal.module.css';
 
 const customStyles = {

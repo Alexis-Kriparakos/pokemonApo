@@ -27,7 +27,7 @@ export default function Index() {
       PokemonStore.update(pokemonListWithUpdatedStats);
       PokemonToShow.update(pokemonListWithUpdatedStats);
     }
-    getData();
+    // getData();
   }, []);
 
   return (
