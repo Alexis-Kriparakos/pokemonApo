@@ -16,33 +16,35 @@ import styles from './battle.module.css';
 
 export default function Battle() {
   const [battleStatus, setBattleStatus] = useState();
-  const [pokemonFighting1, setPokemonFighting1] = useState(CHARMADER1);
-  const [pokemonFighting2, setPokemonFighting2] = useState(CHARMADER2);
+  const [pokemonFighting1, setPokemonFighting1] = useState();
+  const [pokemonFighting2, setPokemonFighting2] = useState();
   const [selectedMoveP1, setSelectedMoveP1] = useState();
   const [selectedMoveP2, setSelectedMoveP2] = useState();
   const [player1Disabled, setPlayer1Disabled] = useState(false);
   const [player2Disabled, setPlayer2Disabled] = useState(false);
 
   useEffect(() => {
-    PokemonFighting1.update(CHARMADER1);
-    PokemonFighting2.update(CHARMADER2);
-    Trainer1Team.update([CHARMADER1, BULBASUAR1]);
-    Trainer2Team.update([CHARMADER2, BULBASUAR2]);
-    const pokemonFighting1$ = PokemonFighting1.subscribe(setPokemonFighting1);
-    const pokemonFighting2$ = PokemonFighting2.subscribe(setPokemonFighting2);
-    const pokemonBattle$ = PokemonBattle.subscribe(setBattleStatus);
-    return () => {
-      pokemonFighting1$.unsubscribe();
-      pokemonFighting2$.unsubscribe();
-      pokemonBattle$.unsubscribe();
-    };
-    // PokemonBattle.startBattle();
+    // PokemonFighting1.update(CHARMADER1);
+    // PokemonFighting2.update(CHARMADER2);
+    // Trainer1Team.update([CHARMADER1, BULBASUAR1]);
+    // Trainer2Team.update([CHARMADER2, BULBASUAR2]);
     // const pokemonFighting1$ = PokemonFighting1.subscribe(setPokemonFighting1);
     // const pokemonFighting2$ = PokemonFighting2.subscribe(setPokemonFighting2);
+    // const pokemonBattle$ = PokemonBattle.subscribe(setBattleStatus);
     // return () => {
     //   pokemonFighting1$.unsubscribe();
     //   pokemonFighting2$.unsubscribe();
+    //   pokemonBattle$.unsubscribe();
     // };
+    PokemonBattle.startBattle();
+    const pokemonBattle$ = PokemonBattle.subscribe(setBattleStatus);
+    const pokemonFighting1$ = PokemonFighting1.subscribe(setPokemonFighting1);
+    const pokemonFighting2$ = PokemonFighting2.subscribe(setPokemonFighting2);
+    return () => {
+      pokemonBattle$.unsubscribe();
+      pokemonFighting1$.unsubscribe();
+      pokemonFighting2$.unsubscribe();
+    };
   }, []);
 
   function resetChoices() {

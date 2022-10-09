@@ -78,7 +78,7 @@ export const PokemonBattle = {
       return { ...pokemonDefending, battleStats: updatedBattleStats };
     }
     updatedBattleStats.hpStat = 0;
-    return { ...pokemonDefending, battleStats: updatedBattleStats, isAlive: false};
+    return { ...pokemonDefending, battleStats: updatedBattleStats, isAlive: false };
   },
   updateTeam: (pokemonInjured, team) => {
     const isTeam1 = team === 'team1';

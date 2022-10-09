@@ -1,18 +1,16 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import cn from 'classnames';
-import { getPokemonMove } from '../../api/pokemon';
 import { Trainer1Turn } from '../../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
-import { MAX_STATS } from '../../constants/constants';
+import { MAX_STATS, MAX_POKEMON_TEAM} from '../../constants/constants';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 import styles from './PokemonCard.module.css';
 
 const alertDuplicatePokemonText = 'This pokemon is already in your team.';
 const alertNotEnoughMoves = 'Your pokemon can learn up to 4 moves.';
-const MAX_POKEMON_TEAM = 1;
 
 export default function PokemonCard({ pokemon }) {
   const image = get(pokemon, 'sprites.other.dream_world.front_default');
@@ -56,7 +54,6 @@ export default function PokemonCard({ pokemon }) {
     },
   };
 
-  const [allPokemonMoves, setAllPokemonMoves] = useState([]);
   const [selectedMoves, setSelectedMoves] = useState([]);
   const [isOpenModal, setOpenModal] = useState(false);
   const [isDuplicatePokemonModal, setDuplicatePokemonModal] = useState(false);
@@ -124,28 +121,6 @@ export default function PokemonCard({ pokemon }) {
     const newTeam2 = team2.filter((p) => p.id !== poke.id);
     Trainer2Team.update(newTeam2);
   }
-
-  useEffect(() => {
-    async function getPokemonMoves() {
-      await Promise.all(pokemon.moves.map(async (move) => {
-        const pokemonM = await getPokemonMove(move.move.url);
-        setAllPokemonMoves((prevS) => [...prevS, {
-          id: pokemonM.id,
-          name: pokemonM.name,
-          effect_chance: pokemonM.effect_chance,
-          effect_changes: pokemonM.effect_changes,
-          effect_entries: pokemonM.effect_entries,
-          accuracy: pokemonM.accuracy,
-          power: pokemonM.power,
-          stat_changes: pokemonM.stat_changes,
-          target: pokemonM.target,
-          type: pokemonM.type,
-        }]);
-        return pokemonM;
-      }));
-    }
-    getPokemonMoves();
-  }, []);
 
   return (
     <section className={styles.pokemonCard}>
@@ -232,7 +207,6 @@ export default function PokemonCard({ pokemon }) {
       <PokemonMovesModal
         isOpenModal={isOpenModal}
         setIsOpenModal={setOpenModal}
-        allPokemonMoves={allPokemonMoves}
         onClickMove={(move) => onClickMove(move)}
         onClickAddToTeam={(poke) => onClickAddToTeam(poke)}
         pokemon={pokemon}

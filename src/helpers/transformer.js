@@ -14,7 +14,7 @@ export function transformPokemon(poke) {
   const newPoke = {
     ...poke,
     searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`],
-    battleStats: stats,
+    battleStats: { ...stats },
     isAlive: true,
     stats,
     types,

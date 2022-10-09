@@ -15,7 +15,7 @@ import styles from './index.module.css';
 
 export default function Index() {
   useEffect(() => {
-    const limit = 20;
+    const limit = 150;
     async function getData() {
       const pokemonList = await getPokemonList(limit);
       const pokemonListWithStats = await Promise.all(pokemonList.map((p) => {
@@ -27,7 +27,7 @@ export default function Index() {
       PokemonStore.update(pokemonListWithUpdatedStats);
       PokemonToShow.update(pokemonListWithUpdatedStats);
     }
-    // getData();
+    getData();
   }, []);
 
   return (

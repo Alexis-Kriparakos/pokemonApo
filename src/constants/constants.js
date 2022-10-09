@@ -6,6 +6,8 @@ export const PHASES = {
   SWITCH_POKEMON2: 'Player two is switching their pokemon',
 };
 
+export const MAX_POKEMON_TEAM = 3;
+
 export const TYPE_TO_IMG = {
   normal: 'normal.png',
   fire: 'fire.png',
@@ -405,5 +407,5 @@ export const TYPE_WEAKNESS_TABLE = {
 };
 
 export default {
-  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES,
+  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES, MAX_POKEMON_TEAM,
 };
