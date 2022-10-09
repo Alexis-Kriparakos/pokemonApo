@@ -17,6 +17,9 @@ export default function MoveSelection({ pokemon, onClick = () => {}, isDisabled 
           {move.name.toUpperCase()}
         </button>
       ))}
+      <button type="button">
+        SWITCH POKEMON
+      </button>
     </div>
   );
 }

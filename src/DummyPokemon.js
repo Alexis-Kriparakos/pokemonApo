@@ -70,7 +70,7 @@ export const CHARMADER2 = {
       id: 52,
       accuracy: 100,
       name: 'ember',
-      power: 40,
+      power: 140,
       type: { name: 'fire' },
     },
   ],
