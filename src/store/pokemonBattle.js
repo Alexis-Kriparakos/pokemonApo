@@ -80,17 +80,15 @@ export const PokemonBattle = {
     updatedBattleStats.hpStat = 0;
     return { ...pokemonDefending, battleStats: updatedBattleStats, isAlive: false };
   },
-  updateTeam: (pokemonInjured, team) => {
-    const isTeam1 = team === 'team1';
-    const teamTemp = isTeam1
-      ? Trainer1Team.getValue().filter((poke) => poke.id !== pokemonInjured.id)
-      : Trainer2Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
+  updateTeam1: (pokemonInjured) => {
+    const teamTemp = Trainer1Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
     const newTeam = [pokemonInjured, ...teamTemp];
-    if (isTeam1) {
-      PokemonFighting1.update(pokemonInjured);
-      Trainer1Team.update(newTeam);
-      return;
-    }
+    PokemonFighting1.update(pokemonInjured);
+    Trainer1Team.update(newTeam);
+  },
+  updateTeam2: (pokemonInjured) => {
+    const teamTemp = Trainer2Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
+    const newTeam = [pokemonInjured, ...teamTemp];
     PokemonFighting2.update(pokemonInjured);
     Trainer2Team.update(newTeam);
   },

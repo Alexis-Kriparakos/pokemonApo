@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import cn from 'classnames';
 import { Trainer1Turn } from '../../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
-import { MAX_STATS, MAX_POKEMON_TEAM} from '../../constants/constants';
+import { MAX_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 import styles from './PokemonCard.module.css';

@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 import MoveSelection from '../components/MoveSelection/MoveSelection';
-import { Trainer1Team, Trainer2Team } from '../store/teamStore';
+// import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 import { PokemonBattle, PokemonFighting1, PokemonFighting2 } from '../store/pokemonBattle';
 import Header from '../components/Header/Header';
 
-import {
-  CHARMADER1, BULBASUAR1, CHARMADER2, BULBASUAR2,
-} from '../DummyPokemon';
+// import {
+//   CHARMADER1, BULBASUAR1, CHARMADER2, BULBASUAR2,
+// } from '../DummyPokemon';
 import { PHASES } from '../constants/constants';
 import styles from './battle.module.css';
 
@@ -72,26 +72,26 @@ export default function Battle() {
         setTimeout(() => {
           if (pokemonTeam1.battleStats.speedStat >= pokemonTeam2.battleStats.speedStat) {
             const poke2 = PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
-            PokemonBattle.updateTeam(poke2, 'team2');
+            PokemonBattle.updateTeam2(poke2);
             if (!poke2.isAlive) {
               PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON2 });
               resetChoices();
               return;
             }
             const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
-            PokemonBattle.updateTeam(poke1, 'team1');
+            PokemonBattle.updateTeam1(poke1);
             resetChoices();
             return;
           }
           const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
-          PokemonBattle.updateTeam(poke1, 'team1');
+          PokemonBattle.updateTeam1(poke1);
           if (!poke1.isAlive) {
             PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON1 });
             resetChoices();
             return;
           }
           const poke2 = PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
-          PokemonBattle.updateTeam(poke2, 'team2');
+          PokemonBattle.updateTeam2(poke2);
           resetChoices();
         }, 1000);
         console.log(PHASES.BATTLE_PHASE);
