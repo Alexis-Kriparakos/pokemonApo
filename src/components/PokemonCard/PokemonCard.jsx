@@ -58,6 +58,7 @@ export default function PokemonCard({ pokemon }) {
   const [isOpenModal, setOpenModal] = useState(false);
   const [isDuplicatePokemonModal, setDuplicatePokemonModal] = useState(false);
   const [isLessMovesModal, setLessMovesModal] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   function getPokeWithMove(p) {
     const newPoke = {
@@ -110,24 +111,20 @@ export default function PokemonCard({ pokemon }) {
     setOpenModal(true);
   }
 
-  function onClickRemoveFromTeam(poke) {
-    const team1 = Trainer1Team.getValue();
-    if (team1.length < MAX_POKEMON_TEAM) {
-      const newTeam1 = team1.filter((p) => p.id !== poke.id);
-      Trainer1Team.update(newTeam1);
-      return;
-    }
-    const team2 = Trainer2Team.getValue();
-    const newTeam2 = team2.filter((p) => p.id !== poke.id);
-    Trainer2Team.update(newTeam2);
-  }
-
   return (
     <section className={styles.pokemonCard}>
       <div className={styles.topContainer}>
-        <img className={styles.pokemonImage} src={image} alt={pokemon.name} />
+        <img
+          className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
+          src={image}
+          alt={pokemon.name}
+        />
         <p className={styles.pokemonName}>{pokemon.name}</p>
-        <div className={styles.pokemonDetails}>
+        <button
+          type="button"
+          className={cn(styles.pokemonDetails, { [styles.animation]: showDetails })}
+          onClick={() => setShowDetails(!showDetails)}
+        >
           <p className={styles.pokemonName}>{pokemon.name}</p>
           <div className={styles.statContainer}>
             <div className={styles.stats}>
@@ -183,7 +180,7 @@ export default function PokemonCard({ pokemon }) {
               <div style={BAR_STYLE.speed} />
             </div>
           </div>
-        </div>
+        </button>
       </div>
       <div className={styles.btnContainer}>
         <button
@@ -196,10 +193,9 @@ export default function PokemonCard({ pokemon }) {
         <button
           className={styles.addPokemon}
           type="button"
-          onClick={() => onClickRemoveFromTeam(pokemon)}
+          onClick={() => setShowDetails(!showDetails)}
         >
-          Remove
-
+          Details
         </button>
       </div>
       {isOpenModal

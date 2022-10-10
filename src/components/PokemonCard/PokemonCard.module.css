@@ -12,22 +12,25 @@
 	width: 10.25rem;
 }
 
-.topContainer:hover .pokemonImage {
+.pokemonImageFade {
     opacity: .5;
     transform: translateX(30%);/*100%*/
 }
-.topContainer .pokemonDetails {
+
+.pokemonDetails {
+	cursor: pointer;
+	border: none;
     position: absolute;
     top: 0;
     left: 0;
-    width: 70%;
+    width: 90%;
     height: 100%;
     background: #fff;
     transition: .5s;
     transform-origin: left;
     transform: perspective(2000px) rotateY(-90deg);
 }
-.topContainer:hover .pokemonDetails {
+.animation {
     transform: perspective(2000px) rotateY(0deg);
 }
 
