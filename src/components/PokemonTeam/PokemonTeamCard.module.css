@@ -1,10 +1,17 @@
+.container {
+    position: relative;
+}
+
 .miniCardContainer {
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
     display: flex;
-    padding: .5rem 0;
+    padding: .5rem;
     border-top: 1px solid #f4f4f4;
 }
 
-.imgContainer{
+.rightContainer{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,10 +28,13 @@
 .moveList {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin: 0.125rem 0;
 }
 
 .moveDetails {
     margin: 0.125rem 0.25rem 0 0;
+    min-width: 5rem;
 }
 
 .typeImg {
@@ -48,9 +58,27 @@
   min-width: 7rem;
   border-radius: 0.875rem;
   padding: 0.25rem;
+  margin: 0 0 0.5rem;
 }
 
 #statsBar > div {
   height: 1rem;
   border-radius: 0.625rem;
+}
+
+.removeBtn {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0.25rem;
+    right: 2.25rem;
+    z-index: 2;
+}
+
+.icon {
+    width: 1.875rem;
+    height: 1.875rem;
+    color: #d0021b;
 }
