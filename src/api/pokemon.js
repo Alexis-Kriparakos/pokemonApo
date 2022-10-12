@@ -6,9 +6,9 @@ const POKE = axios.create({
   baseURL,
 });
 
-export async function getPokemonList(limit) {
+export async function getPokemonList(limit = 150, offset = 0) {
   try {
-    const response = await POKE.get(`/pokemon?limit=${limit}`);
+    const response = await POKE.get(`/pokemon?limit=${limit}&offset=${offset}`);
     const pokemon = get(response, 'data.results');
     return pokemon;
   } catch (error) {

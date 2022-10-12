@@ -5,7 +5,7 @@ import Link from 'next/link';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 import MoveSelection from '../components/MoveSelection/MoveSelection';
 // import { Trainer1Team, Trainer2Team } from '../store/teamStore';
-import { PokemonBattle, PokemonFighting1, PokemonFighting2 } from '../store/pokemonBattle';
+import { PokemonBattle } from '../store/pokemonBattle';
 import Header from '../components/Header/Header';
 
 // import {
@@ -37,13 +37,13 @@ export default function Battle() {
     //   pokemonBattle$.unsubscribe();
     // };
     PokemonBattle.startBattle();
-    const pokemonBattle$ = PokemonBattle.subscribe(setBattleStatus);
-    const pokemonFighting1$ = PokemonFighting1.subscribe(setPokemonFighting1);
-    const pokemonFighting2$ = PokemonFighting2.subscribe(setPokemonFighting2);
+    const pokemonBattle$ = PokemonBattle.subscribe((battle) => {
+      setBattleStatus(battle.status);
+      setPokemonFighting1(battle.pokemonFighting1);
+      setPokemonFighting2(battle.pokemonFighting2);
+    });
     return () => {
       pokemonBattle$.unsubscribe();
-      pokemonFighting1$.unsubscribe();
-      pokemonFighting2$.unsubscribe();
     };
   }, []);
 
@@ -125,8 +125,10 @@ export default function Battle() {
         <div className={styles.teamContainer}>
           <PokemonTeam
             trainer="1"
+            isBattle
             onClick={(poke) => {
-              PokemonFighting1.update(poke);
+              const battle = PokemonBattle.getValue();
+              PokemonBattle.update({ ...battle, pokemonFighting1: poke });
               setPlayer1Disabled(false);
               setPlayer2Disabled(true);
             }}
@@ -136,8 +138,10 @@ export default function Battle() {
         <div className={styles.teamContainer}>
           <PokemonTeam
             trainer="2"
+            isBattle
             onClick={(poke) => {
-              PokemonFighting2.update(poke);
+              const battle = PokemonBattle.getValue();
+              PokemonBattle.update({ ...battle, pokemonFighting2: poke });
               setPlayer1Disabled(false);
               setPlayer2Disabled(true);
             }}

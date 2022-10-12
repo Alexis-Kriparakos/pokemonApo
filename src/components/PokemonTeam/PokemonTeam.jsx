@@ -5,7 +5,9 @@ import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import PokemonTeamCard from './PokemonTeamCard';
 import styles from './PokemonTeam.module.css';
 
-export default function PokemonTeam({ trainer, onClick = () => {} }) {
+export default function PokemonTeam({
+  trainer, team, isBattle, onClick = () => {},
+}) {
   const [pokemonInTeam, setPokemoninTeam] = useState([]);
   const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak';
   useEffect(() => {
@@ -35,7 +37,13 @@ export default function PokemonTeam({ trainer, onClick = () => {} }) {
         {pokemonInTeam.lenght !== 0 && (
         <div>
           {pokemonInTeam.map((pokemon) => (
-            <PokemonTeamCard key={pokemon.id} pokemon={pokemon} onClick={() => onClick(pokemon)} />
+            <PokemonTeamCard
+              key={pokemon.id}
+              pokemon={pokemon}
+              team={team}
+              isBattle={isBattle}
+              onClick={() => onClick(pokemon)}
+            />
           ))}
         </div>
         )}

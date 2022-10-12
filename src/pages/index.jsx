@@ -10,14 +10,16 @@ import PokemonList from '../components/PokemonList/PokemonList';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 
 import Header from '../components/Header/Header';
+import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 import { transformPokemon } from '../helpers/transformer';
 import styles from './index.module.css';
 
 export default function Index() {
   useEffect(() => {
-    const limit = 150;
+    // const limit = 150;
+    // const offset = 450;
     async function getData() {
-      const pokemonList = await getPokemonList(limit);
+      const pokemonList = await getPokemonList();
       const pokemonListWithStats = await Promise.all(pokemonList.map((p) => {
         const pokemon = getPokemon(p.name);
         return pokemon;
@@ -41,9 +43,9 @@ export default function Index() {
         </Link>
       </header>
       <main className={styles.mainContainer}>
-        <PokemonTeam trainer="1" />
+        <PokemonTeam trainer="1" team={Trainer1Team} />
         <PokemonList />
-        <PokemonTeam trainer="2" />
+        <PokemonTeam trainer="2" team={Trainer2Team} />
       </main>
     </>
   );

@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import get from 'lodash/get';
 import cn from 'classnames';
-import { Trainer1Turn } from '../../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import { MAX_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
 import GenericAlert from '../GenericAlert/GenericAlert';
@@ -79,13 +78,11 @@ export default function PokemonCard({ pokemon }) {
     setOpenModal(false);
     if (team1.length < MAX_POKEMON_TEAM) {
       Trainer1Team.update([...team1, newPoke]);
-      Trainer1Turn.update(true);
       return;
     }
     const team2 = Trainer2Team.getValue();
     if (team2.length < MAX_POKEMON_TEAM) {
       Trainer2Team.update([...team2, newPoke]);
-      Trainer1Turn.update(false);
     }
   }
 
@@ -99,15 +96,15 @@ export default function PokemonCard({ pokemon }) {
     setSelectedMoves([...selectedMoves, move]);
   }
 
-  function onClickOpenSelectPokemon(poke) {
+  function onClickOpenSelectPokemon() {
     setSelectedMoves([]);
-    const isT1Turn = Trainer1Turn.getValue();
-    const team = isT1Turn ? Trainer1Team.getValue() : Trainer2Team.getValue();
-    const found = team.some((el) => el.id === poke.id);
-    if (found) {
-      setDuplicatePokemonModal(true);
-      return;
-    }
+    // const isT1Turn = Trainer1Turn.getValue();
+    // const team = isT1Turn ? Trainer1Team.getValue() : Trainer2Team.getValue();
+    // const found = team.some((el) => el.id === poke.id);
+    // if (found) {
+    //   setDuplicatePokemonModal(true);
+    //   return;
+    // }
     setOpenModal(true);
   }
 
