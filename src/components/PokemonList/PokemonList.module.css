@@ -9,3 +9,46 @@
 	flex-wrap: wrap;
 	list-style: none;
 }
+
+.btnContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+}
+
+.btn {
+	background: #d0021b;
+	margin-right: 0.5rem;
+	color: #fff;
+	font-size: 1rem;
+	text-align: center;
+	display: inline-block;
+	padding: 15px 60px;
+	border: 1px solid #fff;
+	cursor: pointer;
+	letter-spacing: 2px;
+	position: relative;
+	overflow: hidden;
+}
+
+.btn:before {
+	content: "";
+	position: absolute;
+	height: 150px;
+	width: 50px;
+	background: #fff;
+	left: -55px;
+	top: -40px;
+	transform: rotate(37deg);
+	transition: all .3s;
+	opacity: 0.3;
+}
+
+.btn:hover:before {
+	left: 95%;
+}
+
+.btn:last-child {
+	margin-right: 0;
+}
