@@ -6,7 +6,7 @@ export const PHASES = {
   SWITCH_POKEMON2: 'Player two is switching their pokemon',
 };
 
-export const MAX_POKEMON_TEAM = 3;
+export const MAX_POKEMON_TEAM = 1;
 
 export const TYPE_TO_IMG = {
   normal: 'normal.png',

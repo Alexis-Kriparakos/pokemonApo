@@ -23,6 +23,13 @@ export default function Battle() {
   const [player1Disabled, setPlayer1Disabled] = useState(false);
   const [player2Disabled, setPlayer2Disabled] = useState(false);
 
+  function resetChoices() {
+    setPlayer1Disabled(false);
+    setPlayer2Disabled(true);
+    setSelectedMoveP1(undefined);
+    setSelectedMoveP2(undefined);
+  }
+
   useEffect(() => {
     // PokemonFighting1.update(CHARMADER1);
     // PokemonFighting2.update(CHARMADER2);
@@ -38,26 +45,23 @@ export default function Battle() {
     // };
     PokemonBattle.startBattle();
     const pokemonBattle$ = PokemonBattle.subscribe((battle) => {
+      console.log(battle);
       setBattleStatus(battle.status);
       setPokemonFighting1(battle.pokemonFighting1);
       setPokemonFighting2(battle.pokemonFighting2);
+      setSelectedMoveP1(battle.movePlayer1);
+      setSelectedMoveP2(battle.movePlayer2);
     });
     return () => {
       pokemonBattle$.unsubscribe();
     };
   }, []);
 
-  function resetChoices() {
-    setPlayer1Disabled(false);
-    setPlayer2Disabled(true);
-    setSelectedMoveP1(undefined);
-    setSelectedMoveP2(undefined);
-  }
-
   useEffect(() => {
     if (!battleStatus) return;
     const [pokemonTeam1, pokemonTeam2] = PokemonBattle.getPokemonFighting();
-    switch (battleStatus.status) {
+    const battle = PokemonBattle.getValue();
+    switch (battleStatus) {
       case PHASES.PLAYER1_MOVE_CHOICE:
         setPlayer1Disabled(false);
         setPlayer2Disabled(true);
@@ -71,14 +75,16 @@ export default function Battle() {
       case PHASES.BATTLE_PHASE:
         setTimeout(() => {
           if (pokemonTeam1.battleStats.speedStat >= pokemonTeam2.battleStats.speedStat) {
-            const poke2 = PokemonBattle.executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
+            const poke2 = PokemonBattle
+              .executeMove(pokemonTeam1, pokemonTeam2, selectedMoveP1);
             PokemonBattle.updateTeam2(poke2);
             if (!poke2.isAlive) {
-              PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON2 });
+              PokemonBattle.update({ ...battle, status: PHASES.SWITCH_POKEMON2 });
               resetChoices();
               return;
             }
-            const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
+            const poke1 = PokemonBattle
+              .executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
             PokemonBattle.updateTeam1(poke1);
             resetChoices();
             return;
@@ -86,7 +92,7 @@ export default function Battle() {
           const poke1 = PokemonBattle.executeMove(pokemonTeam2, pokemonTeam1, selectedMoveP2);
           PokemonBattle.updateTeam1(poke1);
           if (!poke1.isAlive) {
-            PokemonBattle.update({ ...battleStatus, status: PHASES.SWITCH_POKEMON1 });
+            PokemonBattle.update({ ...battle, status: PHASES.SWITCH_POKEMON1 });
             resetChoices();
             return;
           }
@@ -152,16 +158,18 @@ export default function Battle() {
         <MoveSelection
           pokemon={pokemonFighting1}
           onClick={(move) => {
-            setSelectedMoveP1(move);
-            PokemonBattle.update({ ...battleStatus, status: PHASES.PLAYER2_MOVE_CHOICE });
+            const battle = PokemonBattle.getValue();
+            PokemonBattle.update(
+              { ...battle, movePlayer1: move, status: PHASES.PLAYER2_MOVE_CHOICE },
+            );
           }}
           isDisabled={player1Disabled}
         />
         <MoveSelection
           pokemon={pokemonFighting2}
           onClick={(move) => {
-            setSelectedMoveP2(move);
-            PokemonBattle.update({ ...battleStatus, status: PHASES.BATTLE_PHASE });
+            const battle = PokemonBattle.getValue();
+            PokemonBattle.update({ ...battle, movePlayer2: move, status: PHASES.BATTLE_PHASE });
           }}
           isDisabled={player2Disabled}
         />

@@ -25,8 +25,8 @@ export const PokemonBattle = {
   startBattle: () => {
     const pokemon1 = Trainer1Team.getStartingPokemon();
     const pokemon2 = Trainer2Team.getStartingPokemon();
-    const team1 = Trainer1Team.getValue();
-    const team2 = Trainer2Team.getValue();
+    const team1 = [...Trainer1Team.getValue()];
+    const team2 = [...Trainer2Team.getValue()];
     const battle = PokemonBattle.getValue();
     PokemonBattle.update({
       ...battle,

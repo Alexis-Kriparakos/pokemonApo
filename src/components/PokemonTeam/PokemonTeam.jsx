@@ -24,7 +24,7 @@ export default function PokemonTeam({
   }, []);
 
   return (
-    <section>
+    <section className={styles.teamContainer}>
       <header>
         <p>{trainerName}</p>
         <div>
