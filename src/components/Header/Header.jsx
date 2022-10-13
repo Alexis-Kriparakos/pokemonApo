@@ -5,12 +5,11 @@ import PokemonToShow from '../../store/pokemonToShow';
 
 export default function Header() {
   function onChaneInput(value) {
+    const allPokemon = PokemonStore.getValue();
     if (!value.length) {
-      const allPokemon = PokemonStore.getValue();
       PokemonToShow.update(allPokemon);
       return;
     }
-    const allPokemon = PokemonStore.getValue();
     const filteredPokemons = allPokemon.filter((pokemon) => pokemon.searchTerms
       .find((term) => term.indexOf(value) !== -1));
     PokemonToShow.update(filteredPokemons);

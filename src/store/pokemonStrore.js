@@ -1,6 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
+import has from 'lodash/has';
 
-const pokemonStore$ = new BehaviorSubject([]);
+import { getData } from '../api/pokemon';
+
+const pokemonStore$ = new BehaviorSubject({});
 const pokemonFetched$ = new BehaviorSubject(false);
 
 const PokemonFetched = {
@@ -13,6 +16,13 @@ const PokemonStore = {
   update: (pokemon) => {
     pokemonStore$.next(pokemon);
     PokemonFetched.update(true);
+  },
+  onPokemonFetch: async (region) => {
+    const pokemonCollection = PokemonStore.getValue();
+    if (!has(pokemonCollection, `${region}`)) {
+      return getData(region);
+    }
+    return pokemonCollection;
   },
   subscribe: (setPokemon) => pokemonStore$.subscribe(setPokemon),
   getValue: () => pokemonStore$.value,

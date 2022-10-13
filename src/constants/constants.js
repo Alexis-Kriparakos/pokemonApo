@@ -6,6 +6,34 @@ export const PHASES = {
   SWITCH_POKEMON2: 'Player two is switching their pokemon',
 };
 
+export const REGIONS_POKEMON = {
+  kanto: {
+    name: 'Kanto',
+    number: 151,
+    offset: 0,
+  },
+  johto: {
+    name: 'Johto',
+    number: 100,
+    offset: 151,
+  },
+  hoenn: {
+    name: 'Hoenn',
+    number: 135,
+    offset: 251,
+  },
+  sinnoh: {
+    name: 'Sinnoh',
+    number: 107,
+    offset: 386,
+  },
+  unova: {
+    name: 'Unova',
+    number: 165,
+    offset: 493,
+  },
+};
+
 export const MAX_POKEMON_TEAM = 1;
 
 export const TYPE_TO_IMG = {

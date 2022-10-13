@@ -25,13 +25,11 @@ export default function PokemonTeam({
 
   return (
     <section className={styles.teamContainer}>
-      <header>
+      <header className={styles.header}>
         <p>{trainerName}</p>
-        <div>
-          {pokemonInTeam.map((pokemon) => (
-            <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
-          ))}
-        </div>
+        {pokemonInTeam.map((pokemon) => (
+          <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
+        ))}
       </header>
       <main>
         {pokemonInTeam.lenght !== 0 && (

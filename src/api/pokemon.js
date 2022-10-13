@@ -1,6 +1,9 @@
 import axios from 'axios';
 import get from 'lodash/get';
 
+import { transformPokemon } from '../helpers/transformer';
+import { REGIONS_POKEMON } from '../constants/constants';
+
 const baseURL = 'https://pokeapi.co/api/v2';
 const POKE = axios.create({
   baseURL,
@@ -11,16 +14,6 @@ export async function getPokemonList(limit = 150, offset = 0) {
     const response = await POKE.get(`/pokemon?limit=${limit}&offset=${offset}`);
     const pokemon = get(response, 'data.results');
     return pokemon;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-}
-
-export async function getPokemonMove(moveURL) {
-  try {
-    const response = await axios.get(moveURL);
-    return response.data;
   } catch (error) {
     console.log(error);
     return error;
@@ -46,4 +39,28 @@ export async function getPokemon(pokeName) {
   }
 }
 
-export default { getPokemonList, getPokemon, getPokemonMove };
+export async function getData(region = 'kanto') {
+  const { number, offset } = REGIONS_POKEMON[region];
+  const pokemonList = await getPokemonList(number, offset);
+  const pokemonListWithInfo = await Promise.all(pokemonList.map((p) => {
+    const pokemon = getPokemon(p.name);
+    return pokemon;
+  }));
+  const pokemonListWithStats = pokemonListWithInfo
+    .map((poke) => transformPokemon(poke));
+  return { [region]: pokemonListWithStats };
+}
+
+export async function getPokemonMove(moveURL) {
+  try {
+    const response = await axios.get(moveURL);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export default {
+  getPokemonList, getPokemon, getData, getPokemonMove,
+};
