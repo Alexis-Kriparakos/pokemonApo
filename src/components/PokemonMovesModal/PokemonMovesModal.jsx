@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import ReactModal from 'react-modal';
 import cn from 'classnames';
+import React, { useState, useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
+import ReactModal from 'react-modal';
 
-import { PrimaryButton } from '../Buttons/Buttons';
 import { getPokemonMove } from '../../api/pokemon';
 import { TYPE_TO_IMG } from '../../constants/constants';
+import { PrimaryButton } from '../Buttons/Buttons';
+
 import styles from './PokemonMovesModal.module.css';
 
 const customStyles = {
@@ -44,9 +45,9 @@ export default function PokemonMovesModal({
 
   useEffect(() => {
     async function getPokemonMoves() {
-      await Promise.all(pokemon.moves.map(async (move) => {
+      await Promise.all(pokemon.moves.map(async move => {
         const pokemonM = await getPokemonMove(move.move.url);
-        setPokemonMoves((prevS) => [...prevS, {
+        setPokemonMoves(prevS => [...prevS, {
           id: pokemonM.id,
           name: pokemonM.name,
           effect_chance: pokemonM.effect_chance,
@@ -61,7 +62,7 @@ export default function PokemonMovesModal({
         return pokemonM;
       }));
     }
-    // getPokemonMoves();
+    getPokemonMoves();
   }, []);
 
   function getToolTipText(m) {
@@ -79,7 +80,7 @@ export default function PokemonMovesModal({
   }
 
   function isMoveSelected(move) {
-    return selectedMoves.some((m) => m.id === move.id);
+    return selectedMoves.some(m => m.id === move.id);
   }
 
   return (
@@ -92,12 +93,12 @@ export default function PokemonMovesModal({
           </button>
         </header>
         <main className={styles.moveList}>
-          {pokemonMoves.map((move) => (
+          {pokemonMoves.map(move => (
             <div
               key={move.id}
               className={cn(
                 styles.moveBtnContainer,
-                { [styles.moveSelected]: isMoveSelected(move) },
+                { [styles.moveSelected]: isMoveSelected(move) }
               )}
             >
               <PrimaryButton

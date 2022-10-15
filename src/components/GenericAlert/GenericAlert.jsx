@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import ReactModal from 'react-modal';
 import { MdOutlineCatchingPokemon, MdClose } from 'react-icons/md';
+import ReactModal from 'react-modal';
+
 import { PrimaryButton } from '../Buttons/Buttons';
+
 import styles from './GenericAlert.module.css';
 
 export default function GenericAlert({
