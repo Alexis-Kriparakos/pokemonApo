@@ -20,25 +20,18 @@ export default function Index({ pokemon }) {
     PokemonToShow.update({ region: 'kanto', pokemon: allPokemon[0] });
   }, []);
 
-    <a href="https://twitter.com/Dave_Conner" className="btn btn-1">
-      <svg>
-        <rect x="0" y="0" fill="none" width="100%" height="100%" />
-      </svg>
-      Hover
-    </a>;
-
-    return (
-      <>
-        <header>
-          <Header />
-        </header>
-        <main className={styles.mainContainer}>
-          <PokemonTeam trainer="1" team={Trainer1Team} />
-          <PokemonList />
-          <PokemonTeam trainer="2" team={Trainer2Team} />
-        </main>
-      </>
-    );
+  return (
+    <>
+      <header>
+        <Header />
+      </header>
+      <main className={styles.mainContainer}>
+        <PokemonTeam trainer="1" team={Trainer1Team} />
+        <PokemonList />
+        <PokemonTeam trainer="2" team={Trainer2Team} />
+      </main>
+    </>
+  );
 }
 
 export async function getStaticProps() {

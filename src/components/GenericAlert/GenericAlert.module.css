@@ -10,6 +10,19 @@
   padding: 1.5rem 1.5rem 2rem;
 }
 
+.closeButton {
+  cursor: pointer;
+	border: none;
+	outline: none;
+  background-color: #fff;
+}
+
+.closeImage {
+	width: 1.875rem;
+	height: 1.875rem;
+	color: #d0021b;
+}
+
 .content {
   font-size: 1.125rem;
   margin: 0 0 1.5rem;

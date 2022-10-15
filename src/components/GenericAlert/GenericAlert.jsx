@@ -5,7 +5,9 @@ import { MdOutlineCatchingPokemon, MdClose } from 'react-icons/md';
 import { PrimaryButton } from '../Buttons/Buttons';
 import styles from './GenericAlert.module.css';
 
-export default function GenericAlert({ isOpenModal, children, onClickCallback }) {
+export default function GenericAlert({
+  isOpenModal, setIsOpenModal, children, onClickCallback,
+}) {
   const customStyles = {
     overlay: {
       position: 'fixed',
@@ -31,9 +33,9 @@ export default function GenericAlert({ isOpenModal, children, onClickCallback })
     <ReactModal isOpen={isOpenModal} style={customStyles} ariaHideApp={false}>
       <div className={styles.container}>
         <div className={styles.modalContainer} id="cookiesPopup">
-          <PrimaryButton>
-            <MdClose />
-          </PrimaryButton>
+          <button type="button" className={styles.closeButton} onClick={() => setIsOpenModal(!isOpenModal)}>
+            <MdClose className={styles.closeImage} />
+          </button>
           <MdOutlineCatchingPokemon className={styles.img} />
           <div className={styles.content}>
             {children}
