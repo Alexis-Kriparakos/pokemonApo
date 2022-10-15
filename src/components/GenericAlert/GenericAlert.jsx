@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import ReactModal from 'react-modal';
+import { MdOutlineCatchingPokemon, MdClose } from 'react-icons/md';
+import { PrimaryButton } from '../Buttons/Buttons';
 import styles from './GenericAlert.module.css';
 
-export default function GenericAlert({ isOpenModal, alertText, onClickCallback }) {
+export default function GenericAlert({ isOpenModal, children, onClickCallback }) {
   const customStyles = {
     overlay: {
       position: 'fixed',
@@ -27,14 +29,16 @@ export default function GenericAlert({ isOpenModal, alertText, onClickCallback }
 
   return (
     <ReactModal isOpen={isOpenModal} style={customStyles} ariaHideApp={false}>
-      <div className={styles.modalContainer}>
-        <p className={styles.text}>
-          {alertText}
-        </p>
-        <div>
-          <button className={styles.btnAccept} type="button" onClick={() => onClickCallback()}>
-            OK
-          </button>
+      <div className={styles.container}>
+        <div className={styles.modalContainer} id="cookiesPopup">
+          <PrimaryButton>
+            <MdClose />
+          </PrimaryButton>
+          <MdOutlineCatchingPokemon className={styles.img} />
+          <div className={styles.content}>
+            {children}
+          </div>
+          <PrimaryButton onClick={() => onClickCallback()}>Thats fine!</PrimaryButton>
         </div>
       </div>
     </ReactModal>

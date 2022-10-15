@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PokemonToShow from '../../store/pokemonToShow';
 import PokemonStore from '../../store/pokemonStrore';
 import PokemonCard from '../PokemonCard/PokemonCard';
+import { capitalizeFirstLetter } from '../../helpers/transformer';
 import { REGIONS_POKEMON } from '../../constants/constants';
-
 import styles from './PokemonList.module.css';
 
 export default function PokemonList() {
@@ -39,7 +39,7 @@ export default function PokemonList() {
             className={styles.btn}
             onClick={() => onSetRegion(region)}
           >
-            {region}
+            {capitalizeFirstLetter(region)}
           </button>
         ))}
       </div>

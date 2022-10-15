@@ -1,5 +1,9 @@
 import get from 'lodash/get';
 
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function transformPokemon(poke) {
   const hpStat = Math.ceil(get(poke, 'stats[0].base_stat') * 4.5);
   const atkStat = Math.ceil(get(poke, 'stats[1].base_stat') * 3.2);
@@ -13,6 +17,7 @@ export function transformPokemon(poke) {
   const types = poke.types.map((type) => type.type.name);
   const newPoke = {
     ...poke,
+    name: capitalizeFirstLetter(poke.name),
     searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`],
     battleStats: { ...stats },
     isAlive: true,
@@ -22,4 +27,4 @@ export function transformPokemon(poke) {
   return newPoke;
 }
 
-export default { transformPokemon };
+export default { transformPokemon, capitalizeFirstLetter };

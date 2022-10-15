@@ -210,17 +210,19 @@ export default function PokemonCard({ pokemon }) {
       && (
       <GenericAlert
         isOpenModal={isDuplicatePokemonModal}
-        alertText={alertDuplicatePokemonText}
         onClickCallback={() => setDuplicatePokemonModal(false)}
-      />
+      >
+        {alertDuplicatePokemonText}
+      </GenericAlert>
       )}
       {isLessMovesModal
       && (
       <GenericAlert
         isOpenModal={isLessMovesModal}
-        alertText={alertNotEnoughMoves}
         onClickCallback={() => setLessMovesModal(false)}
-      />
+      >
+        {alertNotEnoughMoves}
+      </GenericAlert>
       )}
     </section>
   );

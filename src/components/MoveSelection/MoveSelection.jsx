@@ -1,25 +1,25 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-
+import { PrimaryButton } from '../Buttons/Buttons';
 import styles from './MoveSelection.module.css';
 
 export default function MoveSelection({ pokemon, onClick = () => {}, isDisabled }) {
   return (
     <div className={styles.movesSelection}>
       {pokemon?.selectedMoves.map((move) => (
-        <button
-          key={move.id}
-          type="button"
-          className={styles.moveButton}
-          onClick={() => onClick(move)}
-          disabled={isDisabled}
-        >
-          {move.name.toUpperCase()}
-        </button>
+        <div className={styles.moveButtonContainer}>
+          <PrimaryButton
+            key={move.id}
+            onClick={() => onClick(move)}
+            disabled={isDisabled}
+          >
+            {move.name.toUpperCase()}
+          </PrimaryButton>
+        </div>
       ))}
-      <button type="button">
+      <PrimaryButton>
         SWITCH POKEMON
-      </button>
+      </PrimaryButton>
     </div>
   );
 }

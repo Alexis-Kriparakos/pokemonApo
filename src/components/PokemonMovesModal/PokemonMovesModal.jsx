@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-
 import cn from 'classnames';
 import ReactModal from 'react-modal';
+import { PrimaryButton } from '../Buttons/Buttons';
 import { getPokemonMove } from '../../api/pokemon';
 import { TYPE_TO_IMG } from '../../constants/constants';
 import styles from './PokemonMovesModal.module.css';
@@ -99,14 +99,14 @@ export default function PokemonMovesModal({
             </button>
           ))}
         </div>
-        <div>
-          <button type="button" className={styles.btnAccept} onClick={() => setIsOpenModal(false)}>
-            Cancel
-          </button>
-          <button type="button" className={styles.btnAccept} onClick={() => onClickAddToTeam(pokemon)}>
+        <div className={styles.spacingBtn}>
+          <PrimaryButton onClick={() => onClickAddToTeam(pokemon)}>
             Ok
-          </button>
+          </PrimaryButton>
         </div>
+        <PrimaryButton onClick={() => setIsOpenModal(false)}>
+          Cancel
+        </PrimaryButton>
       </div>
     </ReactModal>
   );
