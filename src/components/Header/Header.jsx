@@ -5,15 +5,17 @@ import PokemonStore from '../../store/pokemonStrore';
 import PokemonToShow from '../../store/pokemonToShow';
 
 export default function Header() {
-  function onChaneInput(value) {
-    const allPokemon = PokemonStore.getValue();
+  function onChangeInput(value) {
+    const pokemonInRegions = PokemonStore.getValue();
+    const { region } = PokemonToShow.getValue();
+    const allPokemon = pokemonInRegions[region];
     if (!value.length) {
-      PokemonToShow.update(allPokemon);
+      PokemonToShow.update({ region, pokemon: allPokemon });
       return;
     }
     const filteredPokemons = allPokemon.filter((pokemon) => pokemon.searchTerms
       .find((term) => term.indexOf(value) !== -1));
-    PokemonToShow.update(filteredPokemons);
+    PokemonToShow.update({ region, pokemon: filteredPokemons });
   }
 
   return (
@@ -22,7 +24,7 @@ export default function Header() {
         <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
       </div>
       {/* <div className={styles.inputContainer}> */}
-      <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={(e) => onChaneInput(e.target.value)} />
+      <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={(e) => onChangeInput(e.target.value)} />
       {/* </div> */}
       <div className={styles.wrapper}>
         <Link href="/battle">

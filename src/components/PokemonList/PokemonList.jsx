@@ -15,12 +15,15 @@ export default function PokemonList() {
     const allPokemon = PokemonStore.getValue();
     const pokemonNewRegion = await PokemonStore.onPokemonFetch(region);
     PokemonStore.update({ ...allPokemon, ...pokemonNewRegion });
-    PokemonToShow.update(pokemonNewRegion[region]);
+    PokemonToShow.update({ region, pokemon: pokemonNewRegion[region] });
     console.log({ ...allPokemon, ...pokemonNewRegion });
   }
 
   useEffect(() => {
-    const pokemontoShow$ = PokemonToShow.subscribe(setPokemonList);
+    const pokemontoShow$ = PokemonToShow.subscribe((pokeList) => {
+      const { pokemon } = pokeList;
+      setPokemonList(pokemon);
+    });
 
     return () => {
       pokemontoShow$.unsubscribe();

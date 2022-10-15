@@ -17,7 +17,7 @@ export default function Index({ pokemon }) {
   useEffect(() => {
     PokemonStore.update(pokemon);
     const allPokemon = Object.values(pokemon);
-    PokemonToShow.update(...allPokemon);
+    PokemonToShow.update({ region: 'kanto', pokemon: allPokemon[0] });
   }, []);
 
     <a href="https://twitter.com/Dave_Conner" className="btn btn-1">

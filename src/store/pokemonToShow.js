@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
-const pokemonStore$ = new BehaviorSubject([]);
+const pokemonStore$ = new BehaviorSubject({ region: '', pokemon: [] });
 
 const PokemonStore = {
   update: (pokemon) => {
