@@ -16,7 +16,6 @@
   cursor: pointer;
   display: inline-flex;
   font-family: "JetBrains Mono",monospace;
-  height: 48px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -33,6 +32,8 @@
   white-space: nowrap;
   will-change: box-shadow,transform;
   font-size: 18px;
+  width: 100%;
+  min-height: 48px;
   min-width: 8rem;
 }
 

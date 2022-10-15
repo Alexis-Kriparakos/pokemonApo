@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import cn from 'classnames';
 import ReactModal from 'react-modal';
+import cn from 'classnames';
+import { MdClose } from 'react-icons/md';
+
 import { PrimaryButton } from '../Buttons/Buttons';
 import { getPokemonMove } from '../../api/pokemon';
 import { TYPE_TO_IMG } from '../../constants/constants';
@@ -38,6 +40,8 @@ export default function PokemonMovesModal({
 }) {
   const [pokemonMoves, setPokemonMoves] = useState([]);
 
+  const headerTitle = `Pick ${pokemon.name}'s 4 Moves`;
+
   useEffect(() => {
     async function getPokemonMoves() {
       await Promise.all(pokemon.moves.map(async (move) => {
@@ -57,7 +61,7 @@ export default function PokemonMovesModal({
         return pokemonM;
       }));
     }
-    getPokemonMoves();
+    // getPokemonMoves();
   }, []);
 
   function getToolTipText(m) {
@@ -81,32 +85,47 @@ export default function PokemonMovesModal({
   return (
     <ReactModal isOpen={isOpenModal} ariaHideApp={false} style={customStyles}>
       <div className={styles.modalContainer}>
-        <div className={styles.moveList}>
+        <header className={styles.header}>
+          <h1 className={styles.headerTitle}>{headerTitle}</h1>
+          <button type="button" className={styles.closeButton} onClick={() => setIsOpenModal(!isOpenModal)}>
+            <MdClose className={styles.closeImage} />
+          </button>
+        </header>
+        <main className={styles.moveList}>
           {pokemonMoves.map((move) => (
-            <button
+            <div
               key={move.id}
-              type="button"
-              className={cn(styles.moveBtn, { [styles.moveBtnSelected]: isMoveSelected(move) })}
-              onClick={() => onClickMove(move)}
+              className={cn(
+                styles.moveBtnContainer,
+                { [styles.moveSelected]: isMoveSelected(move) },
+              )}
             >
-              <div>
-                {move.name}
-                <span className={styles.tooltiptext}>
-                  {getToolTipText(move)}
-                </span>
-              </div>
-              <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
-            </button>
+              <PrimaryButton
+                onClick={() => onClickMove(move)}
+              >
+                <div className={styles.content}>
+                  {move.name}
+                  <span className={styles.tooltiptext}>
+                    {getToolTipText(move)}
+                  </span>
+                  <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
+                </div>
+              </PrimaryButton>
+            </div>
           ))}
-        </div>
-        <div className={styles.spacingBtn}>
-          <PrimaryButton onClick={() => onClickAddToTeam(pokemon)}>
-            Ok
-          </PrimaryButton>
-        </div>
-        <PrimaryButton onClick={() => setIsOpenModal(false)}>
-          Cancel
-        </PrimaryButton>
+        </main>
+        <footer className={styles.buttonContainer}>
+          <div className={styles.spacingBtn}>
+            <PrimaryButton onClick={() => onClickAddToTeam(pokemon)}>
+              Ok
+            </PrimaryButton>
+          </div>
+          <div className={styles.spacingBtn}>
+            <PrimaryButton onClick={() => setIsOpenModal(false)}>
+              Cancel
+            </PrimaryButton>
+          </div>
+        </footer>
       </div>
     </ReactModal>
   );

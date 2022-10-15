@@ -181,14 +181,14 @@ export default function PokemonCard({ pokemon }) {
       </div>
       <div className={styles.btnContainer}>
         <button
-          className={styles.addPokemon}
+          className={styles.actionPokemon}
           type="button"
           onClick={() => onClickOpenSelectPokemon(pokemon)}
         >
           Add to Team
         </button>
         <button
-          className={styles.addPokemon}
+          className={styles.actionPokemon}
           type="button"
           onClick={() => setShowDetails(!showDetails)}
         >
