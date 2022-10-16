@@ -1,9 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
+import get from 'lodash/get';
 import React, { useState, useEffect } from 'react';
 import { MdRemoveCircleOutline } from 'react-icons/md';
-import get from 'lodash/get';
+
 import { TYPE_TO_IMG } from '../../constants/constants';
+
 import styles from './PokemonTeamCard.module.css';
 
 export default function PokemonTeamCard({
@@ -21,7 +23,7 @@ export default function PokemonTeamCard({
 
   function onClickRemovePokemon(_pokemon) {
     const _team = team.getValue();
-    const newTeam = _team.filter((member) => member.id !== _pokemon.id);
+    const newTeam = _team.filter(member => member.id !== _pokemon.id);
     team.update(newTeam);
   }
 
@@ -38,7 +40,7 @@ export default function PokemonTeamCard({
           <div className={styles.statsBar}>
             <div style={healthbarStyle} />
           </div>
-          {currentPokemon.selectedMoves.map((move) => (
+          {currentPokemon.selectedMoves.map(move => (
             <div className={styles.moveList} key={move.name}>
               <p className={styles.moveDetails}>{move.name}</p>
               <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />

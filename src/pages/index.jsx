@@ -3,13 +3,12 @@
 import React, { useEffect } from 'react';
 
 import { getData } from '../api/pokemon';
+import Header from '../components/Header/Header';
+import PokemonList from '../components/PokemonList/PokemonList';
+import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 import PokemonStore from '../store/pokemonStrore';
 import PokemonToShow from '../store/pokemonToShow';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
-
-import PokemonList from '../components/PokemonList/PokemonList';
-import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
-import Header from '../components/Header/Header';
 
 import styles from './index.module.scss';
 
