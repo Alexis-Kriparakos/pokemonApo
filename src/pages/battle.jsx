@@ -15,6 +15,7 @@ import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 import styles from './battle.module.css';
 
 export default function Battle() {
+  const [battleInfo, setBattleInfo] = useState();
   const [battleStatus, setBattleStatus] = useState();
   const [pokemonFighting1, setPokemonFighting1] = useState();
   const [pokemonFighting2, setPokemonFighting2] = useState();
@@ -34,7 +35,8 @@ export default function Battle() {
     PokemonBattle.startBattle();
     const pokemonBattle$ = PokemonBattle.subscribe(battle => {
       console.log(battle);
-      setBattleStatus(battle);
+      setBattleInfo(battle);
+      setBattleStatus(battle.status);
       setPokemonFighting1(battle.pokemonFighting1);
       setPokemonFighting2(battle.pokemonFighting2);
       setSelectedMoveP1(battle.movePlayer1);
