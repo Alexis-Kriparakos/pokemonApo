@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
 import cn from 'classnames';
 import get from 'lodash/get';
@@ -114,77 +113,75 @@ export default function PokemonCard({ pokemon }) {
 
   return (
     <section className={styles.pokemonCard}>
-      <Link href={`pokemon/${pokemon.name}`}>
-        <a className={styles.topContainer}>
-          <img
-            className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
-            src={image}
-            alt={pokemon.name}
-          />
-          <p className={styles.pokemonName}>{pokemon.name}</p>
-        </a>
-      </Link>
-      <button
-        type="button"
-        className={cn(styles.pokemonDetails, { [styles.animation]: showDetails })}
-        onClick={() => setShowDetails(!showDetails)}
-      >
+      <div className={styles.topContainer}>
+        <img
+          className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
+          src={image}
+          alt={pokemon.name}
+        />
         <p className={styles.pokemonName}>{pokemon.name}</p>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>HP : </p>
-            <p>{pokemon.battleStats.hpStat}</p>
+        <button
+          type="button"
+          className={cn(styles.pokemonDetails, { [styles.animation]: showDetails })}
+          onClick={() => setShowDetails(!showDetails)}
+        >
+          <p className={styles.pokemonName}>{pokemon.name}</p>
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>HP : </p>
+              <p>{pokemon.battleStats.hpStat}</p>
+            </div>
+            <div className={styles.statsBar}>
+              <div style={BAR_STYLE.hp} />
+            </div>
           </div>
-          <div className={styles.statsBar}>
-            <div style={BAR_STYLE.hp} />
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>Attack : </p>
+              <p>{pokemon.battleStats.atkStat}</p>
+            </div>
+            <div className={cn(styles.statsBar)}>
+              <div style={BAR_STYLE.atk} />
+            </div>
           </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Attack : </p>
-            <p>{pokemon.battleStats.atkStat}</p>
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>Defense : </p>
+              <p>{pokemon.battleStats.defStat}</p>
+            </div>
+            <div className={cn(styles.statsBar)}>
+              <div style={BAR_STYLE.def} />
+            </div>
           </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.atk} />
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>Sp. Atk : </p>
+              <p>{pokemon.battleStats.spAtkStat}</p>
+            </div>
+            <div className={cn(styles.statsBar)}>
+              <div style={BAR_STYLE.spAtk} />
+            </div>
           </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Defense : </p>
-            <p>{pokemon.battleStats.defStat}</p>
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>Sp. Def : </p>
+              <p>{pokemon.battleStats.spDefStat}</p>
+            </div>
+            <div className={cn(styles.statsBar)}>
+              <div style={BAR_STYLE.spDef} />
+            </div>
           </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.def} />
+          <div className={styles.statContainer}>
+            <div className={styles.stats}>
+              <p>Speed : </p>
+              <p>{pokemon.battleStats.speedStat}</p>
+            </div>
+            <div className={cn(styles.statsBar)}>
+              <div style={BAR_STYLE.speed} />
+            </div>
           </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Sp. Atk : </p>
-            <p>{pokemon.battleStats.spAtkStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.spAtk} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Sp. Def : </p>
-            <p>{pokemon.battleStats.spDefStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.spDef} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Speed : </p>
-            <p>{pokemon.battleStats.speedStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.speed} />
-          </div>
-        </div>
-      </button>
+        </button>
+      </div>
       <div className={styles.btnContainer}>
         <button
           className={styles.actionPokemon}
