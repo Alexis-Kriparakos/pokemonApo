@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PokemonToShow from '../../store/pokemonToShow';
-import PokemonStore from '../../store/pokemonStrore';
-import PokemonCard from '../PokemonCard/PokemonCard';
-import { capitalizeFirstLetter } from '../../helpers/transformer';
+
 import { REGIONS_POKEMON } from '../../constants/constants';
+import { capitalizeFirstLetter } from '../../helpers/transformer';
+import PokemonStore from '../../store/pokemonStrore';
+import PokemonToShow from '../../store/pokemonToShow';
+import PokemonCard from '../PokemonCard/PokemonCard';
+
 import styles from './PokemonList.module.css';
 
 export default function PokemonList() {
@@ -20,7 +22,7 @@ export default function PokemonList() {
   }
 
   useEffect(() => {
-    const pokemontoShow$ = PokemonToShow.subscribe((pokeList) => {
+    const pokemontoShow$ = PokemonToShow.subscribe(pokeList => {
       const { pokemon } = pokeList;
       setPokemonList(pokemon);
     });
@@ -30,12 +32,10 @@ export default function PokemonList() {
     };
   }, []);
 
-  if (!pokemonList.length) return null;
-
   return (
     <section className={styles.container}>
       <div className={styles.btnContainer}>
-        {allRegions.map((region) => (
+        {allRegions.map(region => (
           <button
             key={region}
             type="button"
@@ -46,11 +46,13 @@ export default function PokemonList() {
           </button>
         ))}
       </div>
+      {pokemonList.length !== 0 && (
       <div className={styles.pokemonList}>
-        {pokemonList.map((pokemon) => (
+        {pokemonList.map(pokemon => (
           <PokemonCard pokemon={pokemon} key={pokemon.name} />
         ))}
       </div>
+      )}
     </section>
   );
 }

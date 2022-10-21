@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 
-import PokemonTeamCard from './PokemonTeamCard';
 import styles from './PokemonTeam.module.css';
+import PokemonTeamCard from './PokemonTeamCard';
 
 export default function PokemonTeam({
   trainer, team, isBattle, onClick = () => {},
@@ -11,13 +10,7 @@ export default function PokemonTeam({
   const [pokemonInTeam, setPokemoninTeam] = useState([]);
   const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak';
   useEffect(() => {
-    if (trainer === '1') {
-      const team$ = Trainer1Team.subscribe(setPokemoninTeam);
-      return () => {
-        team$.unsubscribe();
-      };
-    }
-    const team$ = Trainer2Team.subscribe(setPokemoninTeam);
+    const team$ = team.subscribe(setPokemoninTeam);
     return () => {
       team$.unsubscribe();
     };
@@ -27,14 +20,14 @@ export default function PokemonTeam({
     <section className={styles.teamContainer}>
       <header className={styles.header}>
         <p>{trainerName}</p>
-        {pokemonInTeam.map((pokemon) => (
+        {pokemonInTeam.map(pokemon => (
           <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
         ))}
       </header>
       <main>
         {pokemonInTeam.lenght !== 0 && (
         <div>
-          {pokemonInTeam.map((pokemon) => (
+          {pokemonInTeam.map(pokemon => (
             <PokemonTeamCard
               key={pokemon.id}
               pokemon={pokemon}

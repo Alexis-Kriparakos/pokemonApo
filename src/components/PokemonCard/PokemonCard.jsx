@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import Link from 'next/link';
-import get from 'lodash/get';
 import cn from 'classnames';
-import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
+import get from 'lodash/get';
+import Link from 'next/link';
+import React, { useState } from 'react';
+
 import { MAX_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
+import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
+
 import styles from './PokemonCard.module.css';
 
 const alertDuplicatePokemonText = 'This pokemon is already in your team.';
@@ -89,9 +91,9 @@ export default function PokemonCard({ pokemon }) {
   }
 
   function onClickMove(move) {
-    const found = selectedMoves.some((m) => m.id === move.id);
+    const found = selectedMoves.some(m => m.id === move.id);
     if (found) {
-      const newMoves = selectedMoves.filter((m) => m.id !== move.id);
+      const newMoves = selectedMoves.filter(m => m.id !== move.id);
       setSelectedMoves(newMoves);
       return;
     }
@@ -204,8 +206,8 @@ export default function PokemonCard({ pokemon }) {
       <PokemonMovesModal
         isOpenModal={isOpenModal}
         setIsOpenModal={setOpenModal}
-        onClickMove={(move) => onClickMove(move)}
-        onClickAddToTeam={(poke) => onClickAddToTeam(poke)}
+        onClickMove={move => onClickMove(move)}
+        onClickAddToTeam={poke => onClickAddToTeam(poke)}
         pokemon={pokemon}
         selectedMoves={selectedMoves}
       />

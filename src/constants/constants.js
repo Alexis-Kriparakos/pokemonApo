@@ -34,7 +34,7 @@ export const REGIONS_POKEMON = {
   },
 };
 
-export const MAX_POKEMON_TEAM = 1;
+export const MAX_POKEMON_TEAM = 3;
 
 export const TYPE_TO_IMG = {
   normal: 'normal.png',
