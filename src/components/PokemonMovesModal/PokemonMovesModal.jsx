@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactModal from 'react-modal';
 
-import { getPokemonMove } from '../../api/pokemon';
 import { TYPE_TO_IMG } from '../../constants/constants';
+import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { PrimaryButton } from '../Buttons/Buttons';
 
 import styles from './PokemonMovesModal.module.css';
@@ -43,26 +43,13 @@ export default function PokemonMovesModal({
 
   const headerTitle = `Pick ${pokemon.name}'s 4 Moves`;
 
+  async function getMoves() {
+    const allMoves = await getPokemonMoves(pokemon);
+    setPokemonMoves(allMoves);
+  }
+
   useEffect(() => {
-    async function getPokemonMoves() {
-      await Promise.all(pokemon.moves.map(async move => {
-        const pokemonM = await getPokemonMove(move.move.url);
-        setPokemonMoves(prevS => [...prevS, {
-          id: pokemonM.id,
-          name: pokemonM.name,
-          effect_chance: pokemonM.effect_chance,
-          effect_changes: pokemonM.effect_changes,
-          effect_entries: pokemonM.effect_entries,
-          accuracy: pokemonM.accuracy,
-          power: pokemonM.power,
-          stat_changes: pokemonM.stat_changes,
-          target: pokemonM.target,
-          type: pokemonM.type,
-        }]);
-        return pokemonM;
-      }));
-    }
-    getPokemonMoves();
+    getMoves();
   }, []);
 
   function getToolTipText(m) {

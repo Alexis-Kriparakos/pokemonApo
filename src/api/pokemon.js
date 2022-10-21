@@ -1,8 +1,8 @@
 import axios from 'axios';
 import get from 'lodash/get';
 
-import { transformPokemon } from '../helpers/transformer';
 import { REGIONS_POKEMON } from '../constants/constants';
+import { transformPokemon } from '../helpers/transformer';
 
 const baseURL = 'https://pokeapi.co/api/v2';
 const POKE = axios.create({
@@ -42,12 +42,12 @@ export async function getPokemon(pokeName) {
 export async function getData(region = 'kanto') {
   const { number, offset } = REGIONS_POKEMON[region];
   const pokemonList = await getPokemonList(number, offset);
-  const pokemonListWithInfo = await Promise.all(pokemonList.map((p) => {
+  const pokemonListWithInfo = await Promise.all(pokemonList.map(p => {
     const pokemon = getPokemon(p.name);
     return pokemon;
   }));
   const pokemonListWithStats = pokemonListWithInfo
-    .map((poke) => transformPokemon(poke));
+    .map(poke => transformPokemon(poke));
   return { [region]: pokemonListWithStats };
 }
 

@@ -1,8 +1,10 @@
-import React from 'react';
 import Link from 'next/link';
-import styles from './Header.module.css';
+import React from 'react';
+
 import PokemonStore from '../../store/pokemonStrore';
-import PokemonToShow from '../../store/pokemonToShow';
+import { PokemonToShow } from '../../store/pokemonToShow';
+
+import styles from './Header.module.css';
 
 export default function Header() {
   function onChangeInput(value) {
@@ -13,18 +15,20 @@ export default function Header() {
       PokemonToShow.update({ region, pokemon: allPokemon });
       return;
     }
-    const filteredPokemons = allPokemon.filter((pokemon) => pokemon.searchTerms
-      .find((term) => term.indexOf(value) !== -1));
+    const filteredPokemons = allPokemon.filter(pokemon => pokemon.searchTerms
+      .find(term => term.indexOf(value) !== -1));
     PokemonToShow.update({ region, pokemon: filteredPokemons });
   }
 
   return (
     <section className={styles.container}>
-      <div className={styles.headerText}>
-        <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
-      </div>
+      <Link href="/">
+        <a className={styles.headerText}>
+          <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
+        </a>
+      </Link>
       {/* <div className={styles.inputContainer}> */}
-      <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={(e) => onChangeInput(e.target.value)} />
+      <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />
       {/* </div> */}
       <div className={styles.wrapper}>
         <Link href="/battle">
