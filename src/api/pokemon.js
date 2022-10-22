@@ -22,16 +22,17 @@ export async function getPokemonList(limit = 150, offset = 0) {
 
 export async function getPokemon(pokeName) {
   try {
-    const response = await POKE.get(`/pokemon/${pokeName}/`);
-    const name = get(response, 'data.species.name');
-    const moves = get(response, 'data.moves');
-    const sprites = get(response, 'data.sprites');
-    const types = get(response, 'data.types');
-    const stats = get(response, 'data.stats');
-    const id = get(response, 'data.id');
-    const weight = get(response, 'data.weight');
+    const pokemon = await POKE.get(`/pokemon/${pokeName}/`);
+    const name = get(pokemon, 'data.species.name');
+    const moves = get(pokemon, 'data.moves');
+    const sprites = get(pokemon, 'data.sprites');
+    const types = get(pokemon, 'data.types');
+    const stats = get(pokemon, 'data.stats');
+    const id = get(pokemon, 'data.id');
+    const weight = get(pokemon, 'data.weight');
+    const species = get(pokemon, 'data.species');
     return {
-      id, name, moves, sprites, types, stats, weight,
+      id, name, moves, sprites, species, types, stats, weight,
     };
   } catch (error) {
     console.log(error);
@@ -61,6 +62,26 @@ export async function getPokemonMove(moveURL) {
   }
 }
 
+export async function getPokemonSpecies(speciesURL) {
+  try {
+    const response = await axios.get(speciesURL);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export async function getPokemonEvolutionChain(evolutionURL) {
+  try {
+    const response = await axios.get(evolutionURL);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
 export default {
-  getPokemonList, getPokemon, getData, getPokemonMove,
+  getPokemonList, getPokemon, getData, getPokemonMove, getPokemonSpecies, getPokemonEvolutionChain,
 };

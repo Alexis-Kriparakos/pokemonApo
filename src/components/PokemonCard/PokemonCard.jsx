@@ -2,7 +2,7 @@
 import cn from 'classnames';
 import get from 'lodash/get';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { MAX_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
 import { PokemonSelected } from '../../store/pokemonToShow';
@@ -19,44 +19,46 @@ export default function PokemonCard({ pokemon }) {
   const image = get(pokemon, 'sprites.other.dream_world.front_default');
   // const image = get(pokemon, 'sprites.other.official-artwork.front_default');
 
-  const BAR_STYLE = {
-    hp: {
-      backgroundColor: '#5ABA4A',
-      width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: '0.625rem',
-    },
-    atk: {
-      backgroundColor: '#F37336',
-      width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: '0.625rem',
-    },
-    def: {
-      backgroundColor: '#63C8F2',
-      width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: ' 0.625rem',
-    },
-    spAtk: {
-      backgroundColor: '#D88DBC',
-      width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: '0.625rem',
-    },
-    spDef: {
-      backgroundColor: '#1E3E72',
-      width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: '0.625rem',
-    },
-    speed: {
-      backgroundColor: '#F7CC3B',
-      width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
-      height: '0.375rem',
-      borderRadius: '0.625rem',
-    },
-  };
+  const memoStats = useMemo(() => {
+    return {
+      hp: {
+        backgroundColor: '#5ABA4A',
+        width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: '0.625rem',
+      },
+      atk: {
+        backgroundColor: '#F37336',
+        width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: '0.625rem',
+      },
+      def: {
+        backgroundColor: '#63C8F2',
+        width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: ' 0.625rem',
+      },
+      spAtk: {
+        backgroundColor: '#D88DBC',
+        width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: '0.625rem',
+      },
+      spDef: {
+        backgroundColor: '#1E3E72',
+        width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: '0.625rem',
+      },
+      speed: {
+        backgroundColor: '#F7CC3B',
+        width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
+        height: '0.375rem',
+        borderRadius: '0.625rem',
+      },
+    };
+  }, [pokemon]);
 
   const [selectedMoves, setSelectedMoves] = useState([]);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -137,7 +139,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.hpStat}</p>
           </div>
           <div className={styles.statsBar}>
-            <div style={BAR_STYLE.hp} />
+            <div style={memoStats.hp} />
           </div>
         </div>
         <div className={styles.statContainer}>
@@ -146,7 +148,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.atkStat}</p>
           </div>
           <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.atk} />
+            <div style={memoStats.atk} />
           </div>
         </div>
         <div className={styles.statContainer}>
@@ -155,7 +157,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.defStat}</p>
           </div>
           <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.def} />
+            <div style={memoStats.def} />
           </div>
         </div>
         <div className={styles.statContainer}>
@@ -164,7 +166,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.spAtkStat}</p>
           </div>
           <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.spAtk} />
+            <div style={memoStats.spAtk} />
           </div>
         </div>
         <div className={styles.statContainer}>
@@ -173,7 +175,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.spDefStat}</p>
           </div>
           <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.spDef} />
+            <div style={memoStats.spDef} />
           </div>
         </div>
         <div className={styles.statContainer}>
@@ -182,7 +184,7 @@ export default function PokemonCard({ pokemon }) {
             <p>{pokemon.battleStats.speedStat}</p>
           </div>
           <div className={cn(styles.statsBar)}>
-            <div style={BAR_STYLE.speed} />
+            <div style={memoStats.speed} />
           </div>
         </div>
       </button>

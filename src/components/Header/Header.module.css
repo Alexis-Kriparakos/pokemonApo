@@ -16,20 +16,21 @@
 }
 
 .input {
-    font-size: 1rem;	
+	font-size: 1rem;
 	line-height: 1.25rem;
 	outline: 0;
 	height: 40px;
 	border: 1px solid #e8e8e8;
 	color: #292929;
-    border-radius: 1.5rem;
+	border-radius: 1.5rem;
+	padding: 0 1.25rem;
 	display: inline-flex;
 	width: 30rem;
 	height: 2.875rem;
 }
 
 .input:hover {
-  border: 1px solid #d0021b;
+	border: 1px solid #d0021b;
 }
 
 .wrapper {
