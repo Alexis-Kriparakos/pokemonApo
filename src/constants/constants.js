@@ -36,6 +36,12 @@ export const REGIONS_POKEMON = {
 
 export const MAX_POKEMON_TEAM = 3;
 
+export const DUMMY_TEXT = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+It has survived not only five centuries, but also the leap into electronic typesetting, 
+remaining essentially unchanged.`;
+
 export const TYPE_TO_IMG = {
   normal: 'normal.png',
   fire: 'fire.png',
@@ -63,12 +69,12 @@ export const MOVE_DIVISION = {
 };
 
 export const MAX_STATS = {
-  HP_STAT: 450,
-  ATK_STAT: 300,
-  DEF_STAT: 350,
-  SPATK_STAT: 420,
-  SPDEF_STAT: 420,
-  SPEED_STAT: 360,
+  HP_STAT: 500,
+  ATK_STAT: 350,
+  DEF_STAT: 400,
+  SPATK_STAT: 480,
+  SPDEF_STAT: 480,
+  SPEED_STAT: 420,
 };
 
 export const TYPE_WEAKNESS_TABLE = {

@@ -1,20 +1,36 @@
 // import orderBy from 'lodash/orderBy';
 
 import orderBy from 'lodash/orderBy';
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { getPokemonSpecies, getPokemonEvolutionChain, getPokemon } from '../../api/pokemon';
+import { PrimaryButton } from '../../components/Buttons/Buttons';
 import Header from '../../components/Header/Header';
-import { MAX_STATS } from '../../constants/constants';
+import { MAX_STATS, TYPE_TO_IMG, DUMMY_TEXT } from '../../constants/constants';
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { transformPokemon } from '../../helpers/transformer';
 
 import styles from './pokemonDetails.module.css';
 
-export default function PokemonPage({ _pokemon, _pokemonSpecies, _evolutionChain }) {
+export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const pokemon = JSON.parse(_pokemon);
-  const pokemonSpecies = JSON.parse(_pokemonSpecies);
   const evolutionChain = JSON.parse(_evolutionChain);
+
+  function getMostPowerfullMoves() {
+    const sortedMoves = orderBy(pokemon.moves, ({ power }) => power || 0, 'desc');
+    return sortedMoves.slice(0, 4);
+  }
+
+  const pokemonArtwork = pokemon.sprites.other['official-artwork'].front_default;
+  const { chain } = evolutionChain;
+  const fourPokemonMoves = getMostPowerfullMoves(pokemon);
+
+  const [selectedMove, setSelectedMove] = useState(fourPokemonMoves[0]);
+
+  const name1 = chain.species.name;
+  const name2 = chain.evolves_to[0].species.name;
+  console.log(chain);
+  console.log(name1, name2);
 
   const memoStats = useMemo(() => {
     return {
@@ -81,14 +97,14 @@ export default function PokemonPage({ _pokemon, _pokemonSpecies, _evolutionChain
     };
   }, [pokemon]);
 
-  function getMostPowerfullMoves() {
-    const sortedMoves = orderBy(pokemon.moves, ({ power }) => power || 0, 'desc');
-    return sortedMoves.slice(0, 4);
+  function onClickOpenDetails(move) {
+    if (selectedMove?.id === move.id) {
+      setSelectedMove(null);
+      return;
+    }
+    setSelectedMove(move);
   }
-  const pokemonArtwork = pokemon.sprites.other['official-artwork'].front_default;
-  const [evolvesTo] = evolutionChain.chain.evolves_to;
-  // const fourPokemonMoves = getMostPowerfullMoves(pokemon);
-  console.log(pokemon);
+
   return (
     <>
       <header>
@@ -100,55 +116,78 @@ export default function PokemonPage({ _pokemon, _pokemonSpecies, _evolutionChain
         </div>
         <div className={styles.pokemonInfo}>
           <div className={styles.upperSection}>
-            MOVES INFO
+            <div className={styles.title}>
+              <h1>{pokemon.name}</h1>
+              <div>
+                {pokemon.types.map(type => (
+                  <img src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
+                ))}
+              </div>
+            </div>
+            <div className={styles.movesContainer}>
+              {fourPokemonMoves.map(move => (
+                <>
+                  <PrimaryButton onClick={() => onClickOpenDetails(move)}>{move.name}</PrimaryButton>
+                  {move.id === selectedMove?.id && (
+                    <div className={styles.moveDetails}>
+                      <img
+                        src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`}
+                        alt={move.type.name}
+                        className={styles.typeImg}
+                      />
+                      <p>{DUMMY_TEXT}</p>
+                      <div className={styles.moveInfo}>
+                        <p className={styles.moveInfoText}>{`Power: ${move.power}`}</p>
+                        <p className={styles.moveInfoText}>{`Accuracy: ${move.accuracy}`}</p>
+                        <p className={styles.moveInfoText}>{`PP: ${move.pp}`}</p>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ))}
+            </div>
           </div>
           <div className={styles.lowerSection}>
-            {Object.values(memoStats).map(stat => (
-              <div className={styles.statContainer}>
-                <div className={styles.stats}>
-                  <p>{stat.label}</p>
-                  <p>{stat.value}</p>
-                </div>
-                <div className={styles.statsBar}>
-                  <div style={stat.styles} />
-                </div>
-              </div>
-            ))}
+            <div className={styles.statContainer}>
+              {Object.values(memoStats).map(stat => (
+                <React.Fragment key={stat.label}>
+                  <div className={styles.stats}>
+                    <p>{stat.label}</p>
+                    <p>{stat.value}</p>
+                  </div>
+                  <div className={styles.statsBar}>
+                    <div style={stat.styles} />
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </section>
-      {/* {pokemonFourMoves.map(move => (
-        <div>{move.name}</div>
-      ))} */}
+
     </>
   );
 }
-// export async function getStaticPaths() {
-//   const paths = [];
-//   return { paths, fallback: true };
-// }
 
 export async function getServerSideProps(context) {
-  async function getMoves(_pokemon) {
-    const allMoves = await getPokemonMoves(_pokemon);
-    return { ..._pokemon, moves: allMoves };
+  async function getMoves(tempPokemon) {
+    const allMoves = await getPokemonMoves(tempPokemon);
+    return { ...tempPokemon, moves: allMoves };
   }
 
   const { slug } = context.params;
   const pokemonName = slug[0].toLowerCase();
   const _pokemon = await getPokemon(pokemonName);
   const pokemonTransformed = transformPokemon(_pokemon);
-  // const pokemonWithMoves = await getMoves(_pokemon);
-  const _pokemonSpecies = await getPokemonSpecies(pokemonTransformed.species.url);
+  const pokemonWithMoves = await getMoves(pokemonTransformed);
+  const _pokemonSpecies = await getPokemonSpecies(_pokemon.species.url);
   const _evolutionChain = await getPokemonEvolutionChain(_pokemonSpecies.evolution_chain.url);
-  const pokemonJSON = JSON.stringify(pokemonTransformed);
+  const pokemonJSON = JSON.stringify(pokemonWithMoves);
   const evolutionChainJSON = JSON.stringify(_evolutionChain);
-  const pokemonSpeciesJSON = JSON.stringify(_pokemonSpecies);
 
   return {
     props: {
       _pokemon: pokemonJSON,
-      _pokemonSpecies: pokemonSpeciesJSON,
       _evolutionChain: evolutionChainJSON,
     },
   };
