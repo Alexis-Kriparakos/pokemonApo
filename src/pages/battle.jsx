@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 import Header from '../components/Header/Header';
 import MoveSelection from '../components/MoveSelection/MoveSelection';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
-import { PHASES } from '../constants/constants';
+import { PHASES, TYPE_TO_IMG } from '../constants/constants';
 import { PokemonBattle } from '../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 
@@ -23,6 +22,33 @@ export default function Battle() {
   const [selectedMoveP2, setSelectedMoveP2] = useState();
   const [player1Disabled, setPlayer1Disabled] = useState(false);
   const [player2Disabled, setPlayer2Disabled] = useState(false);
+
+  const healthBarStyle = useCallback(pokemon => {
+    if (!pokemon) return;
+    const style = {
+      backgroundColor: '#5ABA4A',
+      width: `${((pokemon.battleStats.hpStat / pokemon.stats.hpStat) * 100).toFixed(3)}%`,
+      height: '0.375rem',
+      borderRadius: '0.625rem',
+    };
+    return (
+      <div className={styles.healthStatus}>
+        <div className={styles.healthText}>
+          <span>{pokemon.name.toUpperCase()}</span>
+          <span>lvl.100</span>
+          <div>
+            {pokemon.types.map(type => (
+              <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
+            ))}
+          </div>
+        </div>
+        <div className={styles.statsBar}>
+          <div style={style} />
+        </div>
+        <span>{`${pokemon.battleStats.hpStat} / ${pokemon.stats.hpStat}`}</span>
+      </div>
+    );
+  }, [pokemonFighting1, pokemonFighting2]);
 
   function resetChoices() {
     setPlayer1Disabled(false);
@@ -107,15 +133,12 @@ export default function Battle() {
     }
   }, [battleStatus]);
 
+  if (!pokemonFighting1 || !pokemonFighting2) return null;
+
   return (
     <>
       <header>
         <Header />
-        <Link href="/">
-          <a className={styles.link}>
-            Home
-          </a>
-        </Link>
       </header>
       <div className={styles.mainContainer}>
         <div className={styles.teamContainer}>
@@ -132,7 +155,25 @@ export default function Battle() {
             }}
           />
         </div>
-        {/* <div className={styles.battleContainer} /> */}
+        <div className={styles.battleContainer}>
+          <div className={styles.arena}>
+            <div className={styles.leftSide}>
+              {healthBarStyle(pokemonFighting1)}
+              <div className={styles.bottomPokemon}>
+                <img className={styles.sprite} src={pokemonFighting1?.sprites?.back_default} alt="" />
+              </div>
+            </div>
+            <div className={styles.rightSide}>
+              <div className={styles.topPokemon}>
+                <img className={styles.sprite} src={pokemonFighting2?.sprites?.front_default} alt="" />
+              </div>
+              {healthBarStyle(pokemonFighting2)}
+            </div>
+          </div>
+          <div className={styles.battleStatusMessageContainer}>
+            {battleStatus}
+          </div>
+        </div>
         <div className={styles.teamContainer}>
           <PokemonTeam
             trainer="2"
@@ -147,9 +188,6 @@ export default function Battle() {
             }}
           />
         </div>
-      </div>
-      <div className={styles.battleStatusMessageContainer}>
-        Player one is choosing his move.
       </div>
       <div className={styles.movesContainer}>
         <MoveSelection

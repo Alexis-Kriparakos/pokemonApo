@@ -34,7 +34,7 @@ export const REGIONS_POKEMON = {
   },
 };
 
-export const MAX_POKEMON_TEAM = 3;
+export const MAX_POKEMON_TEAM = 5;
 
 export const DUMMY_TEXT = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
