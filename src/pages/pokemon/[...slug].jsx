@@ -1,12 +1,14 @@
 // import orderBy from 'lodash/orderBy';
 
 import orderBy from 'lodash/orderBy';
-import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import { getPokemonSpecies, getPokemonEvolutionChain, getPokemon } from '../../api/pokemon';
 import { PrimaryButton } from '../../components/Buttons/Buttons';
 import Header from '../../components/Header/Header';
 import { MAX_STATS, TYPE_TO_IMG, DUMMY_TEXT } from '../../constants/constants';
+import { getEvolutionChainTransformed, findOrGetPokemonChain } from '../../helpers/evolution';
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { transformPokemon } from '../../helpers/transformer';
 
@@ -22,15 +24,10 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   }
 
   const pokemonArtwork = pokemon.sprites.other['official-artwork'].front_default;
-  const { chain } = evolutionChain;
   const fourPokemonMoves = getMostPowerfullMoves(pokemon);
 
   const [selectedMove, setSelectedMove] = useState(fourPokemonMoves[0]);
-
-  const name1 = chain.species.name;
-  const name2 = chain.evolves_to[0].species.name;
-  console.log(chain);
-  console.log(name1, name2);
+  const [evolutions, setEvolutions] = useState([]);
 
   const memoStats = useMemo(() => {
     return {
@@ -97,6 +94,17 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
     };
   }, [pokemon]);
 
+  useEffect(() => {
+    const { chain } = evolutionChain;
+    async function getEvolutionPokemon() {
+      const evoChain = getEvolutionChainTransformed(chain);
+      const pokemonInEvolution = await findOrGetPokemonChain(evoChain);
+      console.log(pokemonInEvolution);
+      setEvolutions(pokemonInEvolution);
+    }
+    getEvolutionPokemon().catch(console.error);
+  }, []);
+
   function onClickOpenDetails(move) {
     if (selectedMove?.id === move.id) {
       setSelectedMove(null);
@@ -111,8 +119,24 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
         <Header />
       </header>
       <section className={styles.pokemonDetailsContaier}>
-        <div className={styles.pokemonImgContainer}>
-          <img className={styles.image} src={pokemonArtwork} alt={pokemon.name} />
+        <div className={styles.leftSection}>
+          <div className={styles.pokemonImgContainer}>
+            <img className={styles.image} src={pokemonArtwork} alt={pokemon.name} />
+          </div>
+          <div className={styles.evolutionChain}>
+            {evolutions.map(poke => (
+              <Link key={poke.id} href={`/pokemon/${poke.name}`}>
+                <a className={styles.linkEvoChain}>
+                  <img
+                    className={styles.smallImage}
+                    src={poke.sprites.front_default}
+                    alt={pokemon.name}
+                  />
+
+                </a>
+              </Link>
+            ))}
+          </div>
         </div>
         <div className={styles.pokemonInfo}>
           <div className={styles.upperSection}>
@@ -120,13 +144,13 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
               <h1>{pokemon.name}</h1>
               <div>
                 {pokemon.types.map(type => (
-                  <img src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
+                  <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
                 ))}
               </div>
             </div>
             <div className={styles.movesContainer}>
               {fourPokemonMoves.map(move => (
-                <>
+                <React.Fragment key={move.id}>
                   <PrimaryButton onClick={() => onClickOpenDetails(move)}>{move.name}</PrimaryButton>
                   {move.id === selectedMove?.id && (
                     <div className={styles.moveDetails}>
@@ -143,7 +167,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
                       </div>
                     </div>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </div>
           </div>

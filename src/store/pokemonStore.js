@@ -24,6 +24,14 @@ const PokemonStore = {
     }
     return pokemonCollection;
   },
+  getAllPokemon: async () => {
+    const pokemonCollection = PokemonStore.getValue();
+    const allPokemonArray = Object.values(pokemonCollection);
+    const allPokemon = allPokemonArray.reduce((_allPokemon, pokemonInRegion) => {
+      return [..._allPokemon, ...pokemonInRegion];
+    }, []);
+    return allPokemon;
+  },
   subscribe: setPokemon => pokemonStore$.subscribe(setPokemon),
   getValue: () => pokemonStore$.value,
   isFetched: () => pokemonFetched$.value,

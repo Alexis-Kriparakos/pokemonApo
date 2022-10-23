@@ -12,7 +12,7 @@
 	align-self: flex-start;
 	padding: 1.5rem;
 	border-radius: 0.5rem;
-	border: 1px solid #eee;
+	border: 2px solid #eee;
 	width: 24.75rem;
 }
 
@@ -21,13 +21,33 @@
 	height: 18.875rem;
 }
 
+.evolutionChain {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 29.875rem;
+}
+
+.smallImage {
+	width: 5rem;
+	height: 5rem;
+	border-radius: 0.5rem;
+	border: 2px solid #eee;
+	padding: 1.5rem;
+}
+
+.smallImage:hover {
+	border: 2px solid #000;
+}
+
 .pokemonInfo {
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
 	border-radius: 0.5rem;
 	background-color: #fff;
-	border: 1px solid #eee;
+	border: 2px solid #eee;
 	margin: 0 1.5rem;
 	padding: 1.5rem;
 	width: 39rem;

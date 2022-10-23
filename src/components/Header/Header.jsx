@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-import PokemonStore from '../../store/pokemonStrore';
+import PokemonStore from '../../store/pokemonStore';
 import { PokemonToShow } from '../../store/pokemonToShow';
 
 import styles from './Header.module.css';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { REGIONS_POKEMON } from '../../constants/constants';
 import { capitalizeFirstLetter } from '../../helpers/transformer';
-import PokemonStore from '../../store/pokemonStrore';
+import PokemonStore from '../../store/pokemonStore';
 import { PokemonToShow } from '../../store/pokemonToShow';
 import PokemonCard from '../PokemonCard/PokemonCard';
 

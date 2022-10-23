@@ -6,7 +6,7 @@ import { getData } from '../api/pokemon';
 import Header from '../components/Header/Header';
 import PokemonList from '../components/PokemonList/PokemonList';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
-import PokemonStore from '../store/pokemonStrore';
+import PokemonStore from '../store/pokemonStore';
 import { PokemonToShow } from '../store/pokemonToShow';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 
@@ -15,8 +15,8 @@ import styles from './index.module.scss';
 export default function Index({ pokemon }) {
   useEffect(() => {
     PokemonStore.update(pokemon);
-    const allPokemon = Object.values(pokemon);
-    PokemonToShow.update({ region: 'kanto', pokemon: allPokemon[0] });
+    const [allPokemon] = Object.values(pokemon);
+    PokemonToShow.update({ region: 'kanto', pokemon: allPokemon });
   }, []);
 
   return (
