@@ -1,3 +1,72 @@
+import { useMemo } from 'react';
+
+export function MEMO_STATS(pokemon) {
+  return useMemo(() => {
+    return {
+      hp: {
+        label: 'Health Points :',
+        value: pokemon.stats.hpStat,
+        styles: {
+          backgroundColor: '#5ABA4A',
+          width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: '0.625rem',
+        },
+      },
+      atk: {
+        label: 'Attack :',
+        value: pokemon.stats.atkStat,
+        styles: {
+          backgroundColor: '#F37336',
+          width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: '0.625rem',
+        },
+      },
+      def: {
+        label: 'Defence :',
+        value: pokemon.stats.defStat,
+        styles: {
+          backgroundColor: '#63C8F2',
+          width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: ' 0.625rem',
+        },
+      },
+      spAtk: {
+        label: 'Sp. Attack :',
+        value: pokemon.stats.spAtkStat,
+        styles: {
+          backgroundColor: '#D88DBC',
+          width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: '0.625rem',
+        },
+      },
+      spDef: {
+        label: 'Sp. Defence :',
+        value: pokemon.stats.spDefStat,
+        styles: {
+          backgroundColor: '#1E3E72',
+          width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: '0.625rem',
+        },
+      },
+      speed: {
+        label: 'Speed :',
+        value: pokemon.stats.speedStat,
+        styles: {
+          backgroundColor: '#F7CC3B',
+          width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
+          height: '0.375rem',
+          borderRadius: '0.625rem',
+        },
+      },
+    };
+  }, [pokemon]);
+}
+
 export const PHASES = {
   PLAYER1_MOVE_CHOICE: 'Player one is choosing their move',
   PLAYER2_MOVE_CHOICE: 'Player two is choosing their move',
@@ -34,7 +103,7 @@ export const REGIONS_POKEMON = {
   },
 };
 
-export const MAX_POKEMON_TEAM = 3;
+export const MAX_POKEMON_TEAM = 5;
 
 export const DUMMY_TEXT = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -441,5 +510,5 @@ export const TYPE_WEAKNESS_TABLE = {
 };
 
 export default {
-  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES, MAX_POKEMON_TEAM,
+  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES, MAX_POKEMON_TEAM, MEMO_STATS,
 };

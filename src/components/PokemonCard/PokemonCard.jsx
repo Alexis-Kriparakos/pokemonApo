@@ -2,9 +2,9 @@
 import cn from 'classnames';
 import get from 'lodash/get';
 import Link from 'next/link';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 
-import { MAX_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
+import { MEMO_STATS, MAX_POKEMON_TEAM } from '../../constants/constants';
 import { PokemonSelected } from '../../store/pokemonToShow';
 import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import GenericAlert from '../GenericAlert/GenericAlert';
@@ -19,46 +19,7 @@ export default function PokemonCard({ pokemon }) {
   const image = get(pokemon, 'sprites.other.dream_world.front_default');
   // const image = get(pokemon, 'sprites.other.official-artwork.front_default');
 
-  const memoStats = useMemo(() => {
-    return {
-      hp: {
-        backgroundColor: '#5ABA4A',
-        width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: '0.625rem',
-      },
-      atk: {
-        backgroundColor: '#F37336',
-        width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: '0.625rem',
-      },
-      def: {
-        backgroundColor: '#63C8F2',
-        width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: ' 0.625rem',
-      },
-      spAtk: {
-        backgroundColor: '#D88DBC',
-        width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: '0.625rem',
-      },
-      spDef: {
-        backgroundColor: '#1E3E72',
-        width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: '0.625rem',
-      },
-      speed: {
-        backgroundColor: '#F7CC3B',
-        width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
-        height: '0.375rem',
-        borderRadius: '0.625rem',
-      },
-    };
-  }, [pokemon]);
+  const memoStats = MEMO_STATS(pokemon);
 
   const [selectedMoves, setSelectedMoves] = useState([]);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -134,58 +95,17 @@ export default function PokemonCard({ pokemon }) {
       >
         <p className={styles.pokemonName}>{pokemon.name}</p>
         <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>HP : </p>
-            <p>{pokemon.battleStats.hpStat}</p>
-          </div>
-          <div className={styles.statsBar}>
-            <div style={memoStats.hp} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Attack : </p>
-            <p>{pokemon.battleStats.atkStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={memoStats.atk} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Defense : </p>
-            <p>{pokemon.battleStats.defStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={memoStats.def} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Sp. Atk : </p>
-            <p>{pokemon.battleStats.spAtkStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={memoStats.spAtk} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Sp. Def : </p>
-            <p>{pokemon.battleStats.spDefStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={memoStats.spDef} />
-          </div>
-        </div>
-        <div className={styles.statContainer}>
-          <div className={styles.stats}>
-            <p>Speed : </p>
-            <p>{pokemon.battleStats.speedStat}</p>
-          </div>
-          <div className={cn(styles.statsBar)}>
-            <div style={memoStats.speed} />
-          </div>
+          {Object.values(memoStats).map(stat => (
+            <React.Fragment key={stat.label}>
+              <div className={styles.stats}>
+                <p>{stat.label}</p>
+                <p>{stat.value}</p>
+              </div>
+              <div className={styles.statsBar}>
+                <div style={stat.styles} />
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       </button>
       <div className={styles.btnContainer}>

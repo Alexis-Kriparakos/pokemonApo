@@ -3,11 +3,90 @@
 }
 
 .battleContainer {
-  background-color: green;
-  width: 80rem;
-  height: 40rem;
+  background-color: #eee;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.arena {
+  display: flex;
+  justify-content: space-around;
+  flex: 1 1;
+  padding: 1.5rem 0;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.healthStatus {
+  font-family: "JetBrains Mono", monospace;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  border: 1px solid #000;
+  padding: 0.5rem 1rem;
+  width: 15rem;
+}
+
+.healthText {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  margin: 0 0 0.5rem;
+}
+
+.bottomPokemon {
+  align-self: flex-end;
+  margin: 0 auto;
+}
+
+.topPokemon {
+  align-self: flex-start;
+  margin: 0 auto;
+}
+
+.sprite {
+  width: 8rem;
+  height: 8rem;
+  box-shadow: 0px 6px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.statsBar {
+  background-color: #000;
+  min-width: 7rem;
+  border-radius: 0.875rem;
+  padding: 0.25rem;
+  margin: 0 0 0.125rem;
+  height: 0.5rem;
+}
+
+.typeImg {
+  width: 1.25rem;
+  margin: 0 0.125rem;
 }
 
 .movesContainer {
   display: flex;
+}
+
+.battleStatusMessageContainer {
+  font-family: "JetBrains Mono", monospace;
+  color: green;
+  background-color: #000;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding: 1rem 2rem;
+  height: 6rem;
+  border-radius: 0.5rem;
+  border: 2px solid #eee;
 }
