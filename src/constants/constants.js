@@ -55,7 +55,7 @@ export function MEMO_STATS(pokemon) {
       },
       speed: {
         label: 'Speed :',
-        value: pokemon.stats.speed,
+        value: pokemon.stats.speedStat,
         styles: {
           backgroundColor: '#F7CC3B',
           width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
