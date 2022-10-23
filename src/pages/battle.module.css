@@ -11,3 +11,15 @@
 .movesContainer {
   display: flex;
 }
+
+.battleStatusMessageContainer {
+  font-family: "JetBrains Mono", monospace;
+  color: green;
+  background-color: #000;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding: 1rem 2rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #eee;
+}

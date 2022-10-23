@@ -148,6 +148,9 @@ export default function Battle() {
           />
         </div>
       </div>
+      <div className={styles.battleStatusMessageContainer}>
+        Player one is choosing his move.
+      </div>
       <div className={styles.movesContainer}>
         <MoveSelection
           pokemon={pokemonFighting1}
