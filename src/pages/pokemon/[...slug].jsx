@@ -2,12 +2,12 @@
 
 import orderBy from 'lodash/orderBy';
 import Link from 'next/link';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { getPokemonSpecies, getPokemonEvolutionChain, getPokemon } from '../../api/pokemon';
 import { PrimaryButton } from '../../components/Buttons/Buttons';
 import Header from '../../components/Header/Header';
-import { MAX_STATS, TYPE_TO_IMG, DUMMY_TEXT } from '../../constants/constants';
+import { MEMO_STATS, TYPE_TO_IMG, DUMMY_TEXT } from '../../constants/constants';
 import { getEvolutionChainTransformed, findOrGetPokemonChain } from '../../helpers/evolution';
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { transformPokemon } from '../../helpers/transformer';
@@ -29,77 +29,13 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const [selectedMove, setSelectedMove] = useState(fourPokemonMoves[0]);
   const [evolutions, setEvolutions] = useState([]);
 
-  const memoStats = useMemo(() => {
-    return {
-      hp: {
-        label: 'Health Points :',
-        value: pokemon.stats.hpStat,
-        styles: {
-          backgroundColor: '#5ABA4A',
-          width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: '0.625rem',
-        },
-      },
-      atk: {
-        label: 'Attack :',
-        value: pokemon.stats.atkStat,
-        styles: {
-          backgroundColor: '#F37336',
-          width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: '0.625rem',
-        },
-      },
-      def: {
-        label: 'Defence :',
-        value: pokemon.stats.defStat,
-        styles: {
-          backgroundColor: '#63C8F2',
-          width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: ' 0.625rem',
-        },
-      },
-      spAtk: {
-        label: 'Sp. Attack :',
-        value: pokemon.stats.spAtkStat,
-        styles: {
-          backgroundColor: '#D88DBC',
-          width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: '0.625rem',
-        },
-      },
-      spDef: {
-        label: 'Sp. Defence :',
-        value: pokemon.stats.spDefStat,
-        styles: {
-          backgroundColor: '#1E3E72',
-          width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: '0.625rem',
-        },
-      },
-      speed: {
-        label: 'Speed :',
-        value: pokemon.stats.speed,
-        styles: {
-          backgroundColor: '#F7CC3B',
-          width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
-          height: '0.375rem',
-          borderRadius: '0.625rem',
-        },
-      },
-    };
-  }, [pokemon]);
+  const memoStats = MEMO_STATS(pokemon);
 
   useEffect(() => {
     const { chain } = evolutionChain;
     async function getEvolutionPokemon() {
       const evoChain = getEvolutionChainTransformed(chain);
       const pokemonInEvolution = await findOrGetPokemonChain(evoChain);
-      console.log(pokemonInEvolution);
       setEvolutions(pokemonInEvolution);
     }
     getEvolutionPokemon().catch(console.error);
