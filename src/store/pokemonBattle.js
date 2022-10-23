@@ -1,7 +1,10 @@
+import { cloneDeep } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { Trainer1Team, Trainer2Team } from './teamStore';
-import { calculateDamage } from '../helpers/damage';
+
 import { PHASES } from '../constants/constants';
+import { calculateDamage } from '../helpers/damage';
+
+import { Trainer1Team, Trainer2Team } from './teamStore';
 
 const pokemonBattle$ = new BehaviorSubject(
   {
@@ -13,20 +16,20 @@ const pokemonBattle$ = new BehaviorSubject(
     pokemonFighting1: {},
     pokemonFighting2: {},
     winner: '',
-  },
+  }
 );
 
 export const PokemonBattle = {
-  update: (battleInfo) => {
+  update: battleInfo => {
     pokemonBattle$.next(battleInfo);
   },
-  subscribe: (setBattleInfo) => pokemonBattle$.subscribe(setBattleInfo),
+  subscribe: setBattleInfo => pokemonBattle$.subscribe(setBattleInfo),
   getValue: () => pokemonBattle$.value,
   startBattle: () => {
     const pokemon1 = Trainer1Team.getStartingPokemon();
     const pokemon2 = Trainer2Team.getStartingPokemon();
-    const team1 = Trainer1Team.getValue();
-    const team2 = Trainer2Team.getValue();
+    const team1 = cloneDeep(Trainer1Team.getValue());
+    const team2 = cloneDeep(Trainer2Team.getValue());
     const battle = PokemonBattle.getValue();
     PokemonBattle.update({
       ...battle,
@@ -44,20 +47,20 @@ export const PokemonBattle = {
     const damageDealt = calculateDamage(pokemonAttacking, pokemonDefending, move);
     const { battleStats: updatedBattleStats } = pokemonDefending;
     if (updatedBattleStats.hpStat - damageDealt > 0) {
-      updatedBattleStats.hpStat -= damageDealt;
+      updatedBattleStats.hpStat = updatedBattleStats.hpStat - damageDealt;
       return { ...pokemonDefending, battleStats: updatedBattleStats };
     }
     updatedBattleStats.hpStat = 0;
     return { ...pokemonDefending, battleStats: updatedBattleStats, isAlive: false };
   },
-  updateTeam1: (pokemonInjured) => {
-    const teamTemp = Trainer1Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
+  updateTeam1: pokemonInjured => {
+    const teamTemp = Trainer1Team.getValue().filter(poke => poke.id !== pokemonInjured.id);
     const newTeam = [pokemonInjured, ...teamTemp];
     const battle = PokemonBattle.getValue();
     PokemonBattle.update({ ...battle, teamPlayer1: newTeam, pokemonFighting1: pokemonInjured });
   },
-  updateTeam2: (pokemonInjured) => {
-    const teamTemp = Trainer2Team.getValue().filter((poke) => poke.id !== pokemonInjured.id);
+  updateTeam2: pokemonInjured => {
+    const teamTemp = Trainer2Team.getValue().filter(poke => poke.id !== pokemonInjured.id);
     const newTeam = [pokemonInjured, ...teamTemp];
     const battle = PokemonBattle.getValue();
     PokemonBattle.update({ ...battle, teamPlayer2: newTeam, pokemonFighting2: pokemonInjured });

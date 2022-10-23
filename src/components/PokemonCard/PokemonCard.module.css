@@ -1,5 +1,4 @@
 .pokemonCard {
-	font-family: 'Roboto', Helvetica, Arial, sans-serif;
 	background-color: #ffffff;
 	border-radius: 0.125rem;
 	border: 1px solid #eee;
@@ -7,31 +6,37 @@
 	display: inline-block;
 	line-height: 1rem;
 	margin: 0;
-	padding: 0.75rem ;
+	padding: 0.75rem;
 	position: relative;
 	width: 10.25rem;
 }
 
+.topContainer {
+	text-decoration: none;
+}
+
 .pokemonImageFade {
-    opacity: .5;
-    transform: translateX(30%);/*100%*/
+	opacity: .5;
+	transform: translateX(30%);
+	/*100%*/
 }
 
 .pokemonDetails {
 	cursor: pointer;
 	border: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 90%;
-    height: 100%;
-    background: #fff;
-    transition: .5s;
-    transform-origin: left;
-    transform: perspective(2000px) rotateY(-90deg);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 90%;
+	height: 100%;
+	background: #fff;
+	transition: .5s;
+	transform-origin: left;
+	transform: perspective(2000px) rotateY(-90deg);
 }
+
 .animation {
-    transform: perspective(2000px) rotateY(0deg);
+	transform: perspective(2000px) rotateY(0deg);
 }
 
 .pokemonImage {
@@ -47,8 +52,7 @@
 	justify-content: space-between;
 }
 
-.addPokemon {
-	font-family: 'Roboto', Helvetica, Arial, sans-serif;
+.actionPokemon {
 	font-size: 0.75rem;
 	outline: 0;
 	max-width: 5rem;
@@ -56,7 +60,7 @@
 	justify-content: center;
 	background-color: #d0021b;
 	border: 0;
-	border-radius: 3rem;
+	border-radius: 0.5rem;
 	color: #ffffff;
 	cursor: pointer;
 	font-size: 0.75rem;
@@ -84,17 +88,17 @@
 
 .stats p {
 	font-size: 0.875rem;
-    color: #292929;
+	color: #292929;
 	margin: 0;
 }
 
 .statsBar {
-  	background-color: black;
-  	border-radius: 0.875rem;
-  	padding: 0.25rem;
+	background-color: black;
+	border-radius: 0.875rem;
+	padding: 0.25rem;
 }
- 
-#statsBar > div {
+
+#statsBar>div {
 	height: 1rem;
 	border-radius: 0.625rem;
 }
