@@ -27,9 +27,7 @@ export default function Header() {
           <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
         </a>
       </Link>
-      {/* <div className={styles.inputContainer}> */}
       <input className={styles.input} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />
-      {/* </div> */}
       <div className={styles.wrapper}>
         <Link href="/battle">
           <a className={styles.linkBattle} href="/battle">
