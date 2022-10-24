@@ -8,10 +8,7 @@ import { PHASES, TYPE_TO_IMG } from '../constants/constants';
 import { PokemonBattle } from '../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 
-// import {
-//   CHARMADER1, BULBASUAR1, CHARMADER2, BULBASUAR2,
-// } from '../DummyPokemon';
-import styles from './battle.module.css';
+import styles from './battle.module.scss';
 
 export default function Battle() {
   const [battleInfo, setBattleInfo] = useState();

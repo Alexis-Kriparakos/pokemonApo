@@ -1,7 +1,19 @@
+@use '../breakpoints';
+
+.container {
+	@media (max-width: breakpoints.$md) {
+		margin: 0 0.5rem;
+	}
+}
+
 .pokemonDetailsContaier {
 	display: flex;
 	justify-content: center;
 	margin: 3rem 0 0;
+
+	@media (max-width: breakpoints.$md) {
+		flex-direction: column;
+	}
 }
 
 .pokemonImgContainer {
@@ -14,6 +26,11 @@
 	border-radius: 0.5rem;
 	border: 2px solid #eee;
 	width: 24.75rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 100%;
+		margin: 0 0 1rem;
+	}
 }
 
 .image {
@@ -27,6 +44,11 @@
 	align-items: center;
 	flex-wrap: wrap;
 	max-width: 29.875rem;
+
+	@media (max-width: breakpoints.$md) {
+		max-width: 100%;
+		margin: 0 1rem 1rem;
+	}
 }
 
 .smallImage {
@@ -52,6 +74,11 @@
 	margin: 0 1.5rem;
 	padding: 1.5rem;
 	width: 39rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 100%;
+		margin: 0;
+	}
 }
 
 .title {
@@ -68,6 +95,10 @@
 .movesContainer {
 	padding: 0 2rem;
 	margin: 0 0 2rem;
+
+	@media (max-width: breakpoints.$md) {
+		padding: 0;
+	}
 }
 
 .moveDetails {
@@ -81,6 +112,10 @@
 	display: flex;
 	justify-content: space-around;
 	margin: 0 0 0.5rem;
+
+	@media (max-width: breakpoints.$md) {
+		flex-direction: column;
+	}
 }
 
 .moveInfoText {
@@ -92,11 +127,19 @@
 	border-radius: 0.5rem;
 	padding: 0.5rem 0.5rem;
 	min-width: 3rem;
+
+	@media (max-width: breakpoints.$md) {
+		margin: 0.25rem 0;
+	}
 }
 
 .statContainer {
 	padding: 0 2rem;
 	margin: 0 0 1rem;
+
+	@media (max-width: breakpoints.$md) {
+		padding: 0;
+	}
 }
 
 .stats {

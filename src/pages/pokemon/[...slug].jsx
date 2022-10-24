@@ -12,7 +12,7 @@ import { getEvolutionChainTransformed, findOrGetPokemonChain } from '../../helpe
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { transformPokemon } from '../../helpers/transformer';
 
-import styles from './pokemonDetails.module.css';
+import styles from './pokemonDetails.module.scss';
 
 export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const pokemon = JSON.parse(_pokemon);
@@ -50,7 +50,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   }
 
   return (
-    <>
+    <section className={styles.container}>
       <header>
         <Header />
       </header>
@@ -125,7 +125,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
         </div>
       </section>
 
-    </>
+    </section>
   );
 }
 
