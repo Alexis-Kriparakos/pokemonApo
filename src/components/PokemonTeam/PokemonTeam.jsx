@@ -39,7 +39,6 @@ export default function PokemonTeam({
 
   return (
     <section className={styles.container}>
-      {!isBattle && (
       <button
         type="button"
         className={cn(styles.collaspeButton, { [styles.isLeft]: isLeft, [styles.isRight]: !isLeft })}
@@ -47,7 +46,6 @@ export default function PokemonTeam({
       >
         {returnArrows()}
       </button>
-      )}
       <div className={cn(styles.teamContainer, { [styles.collasped]: isCollasped })}>
         <header className={styles.header}>
           <p>{trainerName}</p>

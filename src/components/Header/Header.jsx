@@ -22,7 +22,7 @@ export default function Header() {
   }
 
   return (
-    <section>
+    <section className={styles.mainContainer}>
       <div className={styles.container}>
         <Link href="/">
           <a className={styles.headerText}>

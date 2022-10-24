@@ -143,6 +143,7 @@ export default function Battle() {
             trainer="1"
             team={Trainer1Team}
             isBattle
+            isLeft
             onClick={poke => {
               const battle = PokemonBattle.getValue();
               const newTeam = battle.teamPlayer1.filter(_poke => _poke.id !== poke.id);

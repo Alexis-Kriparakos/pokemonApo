@@ -1,6 +1,12 @@
+@use '../../pages/breakpoints';
+
 .container {
 	padding: 0 1rem;
 	position: relative;
+
+	@media (max-width: breakpoints.$md) {
+		padding: 0 0.125rem;
+	}
 }
 
 .collaspeButton {
@@ -22,12 +28,26 @@
 
 .isLeft {
 	top: 2rem;
-	right: -1rem;
+	right: 0;
+
+	@media (max-width: breakpoints.$md) {
+		top: 15rem;
+		left: 0.25rem;
+		position: fixed;
+	}
 }
 
 .isRight {
 	top: 2rem;
-	left: -1rem;
+	left: 0;
+
+
+	@media (max-width: breakpoints.$md) {
+		top: 15rem;
+		right: 0.25rem;
+		left: unset;
+		position: fixed;
+	}
 }
 
 .icon {

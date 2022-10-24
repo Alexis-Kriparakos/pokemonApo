@@ -13,6 +13,12 @@
 	}
 }
 
+.mainContainer {
+	@media (max-width: breakpoints.$md) {
+		padding: 0 0.5rem;
+	}
+}
+
 .container {
 	display: flex;
 	align-items: center;
