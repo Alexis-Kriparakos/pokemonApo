@@ -19,7 +19,10 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const evolutionChain = JSON.parse(_evolutionChain);
 
   function getMostPowerfullMoves() {
-    const sortedMoves = orderBy(pokemon.moves, ({ power }) => power || 0, 'desc');
+    const filteredMoves = pokemon.moves.filter(move => (
+      pokemon.types.find(type => type === move.type.name)
+    ));
+    const sortedMoves = orderBy(filteredMoves, ({ power }) => power || 0, 'desc');
     return sortedMoves.slice(0, 4);
   }
 
