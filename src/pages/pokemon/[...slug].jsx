@@ -26,7 +26,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const pokemonArtwork = pokemon.sprites.other['official-artwork'].front_default;
   const fourPokemonMoves = getMostPowerfullMoves(pokemon);
 
-  const [selectedMove, setSelectedMove] = useState(fourPokemonMoves[0]);
+  const [selectedMove, setSelectedMove] = useState();
   const [evolutions, setEvolutions] = useState([]);
 
   const memoStats = MEMO_STATS(pokemon);
