@@ -25,7 +25,7 @@ export default function Index({ pokemon }) {
         <Header />
       </header>
       <main className={styles.mainContainer}>
-        <PokemonTeam trainer="1" team={Trainer1Team} />
+        <PokemonTeam trainer="1" team={Trainer1Team} isLeft />
         <PokemonList />
         <PokemonTeam trainer="2" team={Trainer2Team} />
       </main>

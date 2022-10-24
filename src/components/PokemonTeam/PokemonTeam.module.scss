@@ -1,0 +1,58 @@
+.container {
+	padding: 0 1rem;
+	position: relative;
+}
+
+.collaspeButton {
+	cursor: pointer;
+	border-radius: 100%;
+	border: 1px solid #eee;
+	background-color: #fff;
+	color: #d0021b;
+	height: 2.5rem;
+	width: 2.5rem;
+	top: 8rem;
+	position: absolute;
+	z-index: 1;
+}
+
+.collasped {
+	display: none;
+}
+
+.isLeft {
+	top: 2rem;
+	right: -1rem;
+}
+
+.isRight {
+	top: 2rem;
+	left: -1rem;
+}
+
+.icon {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.teamContainer {
+	height: 100%;
+	min-width: 13.25rem;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+}
+
+.header p {
+	margin: 0;
+}
+
+.pokeballIMG {
+	width: 1.25rem;
+	height: 1.25rem;
+	margin: 0 0.25rem 0 0;
+}
