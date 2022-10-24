@@ -1,3 +1,5 @@
+@use "../../pages/breakpoints";
+
 .container {
     position: relative;
 }
@@ -9,9 +11,13 @@
     display: flex;
     padding: .5rem;
     border-top: 1px solid #f4f4f4;
+
+    @media (max-width: breakpoints.$md) {
+        width: 13rem;
+    }
 }
 
-.rightContainer{
+.rightContainer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,16 +60,16 @@
 }
 
 .statsBar {
-  background-color: black;
-  min-width: 7rem;
-  border-radius: 0.875rem;
-  padding: 0.25rem;
-  margin: 0 0 0.5rem;
+    background-color: black;
+    min-width: 7rem;
+    border-radius: 0.875rem;
+    padding: 0.25rem;
+    margin: 0 0 0.5rem;
 }
 
-#statsBar > div {
-  height: 1rem;
-  border-radius: 0.625rem;
+#statsBar>div {
+    height: 1rem;
+    border-radius: 0.625rem;
 }
 
 .removeBtn {

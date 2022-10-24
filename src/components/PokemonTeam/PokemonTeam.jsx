@@ -46,7 +46,12 @@ export default function PokemonTeam({
       >
         {returnArrows()}
       </button>
-      <div className={cn(styles.teamContainer, { [styles.collasped]: isCollasped })}>
+      <div
+        className={cn(
+          styles.teamContainer,
+          { [styles.collasped]: isCollasped, [styles.leftContainer]: isLeft, [styles.rightContainer]: !isLeft }
+        )}
+      >
         <header className={styles.header}>
           <p>{trainerName}</p>
           {pokemonInTeam.map(pokemon => (

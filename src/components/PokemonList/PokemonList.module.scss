@@ -10,6 +10,10 @@
 	flex-wrap: wrap;
 	list-style: none;
 	justify-content: center;
+
+	@media (max-width: breakpoints.$md) {
+		position: absolute;
+	}
 }
 
 .btnContainer {

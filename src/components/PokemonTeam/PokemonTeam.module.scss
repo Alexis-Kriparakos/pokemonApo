@@ -19,7 +19,7 @@
 	width: 2.5rem;
 	top: 8rem;
 	position: absolute;
-	z-index: 1;
+	z-index: 5;
 }
 
 .collasped {
@@ -33,6 +33,7 @@
 	@media (max-width: breakpoints.$md) {
 		top: 15rem;
 		left: 0.25rem;
+		right: unset;
 		position: fixed;
 	}
 }
@@ -58,13 +59,40 @@
 .teamContainer {
 	height: 100%;
 	min-width: 13.25rem;
+
+	@media (max-width: breakpoints.$md) {
+		position: absolute;
+		max-width: 11.75rem;
+		min-width: 11.75rem;
+		z-index: 1;
+		right: 1rem;
+	}
+}
+
+.rightContainer {
+	@media (max-width: breakpoints.$md) {
+		right: 1rem;
+	}
+}
+
+.leftContainer {
+	@media (max-width: breakpoints.$md) {
+		left: 0;
+	}
 }
 
 .header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	background-color: #fff;
 	padding: 0.5rem 0;
+
+	@media (max-width: breakpoints.$md) {
+		max-width: 12.75rem;
+		min-width: 12.75rem;
+		z-index: 1;
+	}
 }
 
 .header p {
