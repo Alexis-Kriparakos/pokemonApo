@@ -18,7 +18,7 @@ export function transformPokemon(poke) {
   const newPoke = {
     ...poke,
     name: capitalizeFirstLetter(poke.name),
-    searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`],
+    searchTerms: [`${poke.name}`, `${poke.name.toUpperCase()}`, `${capitalizeFirstLetter(poke.name)}`],
     battleStats: { ...stats },
     isAlive: true,
     stats,
