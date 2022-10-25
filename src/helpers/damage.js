@@ -5,7 +5,7 @@ export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
   if (attackMissed) return 0;
 
   const stab = pokemonAttacking.types
-    .some((type) => type === move.type.name);
+    .some(type => type === move.type.name);
   const { type: { name: moveType } } = move;
   const type1 = TYPE_WEAKNESS_TABLE[moveType][pokemonDefending.types[0]];
   const type2 = TYPE_WEAKNESS_TABLE[moveType][pokemonDefending.types[1]] || 1;

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Header from '../components/Header/Header';
 import MoveSelection from '../components/MoveSelection/MoveSelection';
@@ -11,7 +11,7 @@ import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 import styles from './battle.module.scss';
 
 export default function Battle() {
-  const [battleInfo, setBattleInfo] = useState();
+  // const [battleInfo, setBattleInfo] = useState();
   const [battleStatus, setBattleStatus] = useState();
   const [pokemonFighting1, setPokemonFighting1] = useState();
   const [pokemonFighting2, setPokemonFighting2] = useState();
@@ -57,8 +57,7 @@ export default function Battle() {
   useEffect(() => {
     PokemonBattle.startBattle();
     const pokemonBattle$ = PokemonBattle.subscribe(battle => {
-      console.log(battle);
-      setBattleInfo(battle);
+      // setBattleInfo(battle);
       setBattleStatus(battle.status);
       setPokemonFighting1(battle.pokemonFighting1);
       setPokemonFighting2(battle.pokemonFighting2);
