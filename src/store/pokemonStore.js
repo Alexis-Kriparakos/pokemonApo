@@ -10,6 +10,7 @@ const PokemonFetched = {
   update: fetched => {
     pokemonFetched$.next(fetched);
   },
+  getValue: () => pokemonFetched$.value,
 };
 
 const PokemonStore = {

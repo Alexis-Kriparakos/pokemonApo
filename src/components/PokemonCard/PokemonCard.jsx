@@ -10,7 +10,7 @@ import { Trainer1Team, Trainer2Team } from '../../store/teamStore';
 import GenericAlert from '../GenericAlert/GenericAlert';
 import PokemonMovesModal from '../PokemonMovesModal/PokemonMovesModal';
 
-import styles from './PokemonCard.module.css';
+import styles from './PokemonCard.module.scss';
 
 const alertDuplicatePokemonText = 'This pokemon is already in your team.';
 const alertNotEnoughMoves = 'Your pokemon can learn up to 4 moves.';

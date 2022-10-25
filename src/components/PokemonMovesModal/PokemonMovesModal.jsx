@@ -8,7 +8,7 @@ import { TYPE_TO_IMG } from '../../constants/constants';
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { PrimaryButton } from '../Buttons/Buttons';
 
-import styles from './PokemonMovesModal.module.css';
+import styles from './PokemonMovesModal.module.scss';
 
 const customStyles = {
   overlay: {
@@ -91,11 +91,11 @@ export default function PokemonMovesModal({
               <PrimaryButton
                 onClick={() => onClickMove(move)}
               >
-                <div className={styles.content}>
+                <div className={styles.content} title={getToolTipText(move)}>
                   {move.name}
-                  <span className={styles.tooltiptext}>
-                    {getToolTipText(move)}
-                  </span>
+                  {/* <span className={styles.tooltiptext}> */}
+                  {/* {getToolTipText(move)} */}
+                  {/* </span> */}
                   <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
                 </div>
               </PrimaryButton>
@@ -104,13 +104,13 @@ export default function PokemonMovesModal({
         </main>
         <footer className={styles.buttonContainer}>
           <div className={styles.spacingBtn}>
-            <PrimaryButton onClick={() => onClickAddToTeam(pokemon)}>
-              Ok
+            <PrimaryButton onClick={() => setIsOpenModal(false)}>
+              Cancel
             </PrimaryButton>
           </div>
           <div className={styles.spacingBtn}>
-            <PrimaryButton onClick={() => setIsOpenModal(false)}>
-              Cancel
+            <PrimaryButton onClick={() => onClickAddToTeam(pokemon)}>
+              Ok
             </PrimaryButton>
           </div>
         </footer>

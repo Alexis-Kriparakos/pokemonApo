@@ -8,10 +8,7 @@ import { PHASES, TYPE_TO_IMG } from '../constants/constants';
 import { PokemonBattle } from '../store/pokemonBattle';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 
-// import {
-//   CHARMADER1, BULBASUAR1, CHARMADER2, BULBASUAR2,
-// } from '../DummyPokemon';
-import styles from './battle.module.css';
+import styles from './battle.module.scss';
 
 export default function Battle() {
   const [battleInfo, setBattleInfo] = useState();
@@ -146,6 +143,7 @@ export default function Battle() {
             trainer="1"
             team={Trainer1Team}
             isBattle
+            isLeft
             onClick={poke => {
               const battle = PokemonBattle.getValue();
               const newTeam = battle.teamPlayer1.filter(_poke => _poke.id !== poke.id);

@@ -6,7 +6,7 @@ import PokemonStore from '../../store/pokemonStore';
 import { PokemonToShow } from '../../store/pokemonToShow';
 import PokemonCard from '../PokemonCard/PokemonCard';
 
-import styles from './PokemonList.module.css';
+import styles from './PokemonList.module.scss';
 
 export default function PokemonList() {
   const allRegions = Object.keys(REGIONS_POKEMON);

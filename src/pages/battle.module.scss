@@ -1,3 +1,5 @@
+@use "./breakpoints";
+
 .mainContainer {
   display: flex;
 }
@@ -36,6 +38,12 @@
   border: 1px solid #000;
   padding: 0.5rem 1rem;
   width: 15rem;
+
+  @media (max-width: breakpoints.$md) {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    width: 10rem;
+  }
 }
 
 .healthText {
@@ -43,6 +51,10 @@
   justify-content: space-between;
   font-size: 1.125rem;
   margin: 0 0 0.5rem;
+
+  @media (max-width: breakpoints.$md) {
+    font-size: 0.875rem;
+  }
 }
 
 .bottomPokemon {
@@ -59,6 +71,12 @@
   width: 8rem;
   height: 8rem;
   box-shadow: 0px 6px 0px 0px rgba(0, 0, 0, 0.75);
+
+  @media (max-width: breakpoints.$md) {
+    width: 5rem;
+    height: 5rem;
+    margin: 1rem 0;
+  }
 }
 
 .statsBar {
@@ -73,6 +91,10 @@
 .typeImg {
   width: 1.25rem;
   margin: 0 0.125rem;
+
+  @media (max-width: breakpoints.$md) {
+    display: none;
+  }
 }
 
 .movesContainer {
@@ -89,4 +111,17 @@
   height: 6rem;
   border-radius: 0.5rem;
   border: 2px solid #eee;
+
+  @media (max-width: breakpoints.$md) {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+.statsBar {
+  background-color: black;
+  border-radius: 0.875rem;
+  padding: 0.125rem;
+  height: 0.625rem;
 }

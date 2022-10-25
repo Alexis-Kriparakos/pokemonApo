@@ -8,7 +8,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.hpStat,
         styles: {
           backgroundColor: '#5ABA4A',
-          width: `${((pokemon.battleStats.hpStat / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.hpStat <= MAX_STATS.HP_STAT
+            ? pokemon.battleStats.hpStat
+            : MAX_STATS.HP_STAT) / MAX_STATS.HP_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: '0.625rem',
         },
@@ -18,7 +20,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.atkStat,
         styles: {
           backgroundColor: '#F37336',
-          width: `${((pokemon.battleStats.atkStat / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.atkStat <= MAX_STATS.ATK_STAT
+            ? pokemon.battleStats.atkStat
+            : MAX_STATS.ATK_STAT) / MAX_STATS.ATK_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: '0.625rem',
         },
@@ -28,7 +32,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.defStat,
         styles: {
           backgroundColor: '#63C8F2',
-          width: `${((pokemon.battleStats.defStat / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.defStat <= MAX_STATS.DEF_STAT
+            ? pokemon.battleStats.defStat
+            : MAX_STATS.DEF_STAT) / MAX_STATS.DEF_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: ' 0.625rem',
         },
@@ -38,7 +44,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.spAtkStat,
         styles: {
           backgroundColor: '#D88DBC',
-          width: `${((pokemon.battleStats.spAtkStat / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.spAtkStat <= MAX_STATS.SPATK_STAT
+            ? pokemon.battleStats.spAtkStat
+            : MAX_STATS.SPATK_STAT) / MAX_STATS.SPATK_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: '0.625rem',
         },
@@ -48,7 +56,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.spDefStat,
         styles: {
           backgroundColor: '#1E3E72',
-          width: `${((pokemon.battleStats.spDefStat / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.spDefStat <= MAX_STATS.SPDEF_STAT
+            ? pokemon.battleStats.spDefStat
+            : MAX_STATS.SPDEF_STAT) / MAX_STATS.SPDEF_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: '0.625rem',
         },
@@ -58,7 +68,9 @@ export function MEMO_STATS(pokemon) {
         value: pokemon.stats.speedStat,
         styles: {
           backgroundColor: '#F7CC3B',
-          width: `${((pokemon.battleStats.speedStat / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
+          width: `${(((pokemon.battleStats.speedStat <= MAX_STATS.SPEED_STAT
+            ? pokemon.battleStats.speedStat
+            : MAX_STATS.SPEED_STAT) / MAX_STATS.SPEED_STAT) * 100).toFixed(3)}%`,
           height: '0.375rem',
           borderRadius: '0.625rem',
         },

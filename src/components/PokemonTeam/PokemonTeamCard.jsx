@@ -6,7 +6,7 @@ import { MdRemoveCircleOutline } from 'react-icons/md';
 
 import { TYPE_TO_IMG } from '../../constants/constants';
 
-import styles from './PokemonTeamCard.module.css';
+import styles from './PokemonTeamCard.module.scss';
 
 export default function PokemonTeamCard({
   pokemon, team, onClick, isBattle = false,

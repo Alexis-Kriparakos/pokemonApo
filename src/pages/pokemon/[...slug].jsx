@@ -12,21 +12,24 @@ import { getEvolutionChainTransformed, findOrGetPokemonChain } from '../../helpe
 import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
 import { transformPokemon } from '../../helpers/transformer';
 
-import styles from './pokemonDetails.module.css';
+import styles from './pokemonDetails.module.scss';
 
 export default function PokemonPage({ _pokemon, _evolutionChain }) {
   const pokemon = JSON.parse(_pokemon);
   const evolutionChain = JSON.parse(_evolutionChain);
 
   function getMostPowerfullMoves() {
-    const sortedMoves = orderBy(pokemon.moves, ({ power }) => power || 0, 'desc');
+    const filteredMoves = pokemon.moves.filter(move => (
+      pokemon.types.find(type => type === move.type.name)
+    ));
+    const sortedMoves = orderBy(filteredMoves, ({ power }) => power || 0, 'desc');
     return sortedMoves.slice(0, 4);
   }
 
   const pokemonArtwork = pokemon.sprites.other['official-artwork'].front_default;
   const fourPokemonMoves = getMostPowerfullMoves(pokemon);
 
-  const [selectedMove, setSelectedMove] = useState(fourPokemonMoves[0]);
+  const [selectedMove, setSelectedMove] = useState();
   const [evolutions, setEvolutions] = useState([]);
 
   const memoStats = MEMO_STATS(pokemon);
@@ -50,7 +53,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
   }
 
   return (
-    <>
+    <section className={styles.container}>
       <header>
         <Header />
       </header>
@@ -125,7 +128,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
         </div>
       </section>
 
-    </>
+    </section>
   );
 }
 

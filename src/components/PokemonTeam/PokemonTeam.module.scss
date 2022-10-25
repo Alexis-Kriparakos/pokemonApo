@@ -1,0 +1,106 @@
+@use '../../pages/breakpoints';
+
+.container {
+	padding: 0 1rem;
+	position: relative;
+
+	@media (max-width: breakpoints.$md) {
+		padding: 0 0.125rem;
+	}
+}
+
+.collaspeButton {
+	cursor: pointer;
+	border-radius: 100%;
+	border: 1px solid #eee;
+	background-color: #fff;
+	color: #d0021b;
+	height: 2.5rem;
+	width: 2.5rem;
+	top: 8rem;
+	position: absolute;
+	z-index: 5;
+}
+
+.collasped {
+	display: none;
+}
+
+.isLeft {
+	top: 2rem;
+	right: 0;
+
+	@media (max-width: breakpoints.$md) {
+		top: 15rem;
+		left: 0.25rem;
+		right: unset;
+		position: fixed;
+	}
+}
+
+.isRight {
+	top: 2rem;
+	left: 0;
+
+
+	@media (max-width: breakpoints.$md) {
+		top: 15rem;
+		right: 0.25rem;
+		left: unset;
+		position: fixed;
+	}
+}
+
+.icon {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.teamContainer {
+	height: 100%;
+	min-width: 13.25rem;
+
+	@media (max-width: breakpoints.$md) {
+		position: fixed;
+		max-width: 11.75rem;
+		min-width: 11.75rem;
+		z-index: 1;
+		right: 1rem;
+	}
+}
+
+.rightContainer {
+	@media (max-width: breakpoints.$md) {
+		right: -0.375rem;
+	}
+}
+
+.leftContainer {
+	@media (max-width: breakpoints.$md) {
+		left: 0;
+	}
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+	background-color: #fff;
+
+	@media (max-width: breakpoints.$md) {
+		max-width: 12.125rem;
+		min-width: 12.125rem;
+		z-index: 1;
+	}
+}
+
+.header p {
+	margin: 0;
+}
+
+.pokeballIMG {
+	width: 1.25rem;
+	height: 1.25rem;
+	margin: 0 0.25rem 0 0;
+}

@@ -1,6 +1,7 @@
+@use '../../pages/breakpoints';
+
 .container {
-	width: 59.375rem;
-	padding: 0 1rem;
+	width: 100%;
 }
 
 .pokemonList {
@@ -8,6 +9,11 @@
 	display: flex;
 	flex-wrap: wrap;
 	list-style: none;
+	justify-content: center;
+
+	@media (max-width: breakpoints.$md) {
+		position: absolute;
+	}
 }
 
 .btnContainer {
@@ -15,6 +21,9 @@
 	align-items: center;
 	justify-content: space-between;
 
+	@media (max-width: breakpoints.$md) {
+		flex-wrap: wrap;
+	}
 }
 
 .btn {
@@ -30,6 +39,7 @@
 	letter-spacing: 2px;
 	position: relative;
 	overflow: hidden;
+	flex: 1 1;
 }
 
 .btn:before {
