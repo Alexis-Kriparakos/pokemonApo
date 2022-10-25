@@ -1,3 +1,5 @@
+@use '../../pages/breakpoints';
+
 .modalContainer {
   width: 65.25rem;
   height: 45.25rem;
@@ -5,7 +7,12 @@
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px;
+
+  @media (max-width: breakpoints.$md) {
+    width: 22rem;
+    height: 37.25rem;
+  }
 }
 
 .header {
@@ -24,23 +31,27 @@
 
 .closeButton {
   cursor: pointer;
-	border: none;
-	outline: none;
+  border: none;
+  outline: none;
   background-color: #d0021b;
 }
 
 .closeImage {
-	width: 1.875rem;
-	height: 1.875rem;
-	color: #fff;
+  width: 1.875rem;
+  height: 1.875rem;
+  color: #fff;
 }
 
 .moveList {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
+  // position: relative;
   margin: 0 0 1rem;
   padding: 1.5rem;
+
+  @media (max-width: breakpoints.$md) {
+    padding: 0.5rem;
+  }
 }
 
 .content {
@@ -51,26 +62,26 @@
   padding: 0.5rem 0;
 }
 
-.tooltiptext {
-  visibility: hidden;
-  width: 100px;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 0.25rem;
-  position: absolute;
-  z-index: 1;
-}
-  
-.moveBtnContainer:hover .tooltiptext {
-  visibility: visible;
-}
+// .tooltiptext {
+//   visibility: hidden;
+//   width: 10rem;
+//   background-color: #000;
+//   color: #fff;
+//   text-align: center;
+//   border-radius: 6px;
+//   padding: 0.25rem;
+//   position: absolute;
+//   z-index: 1;
+// }
+
+// .moveBtnContainer:hover .tooltiptext {
+//   visibility: visible;
+// }
 
 .moveBtnContainer {
   flex: 1 1 15%;
   margin: 0.25rem;
-  padding:0.25rem;
+  padding: 0.25rem;
 }
 
 .moveSelected {

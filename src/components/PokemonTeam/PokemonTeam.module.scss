@@ -61,7 +61,7 @@
 	min-width: 13.25rem;
 
 	@media (max-width: breakpoints.$md) {
-		position: absolute;
+		position: fixed;
 		max-width: 11.75rem;
 		min-width: 11.75rem;
 		z-index: 1;
@@ -71,7 +71,7 @@
 
 .rightContainer {
 	@media (max-width: breakpoints.$md) {
-		right: 1rem;
+		right: -0.375rem;
 	}
 }
 
@@ -86,10 +86,11 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 0.5rem 0;
+	background-color: #fff;
 
 	@media (max-width: breakpoints.$md) {
-		max-width: 12.75rem;
-		min-width: 12.75rem;
+		max-width: 12.125rem;
+		min-width: 12.125rem;
 		z-index: 1;
 	}
 }
