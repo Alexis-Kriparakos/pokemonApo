@@ -31,7 +31,7 @@
 	right: 0;
 
 	@media (max-width: breakpoints.$md) {
-		top: 15rem;
+		top: 9rem;
 		left: 0.25rem;
 		right: unset;
 		position: fixed;
@@ -44,7 +44,7 @@
 
 
 	@media (max-width: breakpoints.$md) {
-		top: 15rem;
+		top: 9rem;
 		right: 0.25rem;
 		left: unset;
 		position: fixed;
@@ -62,9 +62,12 @@
 
 	@media (max-width: breakpoints.$md) {
 		position: fixed;
-		max-width: 11.75rem;
-		min-width: 11.75rem;
+		height: 70vh;
+		overflow-y: auto;
+		max-width: 11.625rem;
+		min-width: 11.625rem;
 		z-index: 1;
+		top: 10.75rem;
 		right: 1rem;
 	}
 }
@@ -87,20 +90,28 @@
 	justify-content: space-between;
 	padding: 0.5rem 0;
 	background-color: #fff;
+	border-radius: 0.25rem 0.25rem 0 0;
+	border: 1px solid #eee;
 
 	@media (max-width: breakpoints.$md) {
-		max-width: 12.125rem;
-		min-width: 12.125rem;
+		max-width: 11.625rem;
+		min-width: 11.625rem;
+		padding: 0.5rem 0.125rem;
 		z-index: 1;
 	}
 }
 
 .header p {
 	margin: 0;
+	color: #174489;
+
+	@media (max-width: breakpoints.$md) {
+		font-size: 0.75rem;
+	}
 }
 
 .pokeballIMG {
-	width: 1.25rem;
-	height: 1.25rem;
-	margin: 0 0.25rem 0 0;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin: 0 0.125rem 0 0;
 }

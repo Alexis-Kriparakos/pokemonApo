@@ -23,6 +23,7 @@
 
 	@media (max-width: breakpoints.$md) {
 		flex-wrap: wrap;
+		margin: 2.25rem 0 0;
 	}
 }
 
@@ -33,13 +34,18 @@
 	font-size: 1rem;
 	text-align: center;
 	display: inline-block;
-	padding: 15px 60px;
+	padding: 1rem 3.75rem;
 	border: 1px solid #fff;
 	cursor: pointer;
-	letter-spacing: 2px;
+	letter-spacing: 0.125rem;
 	position: relative;
 	overflow: hidden;
 	flex: 1 1;
+
+	@media (max-width: breakpoints.$md) {
+		font-size: 0.875rem;
+		padding: 0.875rem 0;
+	}
 }
 
 .btn:before {
