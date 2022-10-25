@@ -58,6 +58,11 @@
 	border: 2px solid #eee;
 	background-color: #fff;
 	padding: 1.5rem;
+	box-sizing: content-box;
+
+	@media (max-width: breakpoints.$md) {
+		padding: 0.5rem;
+	}
 }
 
 .smallImage:hover {
