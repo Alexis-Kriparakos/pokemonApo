@@ -10,7 +10,7 @@ export default function PokemonTeam({
   trainer, team, isLeft = false, isBattle = false, onClick = () => {},
 }) {
   const [pokemonInTeam, setPokemoninTeam] = useState([]);
-  const [isCollasped, setIsCollasped] = useState(false);
+  const [isCollasped, setIsCollasped] = useState(true);
 
   const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak';
   useEffect(() => {
