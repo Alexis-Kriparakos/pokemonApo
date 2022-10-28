@@ -1,0 +1,9 @@
+.keyboardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80rem;
+}
+
+.keyboardButton {
+    flex: 1 1 5%;
+}
