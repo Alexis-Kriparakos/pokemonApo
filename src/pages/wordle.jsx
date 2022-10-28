@@ -2,12 +2,15 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import { getPokemonList } from '../api/pokemon';
 import Keyboard from '../components/Wordle/Keyboeard';
+import WordleScreen from '../components/Wordle/WordleScreen';
 import { KEYBOARD_BUTTONS } from '../constants/constants';
+import { getRandomInt } from '../helpers/damage';
 
 export default function Wordle({ pokemon }) {
   const [keyPressed, setKeyPressed] = useState('');
   const [pokemonWord, setPokemonWord] = useState('');
-
+  const [winningPokemon, setWinnningPokemon] = useState();
+  const [pokemonLength, setpokemonLength] = useState(0);
   const keyboard = useMemo(() => {
     const keyboardMap = KEYBOARD_BUTTONS.map(button => (
       {
@@ -17,14 +20,14 @@ export default function Wordle({ pokemon }) {
       }
     ));
     const enterKey = {
-      value: 'Enter',
+      value: 'enter',
       label: 'ENTER',
       action: () => {},
     };
     const backSpaceKey = {
-      value: 'Backspace',
+      value: 'backspace',
       label: 'BACKSPACE',
-      action: () => {},
+      action: () => { setPokemonWord(prev => prev.slice(0, -1)); },
     };
     keyboardMap.splice(19, 0, enterKey);
     keyboardMap.push(backSpaceKey);
@@ -33,13 +36,27 @@ export default function Wordle({ pokemon }) {
 
   function keyDownHandler(e) {
     const keyValue = e.key.toLowerCase();
+    console.log(keyboard);
     const isValidKeyPress = keyboard.some(key => (key.value === keyValue));
     if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
-    console.log('key', keyValue);
+    if (keyValue === 'backspace') {
+      const backSpaceKey = keyboard.find(key => key.value === 'backspace');
+      backSpaceKey.action();
+      return;
+    }
+    if (keyValue === 'enter') {
+      const enterKey = keyboard.find(key => key.value === 'enter');
+      enterKey.action();
+      return;
+    }
     setPokemonWord(prev => prev + keyValue);
   }
 
   useEffect(() => {
+    const randomIndex = getRandomInt(808);
+    const pokemonSelected = pokemon[randomIndex];
+    setWinnningPokemon(pokemonSelected);
+    setpokemonLength(pokemonSelected.name.length);
     document.addEventListener('keydown', keyDownHandler);
 
     return () => {
@@ -49,6 +66,7 @@ export default function Wordle({ pokemon }) {
 
   return (
     <section>
+      <WordleScreen word={pokemonWord} winningItem={winningPokemon} length={pokemonLength} />
       <Keyboard
         keyboard={keyboard}
         setKeyPressed={setKeyPressed}
@@ -61,7 +79,6 @@ export async function getStaticProps() {
   const [pokemon] = await Promise.all([
     getPokemonList(808),
   ]);
-
   return {
     props: {
       pokemon,

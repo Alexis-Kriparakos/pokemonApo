@@ -4,8 +4,7 @@ import { PrimaryButton } from '../Buttons/Buttons';
 
 import styles from './wordle.module.scss';
 
-export default function Keyboard({ keyboard, setKeyPressed }) {
-
+export default function Keyboard({ keyboard }) {
   return (
     <div className={styles.keyboardContainer}>
       {keyboard.map(button => (

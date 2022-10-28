@@ -116,6 +116,7 @@ export const REGIONS_POKEMON = {
 };
 
 export const MAX_POKEMON_TEAM = 5;
+export const MAX_WORDLE_TRIES = 6;
 
 export const DUMMY_TEXT = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -524,5 +525,13 @@ export const TYPE_WEAKNESS_TABLE = {
 export const KEYBOARD_BUTTONS = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
 
 export default {
-  TYPE_TO_IMG, MAX_STATS, TYPE_WEAKNESS_TABLE, MOVE_DIVISION, PHASES, MAX_POKEMON_TEAM, MEMO_STATS, KEYBOARD_BUTTONS,
+  TYPE_TO_IMG,
+  MAX_STATS,
+  TYPE_WEAKNESS_TABLE,
+  MOVE_DIVISION,
+  PHASES,
+  MAX_POKEMON_TEAM,
+  MEMO_STATS,
+  KEYBOARD_BUTTONS,
+  MAX_WORDLE_TRIES,
 };
