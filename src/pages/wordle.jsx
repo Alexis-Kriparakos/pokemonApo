@@ -4,30 +4,30 @@ import { getPokemonList } from '../api/pokemon';
 import Keyboard from '../components/Wordle/Keyboeard';
 import WordleScreen from '../components/Wordle/WordleScreen';
 import { KEYBOARD_BUTTONS } from '../constants/constants';
-import { getRandomInt } from '../helpers/damage';
+import { WordleGame } from '../store/wordle';
 
 export default function Wordle({ pokemon }) {
-  const [keyPressed, setKeyPressed] = useState('');
-  const [pokemonWord, setPokemonWord] = useState('');
-  const [winningPokemon, setWinnningPokemon] = useState();
-  const [pokemonLength, setpokemonLength] = useState(0);
+  const [wordleInfo, setWordleInfo] = useState({});
   const keyboard = useMemo(() => {
     const keyboardMap = KEYBOARD_BUTTONS.map(button => (
       {
         value: button,
         label: button.toUpperCase(),
-        action: val => setPokemonWord(prev => prev + val),
+        action: () => {
+          if (WordleGame.lettersInWordReached()) return;
+          WordleGame.onUpdateWordTyped(button);
+        },
       }
     ));
     const enterKey = {
       value: 'enter',
       label: 'ENTER',
-      action: () => {},
+      action: WordleGame.onPressEnter,
     };
     const backSpaceKey = {
       value: 'backspace',
       label: 'BACKSPACE',
-      action: () => { setPokemonWord(prev => prev.slice(0, -1)); },
+      action: WordleGame.onPressBackSpace,
     };
     keyboardMap.splice(19, 0, enterKey);
     keyboardMap.push(backSpaceKey);
@@ -36,11 +36,11 @@ export default function Wordle({ pokemon }) {
 
   function keyDownHandler(e) {
     const keyValue = e.key.toLowerCase();
-    console.log(keyboard);
     const isValidKeyPress = keyboard.some(key => (key.value === keyValue));
     if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
     if (keyValue === 'backspace') {
       const backSpaceKey = keyboard.find(key => key.value === 'backspace');
+      console.log('BackSpace Pressed');
       backSpaceKey.action();
       return;
     }
@@ -49,28 +49,25 @@ export default function Wordle({ pokemon }) {
       enterKey.action();
       return;
     }
-    setPokemonWord(prev => prev + keyValue);
+    if (WordleGame.lettersInWordReached()) return;
+    WordleGame.onUpdateWordTyped(keyValue);
   }
 
   useEffect(() => {
-    const randomIndex = getRandomInt(808);
-    const pokemonSelected = pokemon[randomIndex];
-    setWinnningPokemon(pokemonSelected);
-    setpokemonLength(pokemonSelected.name.length);
+    WordleGame.startWordle(pokemon);
+    const wordleGame$ = WordleGame.subscribe(setWordleInfo);
     document.addEventListener('keydown', keyDownHandler);
 
     return () => {
+      wordleGame$.unsubscribe();
       document.removeEventListener('keydown', keyDownHandler);
     };
   }, []);
 
   return (
     <section>
-      <WordleScreen word={pokemonWord} winningItem={winningPokemon} length={pokemonLength} />
-      <Keyboard
-        keyboard={keyboard}
-        setKeyPressed={setKeyPressed}
-      />
+      <WordleScreen gameInfo={wordleInfo} />
+      <Keyboard keyboard={keyboard} />
     </section>
   );
 }

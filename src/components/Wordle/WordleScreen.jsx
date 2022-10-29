@@ -1,30 +1,42 @@
-import React, { useCallback } from 'react';
-
-import { MAX_WORDLE_TRIES } from '../../constants/constants';
+import cn from 'classnames';
+import isEmpty from 'lodash/isEmpty';
+import React from 'react';
 
 import styles from './wordle.module.scss';
 
-export default function WordleScreen({ winningItem, word, length }) {
-  function onChangeLetter() {
-    return null;
-  }
+function Row({ lengthWord, _try }) {
+  return (
+    <div className={styles.rowContainer}>
+      {lengthWord.map((val, index) => (
+        <div
+          key={val}
+          className={cn(
+            styles.letterContainer,
+            {
+              [styles.correctPosition]: _try.comparedStrings[index] === 'Matched',
+              [styles.correctLetter]: _try.comparedStrings[index] === 'Included',
+              [styles.wrongLetter]: _try.comparedStrings[index] === 'Unmatched',
+            }
+          )}
+        >
+          <div className={styles.letter}>{_try?.wordTyped[index]}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-  const Row = useCallback(() => {
-    const wordLength = [...Array(length)];
-    return (
-      <div className={styles.rowContainer}>
-        {wordLength.map((_, index) => (
-          <div className={styles.letterContainer}>
-            <div className={styles.letter}>{word[index]}</div>
-          </div>
-        ))}
-      </div>
-    );
-  }, [word]);
+export default function WordleScreen({ gameInfo }) {
+  if (!gameInfo || isEmpty(gameInfo.tries)) return null;
+  const { wordLength, tries } = gameInfo;
+
+  const lengthWord = [...Array.from(Array(wordLength).keys())];
 
   return (
     <div className={styles.screenContainer}>
-      {[...Array(MAX_WORDLE_TRIES)].map((_, index) => <Row key={index}/>)}
+      {tries.map(_try => (
+        <Row key={_try.id} lengthWord={lengthWord} _try={_try} />
+      ))}
     </div>
   );
 }
