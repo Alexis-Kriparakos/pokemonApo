@@ -134,9 +134,7 @@ export default function Battle() {
 
   return (
     <>
-      <header>
-        <Header />
-      </header>
+      <Header />
       <div className={styles.mainContainer}>
         <div className={styles.teamContainer}>
           <PokemonTeam

@@ -3,6 +3,7 @@ import get from 'lodash/get';
 
 import { REGIONS_POKEMON } from '../constants/constants';
 import { transformPokemon } from '../helpers/transformer';
+import { getRegionFromPokemon } from '../helpers/wordle';
 
 const baseURL = 'https://pokeapi.co/api/v2';
 const POKE = axios.create({
@@ -38,6 +39,14 @@ export async function getPokemon(pokeName) {
     console.log(error);
     return error;
   }
+}
+
+export async function getPokemonWordle(url) {
+  const { data: pokemon } = await axios.get(url);
+  const region = getRegionFromPokemon(pokemon?.id);
+  const { types, sprites } = pokemon;
+  const typesFormatted = types.map(type => type.type.name);
+  return { region, types: typesFormatted, sprites };
 }
 
 export async function getData(region = 'kanto') {
