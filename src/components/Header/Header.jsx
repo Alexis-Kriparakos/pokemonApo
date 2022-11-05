@@ -50,7 +50,7 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      <input className={cn(styles.input, styles.searchBarSmallScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />
+      {isPokemonList && <input className={cn(styles.input, styles.searchBarSmallScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />}
     </header>
 
   );

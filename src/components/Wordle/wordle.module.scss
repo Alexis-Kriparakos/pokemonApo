@@ -1,13 +1,24 @@
+@use '../../pages/breakpoints';
+
 .container {
 	margin: 3rem auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 50rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 100%;
+		max-width: 100%;
+	}
 }
 
 .screenContainer {
 	margin: 0 0 4rem;
+
+	@media (max-width: breakpoints.$md) {
+		margin: 0 0 2rem;
+	}
 }
 
 .actionBarContainer {
@@ -15,6 +26,11 @@
 	justify-content: space-between;
 	margin: 0 0 1rem;
 	min-width: 50rem;
+
+	@media (max-width: breakpoints.$md) {
+		min-width: unset;
+		margin: 0 0.5rem 1rem;
+	}
 }
 
 .actionContainer {
@@ -33,11 +49,22 @@
 	display: flex;
 	align-items: center;
 	color: #6aaa64;
+
+	@media (max-width: breakpoints.$md) {
+		border: 1px solid #6aaa64;
+		border-radius: 0.25rem;
+		padding: 0.25rem;
+	}
+
 }
 
 .scoreText {
 	font-size: 1.5rem;
-	margin: 0
+	margin: 0;
+
+	@media (max-width: breakpoints.$md) {
+		font-size: 1rem;
+	}
 }
 
 .tipContainer {
@@ -55,6 +82,11 @@
 	cursor: pointer;
 	background-color: unset;
 	margin-right: 1rem;
+	text-decoration: underline;
+
+	@media (max-width: breakpoints.$md) {
+		font-size: 1rem;
+	}
 }
 
 .tipContent {
@@ -67,16 +99,29 @@
 .tipRegion {
 	font-size: 1.5rem;
 	margin: 0;
+
+	@media (max-width: breakpoints.$md) {
+		font-size: 1rem;
+	}
 }
 
 .tipImageContainer {
 	margin: 0 1.5rem;
+
+	@media (max-width: breakpoints.$md) {
+		margin: 0 0.5rem;
+	}
 }
 
 .tipImage {
 	width: 2rem;
 	height: 2rem;
 	margin: 0 0.125rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 }
 
 .spriteBtn {
@@ -88,11 +133,21 @@
 	height: 4rem;
 	width: 4rem;
 	padding: 0.125rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 3rem;
+		height: 3rem;
+	}
 }
 
 .tipPokeImage {
 	width: 3.875rem;
 	height: 3.875rem;
+
+	@media (max-width: breakpoints.$md) {
+		width: 2.875rem;
+		height: 2.875rem;
+	}
 }
 
 .darkImage {
@@ -119,7 +174,13 @@
 	max-width: 3.875rem;
 	height: 3.875rem;
 	box-sizing: border-box;
-	margin: 0 0.125rem
+	margin: 0 0.125rem;
+
+	@media (max-width: breakpoints.$md) {
+		max-width: unset;
+		height: 2rem;
+		flex: 1 1 100%;
+	}
 }
 
 .correctPosition {
@@ -149,6 +210,14 @@
 	vertical-align: middle;
 	text-transform: uppercase;
 	user-select: none;
+
+	@media (max-width: breakpoints.$md) {
+		min-width: unset;
+		min-height: unset;
+		width: 2rem;
+		height: 2rem;
+		font-size: 1rem;
+	}
 }
 
 .keyboardContainer {
@@ -159,4 +228,10 @@
 
 .keyboardButton {
 	flex: 1 1 10%;
+}
+
+.smallScreen {
+	@media (max-width: breakpoints.$md) {
+		display: none;
+	}
 }

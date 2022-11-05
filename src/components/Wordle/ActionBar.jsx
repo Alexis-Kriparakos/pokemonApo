@@ -16,7 +16,7 @@ export default function ActionBar({ tips, score, onClickRestart }) {
       <div className={styles.actionContainer}>
         <button type="button" className={styles.restartBtn} onClick={onClickRestart}>
           <MdRestartAlt />
-          Restart
+          <span className={styles.smallScreen}>Restart</span>
         </button>
         <p className={styles.scoreText}>{`Score: ${score}`}</p>
       </div>

@@ -1,8 +1,15 @@
+@use './breakpoints';
+
 .container {
-    margin: 3rem 1.5rem 0;
+    margin: 3rem 1.5rem;
     min-width: 60rem;
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: breakpoints.$md) {
+        flex-direction: column;
+        min-width: unset;
+    }
 }
 
 .link {
@@ -13,4 +20,9 @@
     border: 2px solid #292929;
     flex: 0 1 30%;
     padding: 5rem;
+
+    @media (max-width: breakpoints.$md) {
+        flex: 1 1;
+        margin: 0 0 0.5rem;
+    }
 }
