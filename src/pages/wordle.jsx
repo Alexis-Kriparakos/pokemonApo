@@ -1,7 +1,9 @@
+import isEmpty from 'lodash/isEmpty';
 import React, { useState, useEffect, useMemo } from 'react';
 
 import { getPokemonList } from '../api/pokemon';
 import Header from '../components/Header/Header';
+import ActionBar from '../components/Wordle/ActionBar';
 import Keyboard from '../components/Wordle/Keyboeard';
 import styles from '../components/Wordle/wordle.module.scss';
 import WordleScreen from '../components/Wordle/WordleScreen';
@@ -31,8 +33,8 @@ export default function Wordle({ pokemon }) {
       label: 'BACKSPACE',
       action: WordleGame.onPressBackSpace,
     };
-    keyboardMap.splice(19, 0, enterKey);
-    keyboardMap.push(backSpaceKey);
+    keyboardMap.splice(19, 0, backSpaceKey);
+    keyboardMap.push(enterKey);
     return keyboardMap;
   }, []);
 
@@ -54,9 +56,30 @@ export default function Wordle({ pokemon }) {
     WordleGame.onUpdateWordTyped(keyValue);
   }
 
+  function onClickRestart() {
+    WordleGame.startWordle(pokemon);
+    WordleGame.resetScore();
+  }
+
+  function test() {
+    setTimeout(() => (
+      WordleGame.startWordle(pokemon)
+    ), 2000);
+  }
+
   useEffect(() => {
     WordleGame.startWordle(pokemon);
-    const wordleGame$ = WordleGame.subscribe(setWordleInfo);
+    const wordleGame$ = WordleGame.subscribe(info => {
+      setWordleInfo(info);
+      console.log('isGameWon', info.isGameWon, 'isGameOver', info.isGameOver);
+      if (info.isGameOver) {
+        test();
+        return;
+      }
+      if (info.isGameWon) {
+        test();
+      }
+    });
     document.addEventListener('keydown', keyDownHandler);
 
     return () => {
@@ -65,12 +88,16 @@ export default function Wordle({ pokemon }) {
     };
   }, []);
 
+  if (isEmpty(wordleInfo)) return null;
+  const { tips, score } = wordleInfo;
+
   return (
     <>
       <header>
         <Header />
       </header>
       <section className={styles.container}>
+        <ActionBar tips={tips} score={score} onClickRestart={onClickRestart} />
         <WordleScreen gameInfo={wordleInfo} />
         <Keyboard keyboard={keyboard} />
       </section>

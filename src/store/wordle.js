@@ -13,6 +13,7 @@ const wordle$ = new BehaviorSubject(
     winnerWord: '',
     isGameOver: false,
     isGameWon: false,
+    score: 0,
     tips: {},
   }
 );
@@ -38,7 +39,14 @@ export const WordleGame = {
       tips,
       winnerWord: encodeString(name),
       wordLength: length,
+      isGameWon: false,
+      isGameOver: false,
+      currentTry: 0,
     });
+  },
+  resetScore: () => {
+    const _wordleInfo = WordleGame.getValue();
+    WordleGame.update({ ..._wordleInfo, score: 0 });
   },
   returnTry: () => {
     const tempGame = WordleGame.getValue();
@@ -70,11 +78,11 @@ export const WordleGame = {
       const comparedStrings = compareStrings(decodedWinnerWord, wordTyped);
       const newTryObj = { ...tryObj, comparedStrings };
       _wordleInfo.tries[index] = newTryObj;
-      WordleGame.update({ ..._wordleInfo, isGameWon: true });
+      WordleGame.update({ ..._wordleInfo, isGameWon: true, score: _wordleInfo.score + 1 });
       return;
     }
-    if (index === MAX_WORDLE_TRIES) {
-      WordleGame.update({ ..._wordleInfo, isGameOver: true });
+    if (index === MAX_WORDLE_TRIES - 1) {
+      WordleGame.update({ ..._wordleInfo, isGameOver: true, score: 0 });
       return;
     }
     const comparedStrings = compareStrings(decodedWinnerWord, wordTyped);
