@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 import { getPokemonList } from '../api/pokemon';
+import Header from '../components/Header/Header';
 import Keyboard from '../components/Wordle/Keyboeard';
+import styles from '../components/Wordle/wordle.module.scss';
 import WordleScreen from '../components/Wordle/WordleScreen';
 import { KEYBOARD_BUTTONS } from '../constants/constants';
 import { WordleGame } from '../store/wordle';
@@ -40,7 +42,6 @@ export default function Wordle({ pokemon }) {
     if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
     if (keyValue === 'backspace') {
       const backSpaceKey = keyboard.find(key => key.value === 'backspace');
-      console.log('BackSpace Pressed');
       backSpaceKey.action();
       return;
     }
@@ -65,10 +66,15 @@ export default function Wordle({ pokemon }) {
   }, []);
 
   return (
-    <section>
-      <WordleScreen gameInfo={wordleInfo} />
-      <Keyboard keyboard={keyboard} />
-    </section>
+    <>
+      <header>
+        <Header />
+      </header>
+      <section className={styles.container}>
+        <WordleScreen gameInfo={wordleInfo} />
+        <Keyboard keyboard={keyboard} />
+      </section>
+    </>
   );
 }
 

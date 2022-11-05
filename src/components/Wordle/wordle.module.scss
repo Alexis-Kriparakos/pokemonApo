@@ -1,13 +1,95 @@
+.container {
+	margin: 3rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.screenContainer {
+	margin: 0 0 4rem;
+}
+
+.tipContainer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	min-height: 4.25rem;
+	margin: 0 0 1rem;
+}
+
+.tipButton {
+	border: 0;
+	outline: 0;
+	font-size: 1.5rem;
+	cursor: pointer;
+	background-color: unset;
+	margin-right: 1rem;
+}
+
+.tipContent {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.tipRegion {
+	font-size: 1.5rem;
+	font-family: "JetBrains Mono", monospace;
+	margin: 0;
+}
+
+.tipImageContainer {
+	margin: 0 1.5rem;
+}
+
+.tipImage {
+	width: 2rem;
+	height: 2rem;
+	margin: 0 0.125rem;
+}
+
+.spriteBtn {
+	cursor: pointer;
+	padding: 0;
+	border-radius: 0.5rem;
+	border: 1px solid #eee;
+	background-color: #fff;
+	height: 4rem;
+	width: 4rem;
+	padding: 0.125rem;
+}
+
+.tipPokeImage {
+	width: 3.875rem;
+	height: 3.875rem;
+}
+
+.darkImage {
+	filter: brightness(0%);
+}
+
+.spriteBtn:hover {
+	border: 1px solid #000;
+}
+
 .rowContainer {
-    display: flex;
+	display: flex;
+	margin-bottom: 0.25rem;
 }
 
 .letterContainer {
-    display: flex;
-    flex-direction: column;    
-    border: 2px solid #fff;
-    border-radius: 0.25rem;
-		color:#292929;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	border: 2px solid #d3d6da;
+	border-radius: 0.25rem;
+	color: #292929;
+	flex: 1 1 100%;
+	max-width: 3.875rem;
+	height: 3.875rem;
+	box-sizing: border-box;
+	margin: 0 0.125rem
 }
 
 .correctPosition {
@@ -26,25 +108,26 @@
 }
 
 .letter {
-    width: 4rem;
-    height: 4rem;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    line-height: 1;
-    font-weight: bold;
-    vertical-align: middle;
-    text-transform: uppercase;
-    user-select: none;
+	min-width: 4rem;
+	min-height: 4rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+	line-height: 1;
+	font-weight: bold;
+	vertical-align: middle;
+	text-transform: uppercase;
+	user-select: none;
 }
 
 .keyboardContainer {
-    display: flex;
-    flex-wrap: wrap;
-    width: 80rem;
+	display: flex;
+	flex-wrap: wrap;
+	width: 50rem;
+	margin: auto;
 }
 
 .keyboardButton {
-    flex: 1 1 5%;
+	flex: 1 1 10%;
 }

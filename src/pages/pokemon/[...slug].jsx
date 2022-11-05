@@ -9,7 +9,7 @@ import { PrimaryButton } from '../../components/Buttons/Buttons';
 import Header from '../../components/Header/Header';
 import { MEMO_STATS, TYPE_TO_IMG, DUMMY_TEXT } from '../../constants/constants';
 import { getEvolutionChainTransformed, findOrGetPokemonChain } from '../../helpers/evolution';
-import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
+import { getPokemonMoves } from '../../helpers/pokemon';
 import { transformPokemon } from '../../helpers/transformer';
 
 import styles from './pokemonDetails.module.scss';
@@ -67,7 +67,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
               <Link key={poke.id} href={`/pokemon/${poke.name}`}>
                 <a className={styles.linkEvoChain}>
                   <img
-                    className={styles.smallImage}
+                    className={styles.tipPokeImage}
                     src={poke.sprites.front_default}
                     alt={pokemon.name}
                   />

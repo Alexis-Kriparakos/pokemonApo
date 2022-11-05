@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
+import { getPokemonWordle } from '../api/pokemon';
 import { MAX_WORDLE_TRIES } from '../constants/constants';
 import { getRandomInt } from '../helpers/damage';
 import { encodeString, decodeString, compareStrings } from '../helpers/stringHelpers';
@@ -12,18 +13,20 @@ const wordle$ = new BehaviorSubject(
     winnerWord: '',
     isGameOver: false,
     isGameWon: false,
+    tips: {},
   }
 );
 
 export const WordleGame = {
-  startWordle: wordsArray => {
+  startWordle: async wordsArray => {
     const randomIndex = getRandomInt(808);
     const itemSelected = wordsArray[randomIndex];
+    const tips = await getPokemonWordle(itemSelected.url);
     const { name } = itemSelected;
     const { length } = name;
-    const tries = [...Array(MAX_WORDLE_TRIES)].map((_, inedx) => {
+    const tries = [...Array(MAX_WORDLE_TRIES)].map((_, index) => {
       return {
-        id: inedx,
+        id: index,
         wordTyped: '',
         comparedStrings: [],
       };
@@ -32,6 +35,7 @@ export const WordleGame = {
     WordleGame.update({
       ...tempGame,
       tries,
+      tips,
       winnerWord: encodeString(name),
       wordLength: length,
     });
