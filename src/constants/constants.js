@@ -1,5 +1,20 @@
 import { useMemo } from 'react';
 
+export const GAME_MODES = [
+  {
+    label: 'Choose your Team',
+    link: '/pokemon-list',
+  },
+  {
+    label: 'Battle',
+    link: '/battle',
+  },
+  {
+    label: 'Wordle',
+    link: '/wordle',
+  },
+];
+
 export function MEMO_STATS(pokemon) {
   return useMemo(() => {
     return {

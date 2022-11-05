@@ -20,7 +20,7 @@ const wordle$ = new BehaviorSubject(
 
 export const WordleGame = {
   startWordle: async wordsArray => {
-    const randomIndex = getRandomInt(808);
+    const randomIndex = getRandomInt(386);
     const itemSelected = wordsArray[randomIndex];
     const tips = await getPokemonWordle(itemSelected.url);
     const { name } = itemSelected;

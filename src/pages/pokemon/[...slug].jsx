@@ -54,9 +54,7 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
 
   return (
     <section className={styles.container}>
-      <header>
-        <Header />
-      </header>
+      <Header />
       <section className={styles.pokemonDetailsContaier}>
         <div className={styles.leftSection}>
           <div className={styles.pokemonImgContainer}>
