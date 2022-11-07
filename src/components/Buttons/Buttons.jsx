@@ -17,4 +17,17 @@ export function PrimaryButton({ children, onClick = () => {}, ...rest }) {
   );
 }
 
-export default { PrimaryButton };
+export function SecondaryButton({ children, onClick = () => {}, ...rest }) {
+  return (
+    <button
+      className={styles.secondaryButton}
+      type="button"
+      onClick={onClick}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+}
+
+export default { PrimaryButton, SecondaryButton };
