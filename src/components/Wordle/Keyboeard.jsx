@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaBackspace } from 'react-icons/fa';
 
 import { SecondaryButton } from '../Buttons/Buttons';
 
@@ -12,7 +13,8 @@ export default function Keyboard({ keyboard }) {
           <SecondaryButton
             onClick={() => button.action(button.value)}
           >
-            {button.label}
+            {/* {button.label} */}
+            {button.value === 'backspace' ? <FaBackspace /> : button.label}
           </SecondaryButton>
         </div>
       ))}

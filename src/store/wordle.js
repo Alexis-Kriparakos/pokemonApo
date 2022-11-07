@@ -48,6 +48,22 @@ export const WordleGame = {
     const _wordleInfo = WordleGame.getValue();
     WordleGame.update({ ..._wordleInfo, score: 0 });
   },
+  gameLogic: (keyValue, keyboard) => {
+    const isValidKeyPress = keyboard.some(key => (key.value === keyValue));
+    if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
+    if (keyValue === 'backspace') {
+      const backSpaceKey = keyboard.find(key => key.value === 'backspace');
+      backSpaceKey.action();
+      return;
+    }
+    if (keyValue === 'enter') {
+      const enterKey = keyboard.find(key => key.value === 'enter');
+      enterKey.action();
+      return;
+    }
+    if (WordleGame.lettersInWordReached()) return;
+    WordleGame.onUpdateWordTyped(keyValue);
+  },
   returnTry: () => {
     const tempGame = WordleGame.getValue();
     const { currentTry: index, tries, wordLength, winnerWord } = tempGame;

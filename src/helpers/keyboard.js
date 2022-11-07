@@ -22,7 +22,7 @@ export function keyboardMemo() {
     };
     const backSpaceKey = {
       value: 'backspace',
-      label: 'BACKSPACE',
+      label: 'BACK',
       action: WordleGame.onPressBackSpace,
     };
     keyboardMap.splice(19, 0, backSpaceKey);

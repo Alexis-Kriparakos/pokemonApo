@@ -13,22 +13,10 @@ import { WordleGame } from '../store/wordle';
 export default function Wordle({ pokemon }) {
   const [wordleInfo, setWordleInfo] = useState({});
   const keyboard = keyboardMemo();
+
   function keyDownHandler(e) {
     const keyValue = e.key.toLowerCase();
-    const isValidKeyPress = keyboard.some(key => (key.value === keyValue));
-    if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
-    if (keyValue === 'backspace') {
-      const backSpaceKey = keyboard.find(key => key.value === 'backspace');
-      backSpaceKey.action();
-      return;
-    }
-    if (keyValue === 'enter') {
-      const enterKey = keyboard.find(key => key.value === 'enter');
-      enterKey.action();
-      return;
-    }
-    if (WordleGame.lettersInWordReached()) return;
-    WordleGame.onUpdateWordTyped(keyValue);
+    WordleGame.gameLogic(keyValue, keyboard);
   }
 
   function onClickRestart() {

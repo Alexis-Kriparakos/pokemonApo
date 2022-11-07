@@ -53,6 +53,7 @@
 	@media (max-width: breakpoints.$md) {
 		border: 1px solid #6aaa64;
 		border-radius: 0.25rem;
+		margin-right: 0.5rem;
 		padding: 0.25rem;
 	}
 
@@ -86,6 +87,7 @@
 
 	@media (max-width: breakpoints.$md) {
 		font-size: 1rem;
+		margin-right: 0.25rem;
 	}
 }
 
@@ -223,9 +225,9 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin: auto;
+	justify-content: center;
 
 	@media (max-width: breakpoints.$md) {
-		margin: 0 auto;
 		width: 91%;
 	}
 }
