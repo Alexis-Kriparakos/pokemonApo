@@ -21,4 +21,10 @@ export function calculateDamage(pokemonAttacking, pokemonDefending, move) {
   return damage;
 }
 
-export default { calculateDamage };
+export function getRandomInt(max, min = 0) {
+  const _min = Math.ceil(min);
+  const _max = Math.floor(max);
+  return Math.floor(Math.random() * (_max - _min + 1)) + _min;
+}
+
+export default { calculateDamage, getRandomInt };

@@ -29,7 +29,9 @@
 
 	@media (max-width: breakpoints.$md) {
 		min-width: unset;
-		margin: 0 0.25rem 1rem;
+		<<<<<<< HEAD margin: 0 0.25rem 1rem;
+		=======margin: 0 0.5rem 1rem;
+		>>>>>>>bdf395dcc43b84357ee6edac30327486423714cf
 	}
 }
 

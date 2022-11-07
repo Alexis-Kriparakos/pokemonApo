@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import PokemonStore from '../../store/pokemonStore';
@@ -8,6 +9,8 @@ import { PokemonToShow } from '../../store/pokemonToShow';
 import styles from './Header.module.scss';
 
 export default function Header() {
+  const router = useRouter();
+  const isPokemonList = router.pathname === '/pokemon-list';
   function onChangeInput(value) {
     const pokemonInRegions = PokemonStore.getValue();
     const { region } = PokemonToShow.getValue();
@@ -22,14 +25,14 @@ export default function Header() {
   }
 
   return (
-    <section className={styles.mainContainer}>
+    <header className={styles.mainContainer}>
       <div className={styles.container}>
         <Link href="/">
           <a className={styles.headerText}>
             <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
           </a>
         </Link>
-        <input className={cn(styles.input, styles.searchBarBigScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />
+        {isPokemonList && <input className={cn(styles.input, styles.searchBarBigScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />}
         <div className={styles.wrapper}>
           <Link href="/battle">
             <a className={styles.linkBattle} href="/battle">
@@ -47,8 +50,8 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      <input className={cn(styles.input, styles.searchBarSmallScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />
-    </section>
+      {isPokemonList && <input className={cn(styles.input, styles.searchBarSmallScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />}
+    </header>
 
   );
 }

@@ -5,7 +5,7 @@ import { MdClose } from 'react-icons/md';
 import ReactModal from 'react-modal';
 
 import { TYPE_TO_IMG } from '../../constants/constants';
-import { getPokemonMoves } from '../../helpers/pokemonWithMoves';
+import { getPokemonMoves } from '../../helpers/pokemon';
 import { PrimaryButton } from '../Buttons/Buttons';
 
 import styles from './PokemonMovesModal.module.scss';
