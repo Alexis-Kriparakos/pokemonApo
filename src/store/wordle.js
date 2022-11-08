@@ -51,14 +51,9 @@ export const WordleGame = {
   gameLogic: (keyValue, keyboard) => {
     const isValidKeyPress = keyboard.some(key => (key.value === keyValue));
     if (!isValidKeyPress) return console.log('NOT VALID KEYPRESS');
-    if (keyValue === 'backspace') {
-      const backSpaceKey = keyboard.find(key => key.value === 'backspace');
-      backSpaceKey.action();
-      return;
-    }
-    if (keyValue === 'enter') {
-      const enterKey = keyboard.find(key => key.value === 'enter');
-      enterKey.action();
+    if (keyValue === 'enter' || keyValue === 'backspace') {
+      const specialKey = keyboard.find(key => key.value === keyValue);
+      specialKey.action();
       return;
     }
     if (WordleGame.lettersInWordReached()) return;

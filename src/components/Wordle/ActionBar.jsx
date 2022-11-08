@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 import React, { useState } from 'react';
 import { MdRestartAlt } from 'react-icons/md';
 
@@ -7,8 +8,8 @@ import { TYPE_TO_IMG } from '../../constants/constants';
 import styles from './wordle.module.scss';
 
 export default function ActionBar({ tips, score, onClickRestart }) {
-  const [revealTips, setRevealTips] = useState(false);
   const [revealImage, setRevealImage] = useState(false);
+  if (isEmpty(tips)) return null;
 
   const { region, types, sprites } = tips;
   return (
@@ -21,8 +22,6 @@ export default function ActionBar({ tips, score, onClickRestart }) {
         <p className={styles.scoreText}>{`Score: ${score}`}</p>
       </div>
       <div className={styles.tipContainer}>
-        <button type="button" className={styles.tipButton} onClick={() => setRevealTips(!revealTips)}>Get Tips!</button>
-        {revealTips && (
         <div className={styles.tipContent}>
           <p className={styles.tipRegion}>{region}</p>
           <div className={styles.tipImageContainer}>
@@ -38,7 +37,6 @@ export default function ActionBar({ tips, score, onClickRestart }) {
             />
           </button>
         </div>
-        )}
       </div>
     </div>
   );

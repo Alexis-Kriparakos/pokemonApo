@@ -28,7 +28,7 @@
 	min-width: 50rem;
 
 	@media (max-width: breakpoints.$md) {
-		min-width: unset;
+		min-width: 90vw;
 		margin: 0 0.25rem 1rem;
 	}
 }
@@ -76,21 +76,6 @@
 	padding: 0;
 }
 
-.tipButton {
-	border: 0;
-	outline: 0;
-	font-size: 1.5rem;
-	cursor: pointer;
-	background-color: unset;
-	margin-right: 1rem;
-	text-decoration: underline;
-
-	@media (max-width: breakpoints.$md) {
-		font-size: 1rem;
-		margin-right: 0.25rem;
-	}
-}
-
 .tipContent {
 	display: flex;
 	align-items: center;
@@ -133,7 +118,7 @@
 	background-color: #fff;
 	height: 4rem;
 	width: 4rem;
-	padding: 0.125rem;
+	padding: 0;
 
 	@media (max-width: breakpoints.$md) {
 		width: 3rem;
@@ -142,12 +127,12 @@
 }
 
 .tipPokeImage {
-	width: 3.875rem;
-	height: 3.875rem;
+	height: 4rem;
+	width: 4rem;
 
 	@media (max-width: breakpoints.$md) {
-		width: 2.875rem;
-		height: 2.875rem;
+		width: 3rem;
+		height: 3rem;
 	}
 }
 
