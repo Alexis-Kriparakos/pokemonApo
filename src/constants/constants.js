@@ -130,7 +130,7 @@ export const REGIONS_POKEMON = {
   },
 };
 
-export const MAX_POKEMON_TEAM = 5;
+export const MAX_POKEMON_TEAM = 2;
 export const MAX_WORDLE_TRIES = 6;
 
 export const DUMMY_TEXT = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 

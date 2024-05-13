@@ -46,8 +46,9 @@ export const PokemonBattle = {
   executeMove: (pokemonAttacking, pokemonDefending, move) => {
     const damageDealt = calculateDamage(pokemonAttacking, pokemonDefending, move);
     const { battleStats: updatedBattleStats } = pokemonDefending;
-    if (updatedBattleStats.hpStat - damageDealt > 0) {
-      updatedBattleStats.hpStat = updatedBattleStats.hpStat - damageDealt;
+    const updateedHp = updatedBattleStats.hpStat - damageDealt;
+    if (updateedHp > 0) {
+      updatedBattleStats.hpStat = updateedHp;
       return { ...pokemonDefending, battleStats: updatedBattleStats };
     }
     updatedBattleStats.hpStat = 0;
