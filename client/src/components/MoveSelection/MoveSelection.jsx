@@ -12,23 +12,24 @@ export default function MoveSelection({
   status,
   onClick = () => {},
   onClickSwitch = () => {},
+  isDisabled = false
 }) {
-  const { player1, player2 } = status;
-  const areMovesEnabled = (player1Moves && player1) || (player2Moves && player2);
+  // const { player1, player2 } = status;
+  // const areMovesEnabled = (player1Moves && player1) || (player2Moves && player2);
   return (
     <div className={styles.movesSelection}>
       {pokemon?.selectedMoves.map(move => (
         <div className={styles.moveButtonContainer}>
           <PrimaryButton
             key={move.id}
-            disabled={!areMovesEnabled}
+            disabled={isDisabled}
             onClick={() => onClick(move)}
           >
             {move.name.toUpperCase()}
           </PrimaryButton>
         </div>
       ))}
-      <PrimaryButton onClick={onClickSwitch} disabled={!areMovesEnabled}>
+      <PrimaryButton onClick={onClickSwitch} disabled={isDisabled}>
         SWITCH POKEMON
       </PrimaryButton>
     </div>

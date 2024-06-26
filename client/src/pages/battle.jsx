@@ -16,34 +16,39 @@ const socket = io('http://localhost:3010'); // Update with the server address
 
 
 export default function Battle() {
-  // const healthBarStyle = useCallback(pokemon => {
-  //   if (!pokemon) return;
-  //   const style = {
-  //     backgroundColor: '#5ABA4A',
-  //     width: `${((pokemon.battleStats.hpStat / pokemon.stats.hpStat) * 100).toFixed(3)}%`,
-  //     height: '0.375rem',
-  //     borderRadius: '0.625rem',
-  //   };
-  //   return (
-  //     <div className={styles.healthStatus}>
-  //       <div className={styles.healthText}>
-  //         <span>{pokemon.name.toUpperCase()}</span>
-  //         <span>lvl.100</span>
-  //         <div>
-  //           {pokemon.types.map(type => (
-  //             <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
-  //           ))}
-  //         </div>
-  //       </div>
-  //       <div className={styles.statsBar}>
-  //         <div style={style} />
-  //       </div>
-  //       <span>{`${pokemon.battleStats.hpStat} / ${pokemon.stats.hpStat}`}</span>
-  //     </div>
-  //   );
-  // }, [pokemonFighting1, pokemonFighting2]);
-
   const [battlestart, setBattleStart] = useState(false);
+  const [pokemonFightingMain, setPokemonFightingMain] = useState(null);
+  const [pokemonFightingOpponent, setPokemonFightingOpponent] = useState(null);
+  const [moveSelectedMain, setMoveSelctedMain] = useState(null);
+  const [moveSelectedOpponent, setMoveSelectedOpponent] = useState(null);
+
+  const healthBarStyle = useCallback(pokemon => {
+    if (!pokemon) return;
+    const style = {
+      backgroundColor: '#5ABA4A',
+      width: `${((pokemon.battleStats.hpStat / pokemon.stats.hpStat) * 100).toFixed(3)}%`,
+      height: '0.375rem',
+      borderRadius: '0.625rem',
+    };
+    return (
+      <div className={styles.healthStatus}>
+        <div className={styles.healthText}>
+          <span>{pokemon.name.toUpperCase()}</span>
+          <span>lvl.100</span>
+          <div>
+            {pokemon.types.map(type => (
+              <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
+            ))}
+          </div>
+        </div>
+        <div className={styles.statsBar}>
+          <div style={style} />
+        </div>
+        <span>{`${pokemon.battleStats.hpStat} / ${pokemon.stats.hpStat}`}</span>
+      </div>
+    );
+  }, [pokemonFightingMain, pokemonFightingOpponent]);
+
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -60,14 +65,35 @@ export default function Battle() {
     });
 
     socket.on('receiveOpponentTeam', (opponentTeam) => {
-      console.log(opponentTeam);
       Trainer2Team.update(opponentTeam);
+      PokemonBattle.startBattle();
+      PokemonBattle.getValue();
     });
+
+    socket.on('receiveOpponentMove', (opponentMove) => {
+      console.log(opponentMove);
+      setMoveSelectedOpponent(opponentMove);
+    })
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       socket.off('startGame');
       socket.off('receiveOpponentTeam');
+    };
+  }, []);
+
+  useEffect(() => {
+    PokemonBattle.startBattle();
+    const pokemonBattle$ = PokemonBattle.subscribe(battle => {
+      // setBattleInfo(battle);
+      // setBattleStatus(battle.status);
+      setPokemonFightingMain(battle.pokemonFighting1);
+      setPokemonFightingOpponent(battle.pokemonFighting2);
+      // setSelectedMoveP1(battle.movePlayer1);
+      // setSelectedMoveP2(battle.movePlayer2);
+    });
+    return () => {
+      pokemonBattle$.unsubscribe();
     };
   }, []);
 
@@ -92,23 +118,23 @@ export default function Battle() {
             />
           </div>
           <div className={styles.battleContainer}>
-            {/* <div className={styles.arena}>
+            <div className={styles.arena}>
               <div className={styles.leftSide}>
-                {healthBarStyle(pokemonFighting1)}
+                {healthBarStyle(pokemonFightingMain)}
                 <div className={styles.bottomPokemon}>
-                  <img className={styles.sprite} src={pokemonFighting1?.sprites?.back_default} alt="" />
+                  <img className={styles.sprite} src={pokemonFightingMain?.sprites?.back_default} alt="" />
                 </div>
               </div>
               <div className={styles.rightSide}>
                 <div className={styles.topPokemon}>
-                  <img className={styles.sprite} src={pokemonFighting2?.sprites?.front_default} alt="" />
+                  <img className={styles.sprite} src={pokemonFightingOpponent?.sprites?.front_default} alt="" />
                 </div>
-                {healthBarStyle(pokemonFighting2)}
+                {healthBarStyle(pokemonFightingOpponent)}
               </div>
             </div>
             <div className={styles.battleStatusMessageContainer}>
-              {battleInfo.status.message}
-            </div> */}
+              this is a battle status message
+            </div>
           </div>
           <div className={styles.teamContainer}>
             <PokemonTeam
@@ -120,37 +146,27 @@ export default function Battle() {
           </div>
         </div>
         <div className={styles.movesContainer}>
-          {/* <MoveSelection
+          <MoveSelection
             player1Moves
-            pokemon={pokemonFighting1}
+            pokemon={pokemonFightingMain}
             onClick={move => {
-              const battle = PokemonBattle.getValue();
-              PokemonBattle.update(
-                { ...battle, movePlayer1: move, status: PHASES.PLAYER2_MOVE_CHOICE }
-              );
+             setMoveSelctedMain(move);
+             socket.emit('playerSelectedMove', move);
             }}
             onClickSwitch={() => {
-              const battle = PokemonBattle.getValue();
-              PokemonBattle.update(
-                { ...battle, status: PHASES.SWITCH_POKEMON1 }
-              );
+              console.log('switch pokemon main');
             }}
-            status={battleInfo.status}
-          /> */}
+            isDisabled={!!moveSelectedMain}
+          />
           {/* <MoveSelection
             player2Moves
-            pokemon={pokemonFighting2}
+            pokemon={pokemonFightingOpponent}
             onClick={move => {
-              const battle = PokemonBattle.getValue();
-              PokemonBattle.update({ ...battle, movePlayer2: move, status: PHASES.BATTLE_PHASE });
+              console.log(move);
             }}
             onClickSwitch={() => {
-              const battle = PokemonBattle.getValue();
-              PokemonBattle.update(
-                { ...battle, status: PHASES.SWITCH_POKEMON2 }
-              );
+              console.log('switch pokemon opponent');
             }}
-            status={battleInfo.status}
           /> */}
         </div>
       </>

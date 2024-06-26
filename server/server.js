@@ -15,8 +15,8 @@ const io = socketIo(server, {
     }
 });
 
-const queue = []; // Queue to keep track of waiting players
-const teams = {}; // Store teams by socket ID
+let queue = []; // Queue to keep track of waiting players
+let teams = {}; // Store teams by socket ID
 
 io.on('connection', (socket) => {
     console.log('A user connected');
@@ -53,6 +53,22 @@ io.on('connection', (socket) => {
             }
         }
     });
+
+    socket.on('playerSelectedMove', (move) => {
+        console.log(`User with ID ${socket.id} selected the move: ${move.name}`);
+        
+        const rooms = Array.from(socket.rooms);
+        const room = rooms.find(r => r !== socket.id); // Find the room the user is in
+
+        if (room) {
+            const opponentId = Array.from(io.sockets.adapter.rooms.get(room)).find(id => id !== socket.id);
+            if (opponentId && teams[opponentId]) {
+                // Send each player's team to the other player
+                socket.to(room).emit('receiveOpponentMove', move);
+                socket.emit('receiveOpponentMove', move);
+            }
+        }
+    })
 
     socket.on('leaveQueue', () => {
         console.log(`User with ID ${socket.id} is leaving the queue`);
