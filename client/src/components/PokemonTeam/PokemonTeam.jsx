@@ -7,12 +7,11 @@ import styles from './PokemonTeam.module.scss';
 import PokemonTeamCard from './PokemonTeamCard';
 
 export default function PokemonTeam({
-  trainer, team, isLeft = false, isBattle = false, onClick = () => {},
+  team, isLeft = false, isBattle = false, onClick = () => {},
 }) {
   const [pokemonInTeam, setPokemoninTeam] = useState([]);
   const [isCollasped, setIsCollasped] = useState(true);
 
-  const trainerName = trainer === '1' ? 'Ash Ketchum' : 'Gary Oak';
   useEffect(() => {
     const team$ = team.subscribe(setPokemoninTeam);
     return () => {
@@ -53,7 +52,6 @@ export default function PokemonTeam({
         )}
       >
         <header className={styles.header}>
-          <p>{trainerName}</p>
           {pokemonInTeam.map(pokemon => (
             <img key={pokemon.id} className={styles.pokeballIMG} src="/assets/img/Pokeball.png" alt="pokeball" />
           ))}

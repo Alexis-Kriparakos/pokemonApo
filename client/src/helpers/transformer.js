@@ -14,7 +14,7 @@ export function transformPokemon(poke) {
   const stats = {
     hpStat, atkStat, defStat, spAtkStat, spDefStat, speedStat,
   };
-  const types = poke?.types.map(type => type.type.name);
+  const types = poke?.types?.map(type => type.type.name);
   const newPoke = {
     ...poke,
     name: capitalizeFirstLetter(poke.name),

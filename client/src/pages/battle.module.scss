@@ -4,6 +4,13 @@
   display: flex;
 }
 
+.noPlayers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .battleContainer {
   background-color: #eee;
   border-radius: 0.5rem;
