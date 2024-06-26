@@ -7,20 +7,22 @@ import { calculateDamage } from '../helpers/damage';
 
 import { Trainer1Team, Trainer2Team } from './teamStore';
 
-const pokemonBattle$ = new BehaviorSubject(
-  {
-    status: PHASES.PLAYER1_MOVE_CHOICE,
-    movePlayer1: {},
-    movePlayer2: {},
-    teamPlayer1: [],
-    teamPlayer2: [],
-    pokemonFighting1: {},
-    pokemonFighting2: {},
-    winner: '',
-  }
-);
+
+const INITIAL_VALUE = {
+  status: PHASES.PLAYER1_MOVE_CHOICE,
+  movePlayer1: {},
+  movePlayer2: {},
+  teamPlayer1: [],
+  teamPlayer2: [],
+  pokemonFighting1: {},
+  pokemonFighting2: {},
+  winner: '',
+}
+
+const pokemonBattle$ = new BehaviorSubject(INITIAL_VALUE);
 
 export const PokemonBattle = {
+  getSubject: () => pokemonBattle$,
   update: battleInfo => {
     pokemonBattle$.next(battleInfo);
   },

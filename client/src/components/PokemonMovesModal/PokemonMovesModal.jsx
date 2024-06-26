@@ -7,7 +7,7 @@ import ReactModal from 'react-modal';
 import { TYPE_TO_IMG } from '../../constants/constants';
 import { getPokemonMoves } from '../../helpers/pokemon';
 import { PrimaryButton } from '../Buttons/Buttons';
-
+import Loader from '../Loader'
 import styles from './PokemonMovesModal.module.scss';
 
 const customStyles = {
@@ -40,12 +40,15 @@ export default function PokemonMovesModal({
   selectedMoves,
 }) {
   const [pokemonMoves, setPokemonMoves] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const headerTitle = `Pick ${pokemon.name}'s 4 Moves`;
 
   async function getMoves() {
+    setIsFetching(true);
     const allMoves = await getPokemonMoves(pokemon);
     setPokemonMoves(allMoves);
+    setIsFetching(false);
   }
 
   useEffect(() => {
@@ -79,6 +82,7 @@ export default function PokemonMovesModal({
             <MdClose className={styles.closeImage} />
           </button>
         </header>
+        {!isFetching && pokemonMoves.length !== 0 ? (
         <main className={styles.moveList}>
           {pokemonMoves.map(move => (
             <div
@@ -101,7 +105,9 @@ export default function PokemonMovesModal({
               </PrimaryButton>
             </div>
           ))}
-        </main>
+        </main>) 
+        : <Loader />
+        }
         <footer className={styles.buttonContainer}>
           <div className={styles.spacingBtn}>
             <PrimaryButton onClick={() => setIsOpenModal(false)}>

@@ -64,15 +64,14 @@ export default function PokemonCard({ pokemon }) {
     setSelectedMoves([...selectedMoves, move]);
   }
 
-  function onClickOpenSelectPokemon() {
+  function onClickOpenSelectPokemon(poke) {
     setSelectedMoves([]);
-    // const isT1Turn = Trainer1Turn.getValue();
-    // const team = isT1Turn ? Trainer1Team.getValue() : Trainer2Team.getValue();
-    // const found = team.some((el) => el.id === poke.id);
-    // if (found) {
-    //   setDuplicatePokemonModal(true);
-    //   return;
-    // }
+    const team = Trainer1Team.getValue();
+    const found = team.some((el) => el.id === poke.id);
+    if (found) {
+      setDuplicatePokemonModal(true);
+      return;
+    }
     setOpenModal(true);
   }
 

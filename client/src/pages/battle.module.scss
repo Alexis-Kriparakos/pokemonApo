@@ -68,6 +68,11 @@
   }
 }
 
+.typeContainer {
+  display: flex;
+  margin: 1px 0;
+}
+
 .bottomPokemon {
   align-self: flex-end;
   margin: 0 auto;

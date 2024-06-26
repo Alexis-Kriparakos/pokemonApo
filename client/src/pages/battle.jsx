@@ -6,6 +6,7 @@ import MoveSelection from '../components/MoveSelection/MoveSelection';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 import { PHASES, TYPE_TO_IMG } from '../constants/constants';
 import { PokemonBattle } from '../store/pokemonBattle';
+import { distinctUntilKeyChanged } from 'rxjs/operators';
 
 import styles from './battle.module.scss';
 import Loader from '../components/Loader';
@@ -35,7 +36,7 @@ export default function Battle() {
         <div className={styles.healthText}>
           <span>{pokemon.name.toUpperCase()}</span>
           <span>lvl.100</span>
-          <div>
+          <div className={styles.typeContainer} >
             {pokemon.types.map(type => (
               <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
             ))}
@@ -58,6 +59,7 @@ export default function Battle() {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     socket.on('startGame', () => {
+      console.log('startGame');
       const team = Trainer1Team.getValue();
       socket.emit('submitPlayerTeam', team);
       setBattleStart(true);
@@ -67,7 +69,6 @@ export default function Battle() {
     socket.on('receiveOpponentTeam', (opponentTeam) => {
       Trainer2Team.update(opponentTeam);
       PokemonBattle.startBattle();
-      PokemonBattle.getValue();
     });
 
     socket.on('receiveOpponentMove', (opponentMove) => {
@@ -92,8 +93,25 @@ export default function Battle() {
       // setSelectedMoveP1(battle.movePlayer1);
       // setSelectedMoveP2(battle.movePlayer2);
     });
+
+    const battlePhases$ = PokemonBattle.getSubject().pipe(distinctUntilKeyChanged('status')).subscribe(battleInfo => {
+      const { status } = battleInfo;
+      switch (status) {
+        case PHASES.PLAYER1_MOVE_CHOICE:
+          return null;
+        case PHASES.PLAYER2_MOVE_CHOICE:
+          return null;
+        case PHASES.BATTLE_PHASE:
+          return null;
+        case PHASES.SWITCH_POKEMON1:
+          return null;
+        case PHASES.SWITCH_POKEMON2: 
+          return null;
+      };
+    })
     return () => {
       pokemonBattle$.unsubscribe();
+      battlePhases$.unsubscribe();
     };
   }, []);
 
@@ -151,12 +169,14 @@ export default function Battle() {
             pokemon={pokemonFightingMain}
             onClick={move => {
              setMoveSelctedMain(move);
+             const battle = PokemonBattle.getValue();
+             PokemonBattle.update({...battle, status: PHASES.PLAYER2_MOVE_CHOICE})
              socket.emit('playerSelectedMove', move);
             }}
             onClickSwitch={() => {
               console.log('switch pokemon main');
             }}
-            isDisabled={!!moveSelectedMain}
+            isDisabled={false}
           />
           {/* <MoveSelection
             player2Moves
