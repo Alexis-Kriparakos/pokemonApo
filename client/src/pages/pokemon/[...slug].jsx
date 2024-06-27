@@ -63,11 +63,11 @@ export default function PokemonPage({ _pokemon, _evolutionChain }) {
           <div className={styles.evolutionChain}>
             {evolutions.map(poke => (
               <Link key={poke.id} href={`/pokemon/${poke.name}`} className={styles.linkEvoChain}>
-                  <img
-                    className={styles.tipPokeImage}
-                    src={poke.sprites.front_default}
-                    alt={pokemon.name}
-                  />
+                <img
+                  className={styles.tipPokeImage}
+                  src={poke.sprites.front_default}
+                  alt={pokemon.name}
+                />
               </Link>
             ))}
           </div>

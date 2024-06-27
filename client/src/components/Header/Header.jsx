@@ -32,11 +32,13 @@ export default function Header() {
           <img className={styles.logo} src="/assets/img/Pokémon_logo.png" alt="" />
         </Link>
         {isPokemonList && <input className={cn(styles.input, styles.searchBarBigScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />}
-        {!isBattlePage && <div className={styles.wrapper}>
+        {!isBattlePage && (
+        <div className={styles.wrapper}>
           <Link href="/battle" className={styles.linkBattle}>
-              <span className={styles.span}>Battle</span>
+            <span className={styles.span}>Battle</span>
           </Link>
-        </div>}
+        </div>
+        )}
       </div>
       {isPokemonList && <input className={cn(styles.input, styles.searchBarSmallScreen)} type="text" placeholder="Search Pokemon" onChange={e => onChangeInput(e.target.value)} />}
     </header>

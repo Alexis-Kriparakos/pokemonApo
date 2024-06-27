@@ -67,7 +67,7 @@ export default function PokemonCard({ pokemon }) {
   function onClickOpenSelectPokemon(poke) {
     setSelectedMoves([]);
     const team = Trainer1Team.getValue();
-    const found = team.some((el) => el.id === poke.id);
+    const found = team.some(el => el.id === poke.id);
     if (found) {
       setDuplicatePokemonModal(true);
       return;
@@ -78,12 +78,12 @@ export default function PokemonCard({ pokemon }) {
   return (
     <section className={styles.pokemonCard}>
       <Link href={`pokemon/${pokemon.name}`} className={styles.topContainer} onClick={() => PokemonSelected.update(pokemon)}>
-          <img
-            className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
-            src={image}
-            alt={pokemon.name}
-          />
-          <p className={styles.pokemonName}>{pokemon.name}</p>
+        <img
+          className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
+          src={image}
+          alt={pokemon.name}
+        />
+        <p className={styles.pokemonName}>{pokemon.name}</p>
       </Link>
       <button
         type="button"

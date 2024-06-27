@@ -5,5 +5,5 @@ export default function Loader() {
     <div className={styles.container}>
       <div className={styles.pokemon} />
     </div>
-    )
+  );
 }

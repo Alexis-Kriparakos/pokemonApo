@@ -12,7 +12,7 @@ export default function MoveSelection({
   status,
   onClick = () => {},
   onClickSwitch = () => {},
-  isDisabled = false
+  isDisabled = false,
 }) {
   // const { player1, player2 } = status;
   // const areMovesEnabled = (player1Moves && player1) || (player2Moves && player2);

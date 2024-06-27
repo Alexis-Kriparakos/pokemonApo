@@ -7,7 +7,8 @@ import ReactModal from 'react-modal';
 import { TYPE_TO_IMG } from '../../constants/constants';
 import { getPokemonMoves } from '../../helpers/pokemon';
 import { PrimaryButton } from '../Buttons/Buttons';
-import Loader from '../Loader'
+import Loader from '../Loader';
+
 import styles from './PokemonMovesModal.module.scss';
 
 const customStyles = {
@@ -83,31 +84,31 @@ export default function PokemonMovesModal({
           </button>
         </header>
         {!isFetching && pokemonMoves.length !== 0 ? (
-        <main className={styles.moveList}>
-          {pokemonMoves.map(move => (
-            <div
-              key={move.id}
-              className={cn(
-                styles.moveBtnContainer,
-                { [styles.moveSelected]: isMoveSelected(move) }
-              )}
-            >
-              <PrimaryButton
-                onClick={() => onClickMove(move)}
+          <main className={styles.moveList}>
+            {pokemonMoves.map(move => (
+              <div
+                key={move.id}
+                className={cn(
+                  styles.moveBtnContainer,
+                  { [styles.moveSelected]: isMoveSelected(move) }
+                )}
               >
-                <div className={styles.content} title={getToolTipText(move)}>
-                  {move.name}
-                  {/* <span className={styles.tooltiptext}> */}
-                  {/* {getToolTipText(move)} */}
-                  {/* </span> */}
-                  <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
-                </div>
-              </PrimaryButton>
-            </div>
-          ))}
-        </main>) 
-        : <Loader />
-        }
+                <PrimaryButton
+                  onClick={() => onClickMove(move)}
+                >
+                  <div className={styles.content} title={getToolTipText(move)}>
+                    {move.name}
+                    {/* <span className={styles.tooltiptext}> */}
+                    {/* {getToolTipText(move)} */}
+                    {/* </span> */}
+                    <img src={`/assets/img/${TYPE_TO_IMG[move.type.name]}`} alt="" className={styles.typeImg} />
+                  </div>
+                </PrimaryButton>
+              </div>
+            ))}
+          </main>
+        )
+          : <Loader />}
         <footer className={styles.buttonContainer}>
           <div className={styles.spacingBtn}>
             <PrimaryButton onClick={() => setIsOpenModal(false)}>

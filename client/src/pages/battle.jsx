@@ -1,20 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useCallback } from 'react';
+import { distinctUntilKeyChanged } from 'rxjs/operators';
+import io from 'socket.io-client';
 
 import Header from '../components/Header/Header';
+import Loader from '../components/Loader';
 import MoveSelection from '../components/MoveSelection/MoveSelection';
 import PokemonTeam from '../components/PokemonTeam/PokemonTeam';
 import { PHASES, TYPE_TO_IMG } from '../constants/constants';
 import { PokemonBattle } from '../store/pokemonBattle';
-import { distinctUntilKeyChanged } from 'rxjs/operators';
-
-import styles from './battle.module.scss';
-import Loader from '../components/Loader';
-import io from 'socket.io-client';
 import { Trainer1Team, Trainer2Team } from '../store/teamStore';
 
-const socket = io('http://localhost:3010'); // Update with the server address
+import styles from './battle.module.scss';
 
+const socket = io('http://localhost:3010'); // Update with the server address
 
 export default function Battle() {
   const [battlestart, setBattleStart] = useState(false);
@@ -36,7 +35,7 @@ export default function Battle() {
         <div className={styles.healthText}>
           <span>{pokemon.name.toUpperCase()}</span>
           <span>lvl.100</span>
-          <div className={styles.typeContainer} >
+          <div className={styles.typeContainer}>
             {pokemon.types.map(type => (
               <img key={type} src={`/assets/img/${TYPE_TO_IMG[type]}`} alt={type} className={styles.typeImg} />
             ))}
@@ -49,7 +48,6 @@ export default function Battle() {
       </div>
     );
   }, [pokemonFightingMain, pokemonFightingOpponent]);
-
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -66,15 +64,15 @@ export default function Battle() {
       // Start the game logic here
     });
 
-    socket.on('receiveOpponentTeam', (opponentTeam) => {
+    socket.on('receiveOpponentTeam', opponentTeam => {
       Trainer2Team.update(opponentTeam);
       PokemonBattle.startBattle();
     });
 
-    socket.on('receiveOpponentMove', (opponentMove) => {
+    socket.on('receiveOpponentMove', opponentMove => {
       console.log(opponentMove);
       setMoveSelectedOpponent(opponentMove);
-    })
+    });
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -105,10 +103,10 @@ export default function Battle() {
           return null;
         case PHASES.SWITCH_POKEMON1:
           return null;
-        case PHASES.SWITCH_POKEMON2: 
+        case PHASES.SWITCH_POKEMON2:
           return null;
-      };
-    })
+      }
+    });
     return () => {
       pokemonBattle$.unsubscribe();
       battlePhases$.unsubscribe();
@@ -119,66 +117,67 @@ export default function Battle() {
     <section>
       <Header />
       {!battlestart ? (
-      <div className={styles.noPlayers}>
-        <h1>Pokemon Battle</h1>
-        <p>Waiting for another player to join...</p>
-        <Loader />
-      </div>): (
-      <>
-        <div className={styles.mainContainer}>
-          <div className={styles.teamContainer}>
-            <PokemonTeam
-              trainer="1"
-              team={Trainer1Team}
-              isBattle
-              isLeft
-              onClick={poke => console.log(poke)}
-            />
-          </div>
-          <div className={styles.battleContainer}>
-            <div className={styles.arena}>
-              <div className={styles.leftSide}>
-                {healthBarStyle(pokemonFightingMain)}
-                <div className={styles.bottomPokemon}>
-                  <img className={styles.sprite} src={pokemonFightingMain?.sprites?.back_default} alt="" />
-                </div>
-              </div>
-              <div className={styles.rightSide}>
-                <div className={styles.topPokemon}>
-                  <img className={styles.sprite} src={pokemonFightingOpponent?.sprites?.front_default} alt="" />
-                </div>
-                {healthBarStyle(pokemonFightingOpponent)}
-              </div>
-            </div>
-            <div className={styles.battleStatusMessageContainer}>
-              this is a battle status message
-            </div>
-          </div>
-          <div className={styles.teamContainer}>
-            <PokemonTeam
-              trainer="2"
-              team={Trainer2Team}
-              isBattle
-              onClick={poke => {console.log(poke)}}
-            />
-          </div>
+        <div className={styles.noPlayers}>
+          <h1>Pokemon Battle</h1>
+          <p>Waiting for another player to join...</p>
+          <Loader />
         </div>
-        <div className={styles.movesContainer}>
-          <MoveSelection
-            player1Moves
-            pokemon={pokemonFightingMain}
-            onClick={move => {
-             setMoveSelctedMain(move);
-             const battle = PokemonBattle.getValue();
-             PokemonBattle.update({...battle, status: PHASES.PLAYER2_MOVE_CHOICE})
-             socket.emit('playerSelectedMove', move);
-            }}
-            onClickSwitch={() => {
-              console.log('switch pokemon main');
-            }}
-            isDisabled={false}
-          />
-          {/* <MoveSelection
+      ) : (
+        <>
+          <div className={styles.mainContainer}>
+            <div className={styles.teamContainer}>
+              <PokemonTeam
+                trainer="1"
+                team={Trainer1Team}
+                isBattle
+                isLeft
+                onClick={poke => console.log(poke)}
+              />
+            </div>
+            <div className={styles.battleContainer}>
+              <div className={styles.arena}>
+                <div className={styles.leftSide}>
+                  {healthBarStyle(pokemonFightingMain)}
+                  <div className={styles.bottomPokemon}>
+                    <img className={styles.sprite} src={pokemonFightingMain?.sprites?.back_default} alt="" />
+                  </div>
+                </div>
+                <div className={styles.rightSide}>
+                  <div className={styles.topPokemon}>
+                    <img className={styles.sprite} src={pokemonFightingOpponent?.sprites?.front_default} alt="" />
+                  </div>
+                  {healthBarStyle(pokemonFightingOpponent)}
+                </div>
+              </div>
+              <div className={styles.battleStatusMessageContainer}>
+                this is a battle status message
+              </div>
+            </div>
+            <div className={styles.teamContainer}>
+              <PokemonTeam
+                trainer="2"
+                team={Trainer2Team}
+                isBattle
+                onClick={poke => { console.log(poke); }}
+              />
+            </div>
+          </div>
+          <div className={styles.movesContainer}>
+            <MoveSelection
+              player1Moves
+              pokemon={pokemonFightingMain}
+              onClick={move => {
+                setMoveSelctedMain(move);
+                const battle = PokemonBattle.getValue();
+                PokemonBattle.update({ ...battle, status: PHASES.PLAYER2_MOVE_CHOICE });
+                socket.emit('playerSelectedMove', move);
+              }}
+              onClickSwitch={() => {
+                console.log('switch pokemon main');
+              }}
+              isDisabled={false}
+            />
+            {/* <MoveSelection
             player2Moves
             pokemon={pokemonFightingOpponent}
             onClick={move => {
@@ -188,8 +187,8 @@ export default function Battle() {
               console.log('switch pokemon opponent');
             }}
           /> */}
-        </div>
-      </>
+          </div>
+        </>
       )}
     </section>
   );

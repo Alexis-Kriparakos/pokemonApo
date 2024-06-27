@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import { getData } from '../api/pokemon';
 import Header from '../components/Header/Header';
@@ -20,11 +20,13 @@ export default function Index({ pokemon }) {
   return (
     <>
       <Header />
-      <main className={styles.mainContainer}>
-        <PokemonTeam trainer="1" team={Trainer1Team} isLeft />
-        <PokemonList />
-        <PokemonTeam trainer="2" team={Trainer2Team} />
-      </main>
+      <Suspense>
+        <main className={styles.mainContainer}>
+          <PokemonTeam trainer="1" team={Trainer1Team} isLeft />
+          <PokemonList />
+          <PokemonTeam trainer="2" team={Trainer2Team} />
+        </main>
+      </Suspense>
     </>
   );
 }
