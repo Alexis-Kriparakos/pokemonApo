@@ -3,6 +3,7 @@
 .modalContainer {
   width: 65.25rem;
   max-height: 40rem;
+  min-height: 30rem;
   background-color: #fff;
   text-align: center;
   overflow-y: auto;
@@ -60,6 +61,13 @@
   justify-content: center;
   flex-direction: column;
   padding: 0.5rem 0;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rem 0;
 }
 
 // .tooltiptext {

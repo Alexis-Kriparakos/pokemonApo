@@ -95,47 +95,26 @@ export function MEMO_STATS(pokemon) {
 }
 
 export const PHASES = {
-  PLAYER1_MOVE_CHOICE: {
-    message: 'Player one is choosing their move',
-    player1: true,
-    player2: false,
-    switch1: false,
-    switch2: false,
+  BATTLE_START: {
+    message: "Choose your pokemon's move"
   },
-  PLAYER2_MOVE_CHOICE: {
-    message: 'Player two is choosing their move',
-    player1: false,
-    player2: true,
-    switch1: false,
-    switch2: false,
+  PLAYER_MOVE_CHOICE: {
+    message: 'Player has choosen their move',
+  },
+  OPPONENT_MOVE_CHOICE: {
+    message: 'Opponent has choosen their move',
   },
   BATTLE_PHASE: {
     message: 'Battle Phase',
-    player1: false,
-    player2: false,
-    switch1: false,
-    switch2: false,
   },
   SWITCH_POKEMON1: {
     message: 'Player one is switching their pokemon',
-    player1: false,
-    player2: false,
-    switch1: true,
-    switch2: false,
   },
   SWITCH_POKEMON2: {
     message: 'Player two is switching their pokemon',
-    player1: false,
-    player2: false,
-    switch1: false,
-    switch2: true,
   },
   pokemonIsDown: {
     message: "Pokemon is downed, it can't keep fighting",
-    player1: false,
-    player2: false,
-    switch1: false,
-    switch2: false,
   },
 };
 

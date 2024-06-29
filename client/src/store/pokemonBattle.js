@@ -9,7 +9,7 @@ import { Trainer1Team, Trainer2Team } from './teamStore';
 
 
 const INITIAL_VALUE = {
-  status: PHASES.PLAYER1_MOVE_CHOICE,
+  status: PHASES.BATTLE_START,
   movePlayer1: {},
   movePlayer2: {},
   teamPlayer1: [],

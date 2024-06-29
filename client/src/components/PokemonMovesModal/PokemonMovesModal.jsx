@@ -108,7 +108,7 @@ export default function PokemonMovesModal({
             ))}
           </main>
         )
-          : <Loader />}
+          : <div className={styles.loaderContainer}><Loader /></div>}
         <footer className={styles.buttonContainer}>
           <div className={styles.spacingBtn}>
             <PrimaryButton onClick={() => setIsOpenModal(false)}>

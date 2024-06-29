@@ -77,7 +77,11 @@ export default function PokemonCard({ pokemon }) {
 
   return (
     <section className={styles.pokemonCard}>
-      <Link href={`pokemon/${pokemon.name}`} className={styles.topContainer} onClick={() => PokemonSelected.update(pokemon)}>
+      <Link
+        href={`pokemon/${pokemon.name}`}
+        className={styles.topContainer}
+        onClick={() => PokemonSelected.update(pokemon)}
+      >
         <img
           className={cn(styles.pokemonImage, { [styles.pokemonImageFade]: showDetails })}
           src={image}

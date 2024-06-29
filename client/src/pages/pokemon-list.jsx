@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
 import { getData } from '../api/pokemon';
 import Header from '../components/Header/Header';

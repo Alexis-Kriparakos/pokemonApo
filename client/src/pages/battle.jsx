@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import isEmpty from 'lodash/isEmpty';
 import React, { useState, useEffect, useCallback } from 'react';
 import { distinctUntilKeyChanged } from 'rxjs/operators';
 import io from 'socket.io-client';
@@ -21,6 +22,14 @@ export default function Battle() {
   const [pokemonFightingOpponent, setPokemonFightingOpponent] = useState(null);
   const [moveSelectedMain, setMoveSelctedMain] = useState(null);
   const [moveSelectedOpponent, setMoveSelectedOpponent] = useState(null);
+  const [battlePhase, setBattlePhase] = useState('');
+  const [movesDisabled, setMovesDisabled] = useState(false);
+
+  function resetChoices() {
+    const battle = PokemonBattle.getValue();
+    PokemonBattle.update({ ...battle, movePlayer1: null, movePlayer2: null, status: PHASES.BATTLE_START });
+    setMovesDisabled(false);
+  }
 
   const healthBarStyle = useCallback(pokemon => {
     if (!pokemon) return;
@@ -50,9 +59,9 @@ export default function Battle() {
   }, [pokemonFightingMain, pokemonFightingOpponent]);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
+    function handleBeforeUnload() {
       socket.emit('leaveQueue');
-    };
+    }
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
@@ -69,9 +78,10 @@ export default function Battle() {
       PokemonBattle.startBattle();
     });
 
-    socket.on('receiveOpponentMove', opponentMove => {
+    socket.on('receiveOpponentMove', ({ move: opponentMove, phase }) => {
       console.log(opponentMove);
-      setMoveSelectedOpponent(opponentMove);
+      const battle = PokemonBattle.getValue();
+      PokemonBattle.update({ ...battle, movePlayer2: opponentMove, status: phase });
     });
 
     return () => {
@@ -84,29 +94,70 @@ export default function Battle() {
   useEffect(() => {
     PokemonBattle.startBattle();
     const pokemonBattle$ = PokemonBattle.subscribe(battle => {
-      // setBattleInfo(battle);
-      // setBattleStatus(battle.status);
       setPokemonFightingMain(battle.pokemonFighting1);
       setPokemonFightingOpponent(battle.pokemonFighting2);
-      // setSelectedMoveP1(battle.movePlayer1);
-      // setSelectedMoveP2(battle.movePlayer2);
+      setMoveSelctedMain(battle.movePlayer1);
+      setMoveSelectedOpponent(battle.movePlayer2);
     });
 
     const battlePhases$ = PokemonBattle.getSubject().pipe(distinctUntilKeyChanged('status')).subscribe(battleInfo => {
       const { status } = battleInfo;
-      switch (status) {
-        case PHASES.PLAYER1_MOVE_CHOICE:
+      setBattlePhase(status);
+
+      const { movePlayer1, movePlayer2, pokemonFighting1, pokemonFighting2 } = PokemonBattle.getValue();
+      switch (status.message) {
+        case PHASES.PLAYER_MOVE_CHOICE.message:
+          setMovesDisabled(true);
+          if (!isEmpty(movePlayer1) && !isEmpty(movePlayer2)) {
+            const battle = PokemonBattle.getValue();
+            PokemonBattle.update({ ...battle, status: PHASES.BATTLE_PHASE });
+          }
+          break;
+        case PHASES.OPPONENT_MOVE_CHOICE.message:
+          if (!isEmpty(movePlayer1) && !isEmpty(movePlayer2)) {
+            const battle = PokemonBattle.getValue();
+            PokemonBattle.update({ ...battle, status: PHASES.BATTLE_PHASE });
+          }
+          break;
+        case PHASES.BATTLE_PHASE.message:
+          console.log('battle');
+          setTimeout(() => {
+            if (pokemonFighting1.battleStats.speedStat >= pokemonFighting2.battleStats.speedStat) {
+              const poke2 = PokemonBattle
+                .executeMove(pokemonFighting1, pokemonFighting2, movePlayer1);
+              PokemonBattle.updateTeam2(poke2);
+              // if (!poke2.isAlive) {
+              //   PokemonBattle.update({ ...battle, status: PHASES.SWITCH_POKEMON2 });
+              //   resetChoices();
+              //   return;
+              // }
+              const poke1 = PokemonBattle
+                .executeMove(pokemonFighting2, pokemonFighting1, movePlayer2);
+              PokemonBattle.updateTeam1(poke1);
+              resetChoices();
+              return;
+            }
+            const poke1 = PokemonBattle.executeMove(pokemonFighting2, pokemonFighting1, movePlayer2);
+            PokemonBattle.updateTeam1(poke1);
+            // if (!poke1.isAlive) {
+            //   PokemonBattle.update({ ...battle, status: PHASES.SWITCH_POKEMON1 });
+            //   resetChoices();
+            //   return;
+            // }
+            const poke2 = PokemonBattle.executeMove(pokemonFighting1, pokemonFighting2, movePlayer1);
+            PokemonBattle.updateTeam2(poke2);
+            resetChoices();
+          }, 1000);
+          break;
+        case PHASES.SWITCH_POKEMON1.message:
           return null;
-        case PHASES.PLAYER2_MOVE_CHOICE:
+        case PHASES.SWITCH_POKEMON2.message:
           return null;
-        case PHASES.BATTLE_PHASE:
-          return null;
-        case PHASES.SWITCH_POKEMON1:
-          return null;
-        case PHASES.SWITCH_POKEMON2:
-          return null;
+        default:
+          break;
       }
     });
+
     return () => {
       pokemonBattle$.unsubscribe();
       battlePhases$.unsubscribe();
@@ -150,7 +201,7 @@ export default function Battle() {
                 </div>
               </div>
               <div className={styles.battleStatusMessageContainer}>
-                this is a battle status message
+                {battlePhase.message}
               </div>
             </div>
             <div className={styles.teamContainer}>
@@ -167,15 +218,14 @@ export default function Battle() {
               player1Moves
               pokemon={pokemonFightingMain}
               onClick={move => {
-                setMoveSelctedMain(move);
                 const battle = PokemonBattle.getValue();
-                PokemonBattle.update({ ...battle, status: PHASES.PLAYER2_MOVE_CHOICE });
-                socket.emit('playerSelectedMove', move);
+                PokemonBattle.update({ ...battle, movePlayer1: move, status: PHASES.PLAYER_MOVE_CHOICE });
+                socket.emit('playerSelectedMove', { move, phase: PHASES.OPPONENT_MOVE_CHOICE });
               }}
               onClickSwitch={() => {
                 console.log('switch pokemon main');
               }}
-              isDisabled={false}
+              isDisabled={movesDisabled}
             />
             {/* <MoveSelection
             player2Moves
